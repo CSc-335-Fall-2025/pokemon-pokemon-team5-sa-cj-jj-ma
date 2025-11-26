@@ -45,4 +45,7 @@ public class Creature {
 	public Move[] getMoves() {
 		return this.moves;
 	}
+	public void setMoves(Move[] newMoves) {
+		this.moves = newMoves;
+	}
 }
