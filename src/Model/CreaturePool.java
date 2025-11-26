@@ -4,7 +4,7 @@ public class CreaturePool {
 
     private static final Creature[] CREATURES = {
     	
-    	
+    		
         new Creature("Pikachu",      90,  55, 40),
         new Creature("Bulbasaur",   100, 50, 45),
         new Creature("Charmander",   95,  52, 38),
