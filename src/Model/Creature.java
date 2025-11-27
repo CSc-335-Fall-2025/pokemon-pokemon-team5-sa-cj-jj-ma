@@ -12,6 +12,7 @@ public class Creature {
 	private int attack;
 	private int defense;
 	private Move[] moves;
+	private int shield;
 	
 	/**
 	 * 
@@ -26,6 +27,7 @@ public class Creature {
 		this.attack = attack;
 		this.defense = defense;
 		this.moves = moveArray;
+		this.shield = 0;
 	}
 	public String getName() {
 		return this.name;
@@ -47,5 +49,11 @@ public class Creature {
 	}
 	public void setMoves(Move[] newMoves) {
 		this.moves = newMoves;
+	}
+	public int getShield(){
+		return this.shield;
+	}
+	public void setShield(int number) {
+		this.shield = number;
 	}
 }

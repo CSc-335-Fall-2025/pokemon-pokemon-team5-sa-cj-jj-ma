@@ -9,4 +9,8 @@ public class attackMove extends Move{
 	public int getPower() {
 		return this.power;
 	}
+	
+	public void doMove(Creature attacker, Creature defender) {
+		defender.setHealth(defender.getHealth()-power);
+	}
 }
