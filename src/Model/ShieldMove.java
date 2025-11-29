@@ -8,6 +8,6 @@ public class ShieldMove extends Move {
 	}
 	
 	public void doMove(Creature attacker) {
-		attacker.setShield(this.shield);
+		attacker.setHealth(attacker.getHealth()+this.shield);
 	}
 }

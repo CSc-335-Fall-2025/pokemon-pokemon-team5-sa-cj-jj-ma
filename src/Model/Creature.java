@@ -12,7 +12,7 @@ public class Creature {
 	private int attack;
 	private int defense;
 	private Move[] moves;
-	private int shield;
+	private int counter;
 	
 	/**
 	 * 
@@ -27,7 +27,7 @@ public class Creature {
 		this.attack = attack;
 		this.defense = defense;
 		this.moves = moveArray;
-		this.shield = 0;
+		this.counter = 0;
 	}
 	public String getName() {
 		return this.name;
@@ -50,10 +50,16 @@ public class Creature {
 	public void setMoves(Move[] newMoves) {
 		this.moves = newMoves;
 	}
-	public int getShield(){
-		return this.shield;
+	public int getCounter(){
+		return this.counter;
 	}
-	public void setShield(int number) {
-		this.shield = number;
+	public void setCounter(int number) {
+		this.counter = number;
 	}
+	public void incrementCounter() {
+		if (this.counter>=1) {
+			this.counter--;
+		}
+	}
+	
 }
