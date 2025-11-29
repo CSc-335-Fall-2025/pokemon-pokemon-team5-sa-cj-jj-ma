@@ -51,7 +51,6 @@ public class CreaturePool {
     	CREATURES[11].setMoves(moveArray);
     	
     	CREATURES[12].setMoves(moveArray);
-    	
     }
     
 }
