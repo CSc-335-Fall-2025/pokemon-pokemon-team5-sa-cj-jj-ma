@@ -1,6 +1,7 @@
 import java.util.Observable;
 import java.util.Observer;
 
+import Model.CreaturePool;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ import javafx.stage.Stage;
 
 @SuppressWarnings("deprecation")
 public class GameView extends Application implements Observer {
+	private CreaturePool creaturePool;
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -45,6 +47,8 @@ public class GameView extends Application implements Observer {
 	}
 	
 	public void initializeGame(){
+		creaturePool = new CreaturePool();
+		creaturePool.setMoves();
 		
 	}
 	
