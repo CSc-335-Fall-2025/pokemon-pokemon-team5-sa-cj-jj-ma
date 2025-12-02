@@ -3,7 +3,6 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import Model.CreaturePool;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,6 +16,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.CreaturePool;
 
 @SuppressWarnings("deprecation")
 public class GameView extends Application implements Observer {

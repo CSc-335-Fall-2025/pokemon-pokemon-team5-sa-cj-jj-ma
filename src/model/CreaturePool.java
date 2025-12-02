@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 public class CreaturePool {
 
@@ -21,7 +21,7 @@ public class CreaturePool {
     /**
      * Returns the full list of all available creatures.
      */
-    public static Creature[] getAllCreatures() {
+    public Creature[] getAllCreatures() {
         return CREATURES;
         
     }

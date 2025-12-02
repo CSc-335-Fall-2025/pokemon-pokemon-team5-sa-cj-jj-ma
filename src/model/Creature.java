@@ -4,7 +4,7 @@
  * Prupose define the creature class for our pokemon game.
  * This creature will have different stats and a collection of moves.
  */
-package Model;
+package model;
 
 public class Creature {
 	private String name;

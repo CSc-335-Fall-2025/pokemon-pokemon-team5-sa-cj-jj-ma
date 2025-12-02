@@ -1,13 +1,20 @@
-package Model;
+package model;
 
 public class Battle {
 
-    private Trainer player;
-    private Trainer opponent;
+    private Trainer player1;
+    private Trainer player2;
+    private Trainer player3;
 
-    public Battle(Trainer player, Trainer opponent) {
-        this.player = player;
-        this.opponent = opponent;
+    public Battle(Trainer player1, Trainer player2) {
+        this.player1 = player1;
+        this.player2 = player2;
+    }
+    
+    public Battle(Trainer player1, Trainer player2, Trainer player3) {
+        this.player1 = player1;
+        this.player2 = player2;
+        this.player3 = player3;
     }
 
     /**

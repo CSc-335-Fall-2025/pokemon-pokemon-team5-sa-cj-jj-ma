@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 public class healMove extends Move {
 	public int power;

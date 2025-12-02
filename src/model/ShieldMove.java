@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 public class ShieldMove extends Move {
 	private int shield;

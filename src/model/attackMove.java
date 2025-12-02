@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 public class attackMove extends Move{
 	public int power;
