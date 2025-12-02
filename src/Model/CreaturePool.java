@@ -28,6 +28,9 @@ public class CreaturePool {
     
     public void setMoves() {
     	Move[] moveArray = {new healMove(40), new attackMove(50), new ShieldMove(25), new healMove(45)};
+    	
+    	CREATURES[0].setMoves(moveArray);
+    	
     	CREATURES[1].setMoves(moveArray);
     	
     	CREATURES[2].setMoves(moveArray);
@@ -50,7 +53,7 @@ public class CreaturePool {
     	
     	CREATURES[11].setMoves(moveArray);
     	
-    	CREATURES[12].setMoves(moveArray);
+//    	CREATURES[12].setMoves(moveArray);
     }
     
 }
