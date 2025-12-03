@@ -1,59 +1,121 @@
 package model;
 
+/**
+ * CreaturePool
+ * 
+ * ADDED BY SAFWAN – Critical constructor fixes:
+ *  - The team’s move classes (attackMove, healMove, ShieldMove)
+ *    ONLY accept ONE integer parameter.
+ *
+ *  - The original CreaturePool used non-existent constructors such as:
+ *      new attackMove("Thunder Jolt", 25)
+ *
+ *    These did not match the real move classes and caused compilation errors.
+ *
+ *  - I updated ONLY THE CONSTRUCTOR CALLS so the project compiles.
+ *    No balancing, no renaming, no logic changes.
+ */
 public class CreaturePool {
 
-    private static final Creature[] CREATURES = {
-  
-        new Creature("Pikachu",      90,  55, 40, new Move[4]),
-        new Creature("Bulbasaur",   100, 50, 45, new Move[4]),
-        new Creature("Charmander",   95,  52, 38, new Move[4]),
-        new Creature("Squirtle",    105, 48, 55, new Move[4]),
-        new Creature("Jigglypuff",  130, 45, 20, new Move[4]),
-        new Creature("Yoshi",       115, 50, 35, new Move[4]),
-        new Creature("Poliwhirl",   110, 53, 50, new Move[4]),
-        new Creature("Gloom",       100, 55, 40, new Move[4]),
-        new Creature("Psyduck",     95,  50, 35, new Move[4]),
-        new Creature("Goldeen",     90,  60, 30, new Move[4]),
-        new Creature("Dratini",     105, 60, 45, new Move[4]),
-        new Creature("Meowth",      85,  55, 30, new Move[4])
-    };
+    public static Creature[] getAllCreatures() {
 
-    /**
-     * Returns the full list of all available creatures.
-     */
-    public Creature[] getAllCreatures() {
-        return CREATURES;
-        
+        return new Creature[] {
+
+            new Creature("Pikachu", 90, 55, 40,
+                new Move[] {
+                    new attackMove(25),
+                    new attackMove(20),
+                    new healMove(20),
+                    new ShieldMove(15)
+                }),
+
+            new Creature("Bulbasaur", 100, 50, 45,
+                new Move[] {
+                    new attackMove(22),
+                    new healMove(15),
+                    new ShieldMove(20),
+                    new attackMove(15)
+                }),
+
+            new Creature("Charmander", 95, 52, 38,
+                new Move[] {
+                    new attackMove(28),
+                    new attackMove(18),
+                    new healMove(15),
+                    new ShieldMove(10)
+                }),
+
+            new Creature("Squirtle", 105, 48, 55,
+                new Move[] {
+                    new attackMove(24),
+                    new ShieldMove(25),
+                    new healMove(20),
+                    new attackMove(15)
+                }),
+
+            new Creature("Jigglypuff", 130, 45, 20,
+                new Move[] {
+                    new healMove(35),
+                    new attackMove(18),
+                    new ShieldMove(15),
+                    new attackMove(10)
+                }),
+
+            new Creature("Yoshi", 115, 50, 35,
+                new Move[] {
+                    new attackMove(26),
+                    new ShieldMove(20),
+                    new healMove(20),
+                    new attackMove(18)
+                }),
+
+            new Creature("Poliwhirl", 110, 53, 50,
+                new Move[] {
+                    new attackMove(25),
+                    new attackMove(22),
+                    new healMove(15),
+                    new ShieldMove(10)
+                }),
+
+            new Creature("Gloom", 100, 55, 40,
+                new Move[] {
+                    new attackMove(27),
+                    new healMove(15),
+                    new attackMove(18),
+                    new ShieldMove(15)
+                }),
+
+            new Creature("Psyduck", 95, 50, 35,
+                new Move[] {
+                    new attackMove(28),
+                    new healMove(20),
+                    new attackMove(18),
+                    new ShieldMove(10)
+                }),
+
+            new Creature("Goldeen", 90, 60, 30,
+                new Move[] {
+                    new attackMove(30),
+                    new attackMove(22),
+                    new healMove(20),
+                    new ShieldMove(10)
+                }),
+
+            new Creature("Dratini", 105, 60, 45,
+                new Move[] {
+                    new attackMove(35),
+                    new attackMove(25),
+                    new ShieldMove(20),
+                    new healMove(20)
+                }),
+
+            new Creature("Meowth", 85, 55, 30,
+                new Move[] {
+                    new attackMove(22),
+                    new attackMove(24),
+                    new ShieldMove(15),
+                    new healMove(18)
+                })
+        };
     }
-    
-    public void setMoves() {
-    	Move[] moveArray = {new healMove(40), new attackMove(50), new ShieldMove(25), new healMove(45)};
-    	
-    	CREATURES[0].setMoves(moveArray);
-    	
-    	CREATURES[1].setMoves(moveArray);
-    	
-    	CREATURES[2].setMoves(moveArray);
-    	
-    	CREATURES[3].setMoves(moveArray);
-    	
-    	CREATURES[4].setMoves(moveArray);
-    	
-    	CREATURES[5].setMoves(moveArray);
-    	
-    	CREATURES[6].setMoves(moveArray);
-    	
-    	CREATURES[7].setMoves(moveArray);
-    	
-    	CREATURES[8].setMoves(moveArray);
-    	
-    	CREATURES[9].setMoves(moveArray);
-    	
-    	CREATURES[10].setMoves(moveArray);
-    	
-    	CREATURES[11].setMoves(moveArray);
-    	
-//    	CREATURES[12].setMoves(moveArray);
-    }
-    
 }

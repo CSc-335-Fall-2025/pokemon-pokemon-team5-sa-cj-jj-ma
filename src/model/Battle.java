@@ -1,92 +1,74 @@
 package model;
 
+import java.util.Random;
+
+/**
+ * Basic Battle Engine
+ * 
+ * Added by Safwan:
+ *   - Simplified version using only the fields our Creature class has
+ *   - Enough for GUI + Controller testing
+ *   - Advanced features left for teammates (critical hits, turn order, types, etc.)
+ */
 public class Battle {
 
-    private Trainer player1;
-    private Trainer player2;
-    private Trainer player3;
+    private Trainer player;
+    private Trainer opponent;
+    private Random random = new Random();
 
-    public Battle(Trainer player1, Trainer player2) {
-        this.player1 = player1;
-        this.player2 = player2;
-    }
-    
-    public Battle(Trainer player1, Trainer player2, Trainer player3) {
-        this.player1 = player1;
-        this.player2 = player2;
-        this.player3 = player3;
+    public Battle(Trainer player, Trainer opponent) {
+        this.player = player;
+        this.opponent = opponent;
     }
 
     /**
-     * Runs one turn of combat.
-     * Simple rule:
-     *  damage = attacker.attack - defender.defense
-     * if damage < 1, set to 1.
+     * Executes one turn of battle.
+     * Player always goes first (team can improve later).
      */
-    public String takeTurn() {
+    public String takeTurn(Move playerMove) {
 
         Creature p = player.getActiveCreature();
-        Creature a = opponent.getActiveCreature();
+        Creature o = opponent.getActiveCreature();
 
-        boolean playerFirst = p.getAttack() >= a.getAttack();
+        Move aiMove = chooseAIMove(o);
 
-        // FIRST ATTACKER
-        if (playerFirst) {
+        StringBuilder log = new StringBuilder();
 
-            attack(p, a);
-            if (a.getHealth() <= 0) {
-                opponent.autoSwap();
-                return player.getName() + "'s " + p.getName() + " knocked out " + a.getName();
-            }
+        // Player attacks first
+        log.append("Player's " + p.getName() + " used " + playerMove.getClass().getSimpleName() + "!\n");
+        playerMove.doMove(p, o);
 
-            // Opponent attacks second
-            attack(a, p);
-            if (p.getHealth() <= 0) {
-                player.autoSwap();
-                return opponent.getName() + "'s " + a.getName() + " knocked out " + p.getName();
-            }
-
-        } else {
-
-            attack(a, p);
-            if (p.getHealth() <= 0) {
-                player.autoSwap();
-                return opponent.getName() + "'s " + a.getName() + " knocked out " + p.getName();
-            }
-
-            attack(p, a);
-            if (a.getHealth() <= 0) {
-                opponent.autoSwap();
-                return player.getName() + "'s " + p.getName() + " knocked out " + a.getName();
-            }
+        if (o.isFainted()) {
+            opponent.autoSwap();
+            log.append("Opponent's creature fainted! They swapped.\n");
+            return log.toString();
         }
 
-        return "Both creatures attacked!";
+        // Opponent attacks
+        log.append("Opponent's " + o.getName() + " used " + aiMove.getClass().getSimpleName() + "!\n");
+        aiMove.doMove(o, p);
+
+        if (p.isFainted()) {
+            player.autoSwap();
+            log.append("Your creature fainted! Auto-swapped.\n");
+        }
+
+        return log.toString();
     }
 
     /**
-     * Damage formula for Sprint 1.
+     * Very simple AI:
+     *  - Attack if possible
+     *  - Otherwise random move
      */
-    private void attack(Creature attacker, Creature defender) {
-        int damage = attacker.getAttack() - defender.getDefense();
-        if (damage < 1) damage = 1;
-
-        defender.setHealth(defender.getHealth() - damage);
-    }
-
-    /**
-     * Returns true when a trainer has no living creatures left.
-     */
-    public boolean isBattleOver() {
-        return !player.hasLivingCreature() || !opponent.hasLivingCreature();
-    }
-
-    /**
-     * Returns the winner if the battle has ended.
-     */
-    public Trainer getWinner() {
-        if (!player.hasLivingCreature()) return opponent;
-        if (!opponent.hasLivingCreature()) return player;
-        return null;
+    private Move chooseAIMove(Creature c) {
+        for (Move m : c.getMoves()) {
+            if (m instanceof attackMove) {
+                return m;
+            }
+        }
+        // fallback
+        Move[] moves = c.getMoves();
+        return moves[random.nextInt(moves.length)];
     }
 }
