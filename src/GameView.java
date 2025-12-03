@@ -2,12 +2,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Optional;
 
+import controller.PokemonController;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -17,10 +20,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.CreaturePool;
+//import model.CreaturePool;
+import model.PokemonModel;
 
 @SuppressWarnings("deprecation")
 public class GameView extends Application implements Observer {
-	private CreaturePool creaturePool;
+	
+	private PokemonModel model;
+	private PokemonController controller;
+	
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -30,13 +38,14 @@ public class GameView extends Application implements Observer {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		initializeGame();
+
+		
 		BorderPane MainMenu = new BorderPane();
 		HBox buttonBox = new HBox(20);
-		Button progressionMode = new Button("Single Player");
+		Button singlePlayer = new Button("Single Player");
 		Button multiPlayerVersus = new Button("Multiplayer Versus");
 		Button multiPlayerTogether = new Button("Play Together Versus CPU");
-		buttonBox.getChildren().add(progressionMode);
+		buttonBox.getChildren().add(singlePlayer);
 		buttonBox.getChildren().add(multiPlayerVersus);
 		buttonBox.getChildren().add(multiPlayerTogether);
 		buttonBox.setAlignment(Pos.CENTER);
@@ -407,6 +416,7 @@ public class GameView extends Application implements Observer {
 				
 			}
 		});
+		
 		pokemonPool.getChildren().add(pikachuBtn);
 		pokemonPool.getChildren().add(charmanderBtn);
 		pokemonPool.getChildren().add(dratiniBtn);
@@ -431,16 +441,50 @@ public class GameView extends Application implements Observer {
 		acceptBox.setAlignment(Pos.CENTER);
 		MainMenu.setBottom(acceptBox);
 		
+		
+		
+		BorderPane progressionMenu = new BorderPane();
+		HBox levelsBox = new HBox(120);
+		Button easyBtn = new Button("Easy");
+		Button mediumBtn = new Button("Medium");
+		Button hardBtn = new Button("Hard");
+		levelsBox.getChildren().addAll(easyBtn, mediumBtn, hardBtn);
+
+		levelsBox.setAlignment(Pos.CENTER);
+		progressionMenu.setCenter(levelsBox);
+		
+		
+		singlePlayer.setOnAction(e -> {
+			
+			TextInputDialog namePrompt = new TextInputDialog("Name");
+			
+			namePrompt.setTitle("Name prompt");
+			namePrompt.setHeaderText("Enter your name");
+			namePrompt.setContentText("Enter your name");
+			
+			Optional<String> input = namePrompt.showAndWait();
+			
+			initializeGame(selectedTeam, input);
+			
+			Scene progressionScene = new Scene(progressionMenu, 1280, 720);
+			stage.setScene(progressionScene);
+			stage.setTitle("Progression");
+			stage.show();
+			
+		});
+		
 		Scene scene = new Scene(MainMenu, 1280,720);
 		stage.setScene(scene);
 		stage.setTitle("Pokemen");
 		stage.show();
 	}
 	
-	public void initializeGame(){
-		creaturePool = new CreaturePool();
-		creaturePool.setMoves();
-		
+	public void initializeGame(List<String> pokemonStrs, Optional<String> name) {
+//		this.controller = new PokemonController(userInput, "Computer", pokemonStrs, 
+		CreaturePool pool = new CreaturePool();
+		List<String> randStrs = new ArrayList<>(pool.generateRandom());
+		String nameStr = name.orElse("");
+		controller = new PokemonController(nameStr, "computer", pokemonStrs, randStrs);
 	}
 	
 	public void initializeBattle() {

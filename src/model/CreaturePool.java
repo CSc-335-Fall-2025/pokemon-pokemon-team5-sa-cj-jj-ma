@@ -1,5 +1,9 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class CreaturePool {
 
     private static final Creature[] CREATURES = {
@@ -54,6 +58,21 @@ public class CreaturePool {
     	CREATURES[11].setMoves(moveArray);
     	
 //    	CREATURES[12].setMoves(moveArray);
+    }
+    
+    public List<String> generateRandom() {
+    	List<String> retRand = new ArrayList<>();
+    	Random rand = new Random();
+    	
+    	while (retRand.size() < 3) {
+    		int currRand = rand.nextInt(12);
+    		String currName = CREATURES[currRand].getName().toLowerCase();
+    		if (!retRand.contains(currName)) {
+    			retRand.add(currName);
+    		}
+    	}
+    	
+    	return retRand;
     }
     
 }

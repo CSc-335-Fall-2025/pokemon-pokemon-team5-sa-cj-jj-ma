@@ -25,8 +25,8 @@ public class Battle {
      */
     public String takeTurn() {
 
-        Creature p = player.getActiveCreature();
-        Creature a = opponent.getActiveCreature();
+        Creature p = player1.getActiveCreature();
+        Creature a = player2.getActiveCreature();
 
         boolean playerFirst = p.getAttack() >= a.getAttack();
 
@@ -35,29 +35,29 @@ public class Battle {
 
             attack(p, a);
             if (a.getHealth() <= 0) {
-                opponent.autoSwap();
-                return player.getName() + "'s " + p.getName() + " knocked out " + a.getName();
+                player2.autoSwap();
+                return player1.getName() + "'s " + p.getName() + " knocked out " + a.getName();
             }
 
-            // Opponent attacks second
+            // player2 attacks second
             attack(a, p);
             if (p.getHealth() <= 0) {
-                player.autoSwap();
-                return opponent.getName() + "'s " + a.getName() + " knocked out " + p.getName();
+                player1.autoSwap();
+                return player2.getName() + "'s " + a.getName() + " knocked out " + p.getName();
             }
 
         } else {
 
             attack(a, p);
             if (p.getHealth() <= 0) {
-                player.autoSwap();
-                return opponent.getName() + "'s " + a.getName() + " knocked out " + p.getName();
+                player1.autoSwap();
+                return player2.getName() + "'s " + a.getName() + " knocked out " + p.getName();
             }
 
             attack(p, a);
             if (a.getHealth() <= 0) {
-                opponent.autoSwap();
-                return player.getName() + "'s " + p.getName() + " knocked out " + a.getName();
+                player2.autoSwap();
+                return player1.getName() + "'s " + p.getName() + " knocked out " + a.getName();
             }
         }
 
@@ -78,15 +78,15 @@ public class Battle {
      * Returns true when a trainer has no living creatures left.
      */
     public boolean isBattleOver() {
-        return !player.hasLivingCreature() || !opponent.hasLivingCreature();
+        return !player1.hasLivingCreature() || !player2.hasLivingCreature();
     }
 
     /**
      * Returns the winner if the battle has ended.
      */
     public Trainer getWinner() {
-        if (!player.hasLivingCreature()) return opponent;
-        if (!opponent.hasLivingCreature()) return player;
+        if (!player1.hasLivingCreature()) return player2;
+        if (!player2.hasLivingCreature()) return player1;
         return null;
     }
 }

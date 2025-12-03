@@ -11,7 +11,7 @@ public class PokemonModel {
 	private Battle battle;
 	private CreaturePool pool;
 	
-	public PokemonModel(String name1, String name2, String[] team1, String[] team2) {
+	public PokemonModel(String name1, String name2, List<String> team1, List<String> team2) {
 		pool = new CreaturePool();
 		pool.setMoves();
 		
@@ -21,7 +21,7 @@ public class PokemonModel {
 		this.battle = new Battle(trainer1, trainer2);
 	}
 	
-	public PokemonModel(String name1, String name2, String name3, String[] team1, String[] team2, String[] team3) {
+	public PokemonModel(String name1, String name2, String name3, List<String> team1, List<String> team2, List<String> team3) {
 		pool = new CreaturePool();
 		pool.setMoves();
 		
@@ -33,9 +33,10 @@ public class PokemonModel {
 
 	}
 	
-	public Creature[] convertStringToTeam(String[] strTeam) {
+	public Creature[] convertStringToTeam(List<String> strTeam) {
 		List<Creature> retTeam = new ArrayList<>();
 		for (String str : strTeam) {
+			System.out.println("iterating\n\n");
 			switch (str) {
 			case "pikachu":
 				retTeam.add(pool.getAllCreatures()[0]);
@@ -85,9 +86,6 @@ public class PokemonModel {
 
 	}
 	
-	public Creature[] pickRandomTeam() {
-		
-	}
 	
 	
 }
