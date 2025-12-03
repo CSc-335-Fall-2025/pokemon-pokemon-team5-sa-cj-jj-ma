@@ -455,21 +455,28 @@ public class GameView extends Application implements Observer {
 		
 		
 		singlePlayer.setOnAction(e -> {
-			
-			TextInputDialog namePrompt = new TextInputDialog("Name");
-			
-			namePrompt.setTitle("Name prompt");
-			namePrompt.setHeaderText("Enter your name");
-			namePrompt.setContentText("Enter your name");
-			
-			Optional<String> input = namePrompt.showAndWait();
-			
-			initializeGame(selectedTeam, input);
-			
-			Scene progressionScene = new Scene(progressionMenu, 1280, 720);
-			stage.setScene(progressionScene);
-			stage.setTitle("Progression");
-			stage.show();
+			if (selectedTeam.size() == 3)  {
+				TextInputDialog namePrompt = new TextInputDialog("Name");
+				
+				namePrompt.setTitle("Name prompt");
+				namePrompt.setHeaderText("Enter your name");
+				namePrompt.setContentText("Enter your name");
+				
+				Optional<String> input = namePrompt.showAndWait();
+				initializeGame(selectedTeam, input);
+				
+				Scene progressionScene = new Scene(progressionMenu, 1280, 720);
+				stage.setScene(progressionScene);
+				stage.setTitle("Progression");
+				stage.show();
+			}
+			else {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Member");
+				alert.setHeaderText("Too little pokemone");
+				alert.setContentText("Please select 3 pokemone");
+				alert.show();
+			}
 			
 		});
 		
