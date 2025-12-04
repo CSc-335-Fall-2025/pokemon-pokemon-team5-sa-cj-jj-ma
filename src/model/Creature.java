@@ -11,8 +11,10 @@ public class Creature {
 	private int health;
 	private int attack;
 	private int defense;
+	private int heal;
 	private Move[] moves;
 	private int counter;
+	private String path;
 	
 	/**
 	 * 
@@ -21,13 +23,15 @@ public class Creature {
 	 * @param attack
 	 * @param defense
 	 */
-	public Creature(String name, int health, int attack, int defense, Move[] moveArray) {
+	public Creature(String name, int health, int attack, int defense, int heal, Move[] moveArray, String path) {
 		this.name = name;
 		this.health = health;
 		this.attack = attack;
 		this.defense = defense;
+		this.health = heal;
 		this.moves = moveArray;
 		this.counter = 0;
+		this.path = path;
 	}
 	public String getName() {
 		return this.name;
@@ -60,6 +64,12 @@ public class Creature {
 		if (this.counter>=1) {
 			this.counter--;
 		}
+	}
+	public String getPath() {
+		return this.path;
+	}
+	public int getHeal() {
+		return this.heal;
 	}
 	
 }

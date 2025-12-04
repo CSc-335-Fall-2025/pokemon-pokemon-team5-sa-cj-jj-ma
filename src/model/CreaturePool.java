@@ -8,18 +8,18 @@ public class CreaturePool {
 
     private static final Creature[] CREATURES = {
   
-        new Creature("Pikachu",      90,  55, 40, new Move[4]),
-        new Creature("Bulbasaur",   100, 50, 45, new Move[4]),
-        new Creature("Charmander",   95,  52, 38, new Move[4]),
-        new Creature("Squirtle",    105, 48, 55, new Move[4]),
-        new Creature("Jigglypuff",  130, 45, 20, new Move[4]),
-        new Creature("Yoshi",       115, 50, 35, new Move[4]),
-        new Creature("Poliwhirl",   110, 53, 50, new Move[4]),
-        new Creature("Gloom",       100, 55, 40, new Move[4]),
-        new Creature("Psyduck",     95,  50, 35, new Move[4]),
-        new Creature("Goldeen",     90,  60, 30, new Move[4]),
-        new Creature("Dratini",     105, 60, 45, new Move[4]),
-        new Creature("Meowth",      85,  55, 30, new Move[4])
+        new Creature("Pikachu",      90,  55, 40, 50, new Move[4], "/sprites/pokemon/pickachu.png"),
+        new Creature("Bulbasaur",   100, 50, 45, 50, new Move[4], "/sprites/pokemon/bulbasaur.png"),
+        new Creature("Charmander",   95,  52, 38, 50, new Move[4], "/sprites/pokemon/charmander.png"),
+        new Creature("Squirtle",    105, 48, 55, 50, new Move[4], "/sprites/pokemon/squirtle.png"),
+        new Creature("Jigglypuff",  130, 45, 20, 50, new Move[4], "/sprites/pokemon/jigglypuff.png"),
+        new Creature("Yoshi",       115, 50, 35, 50, new Move[4], "/sprites/pokemon/yoshi.png"),
+        new Creature("Poliwhirl",   110, 53, 50, 50, new Move[4], "/sprites/pokemon/poliwhirl.png"),
+        new Creature("Gloom",       100, 55, 40, 50, new Move[4], "/sprites/pokemon/gloom.png"),
+        new Creature("Psyduck",     95,  50, 35, 50, new Move[4], "/sprites/pokemon/psyduck.png"),
+        new Creature("Goldeen",     90,  60, 30, 50, new Move[4], "/sprites/pokemon/goldeen.png"),
+        new Creature("Dratini",     105, 60, 45, 50, new Move[4], "/sprites/pokemon/dratini.png"),
+        new Creature("Meowth",      85,  55, 30, 50, new Move[4], "/sprites/pokemon/meowth.png")
     };
 
     /**
