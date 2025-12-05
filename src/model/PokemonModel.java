@@ -11,27 +11,16 @@ public class PokemonModel {
 	private Battle battle;
 	private CreaturePool pool;
 	
-	public PokemonModel(String name1, String name2, List<String> team1, List<String> team2) {
-		pool = new CreaturePool();
-		pool.setMoves();
+	public PokemonModel() {
+		trainer1 = null;
+		trainer2 = null;
+		trainer3 = null;
+		battle = null;
+		pool = null;
 		
-		this.trainer1 = new Trainer(name1, convertStringToTeam(team1));
-		this.trainer2 = new Trainer(name2, convertStringToTeam(team2));
-
-		this.battle = new Battle(trainer1, trainer2);
 	}
 	
-	public PokemonModel(String name1, String name2, String name3, List<String> team1, List<String> team2, List<String> team3) {
-		pool = new CreaturePool();
-		pool.setMoves();
-		
-		this.trainer1 = new Trainer(name1, convertStringToTeam(team1));
-		this.trainer2 = new Trainer(name2, convertStringToTeam(team2));
-		this.trainer3 = new Trainer(name3, convertStringToTeam(team3));
-		
-		this.battle = new Battle(trainer1, trainer2, trainer3);
-
-	}
+	
 	
 	public Creature[] convertStringToTeam(List<String> strTeam) {
 		List<Creature> retTeam = new ArrayList<>();
