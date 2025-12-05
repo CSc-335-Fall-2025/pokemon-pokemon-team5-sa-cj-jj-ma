@@ -7,7 +7,7 @@ public class ShieldMove extends Move {
 		this.shield = number;
 	}
 	
-	public void doMove(Creature attacker) {
+	public void doMove(Creature attacker, Creature Defender) {
 		attacker.setHealth(attacker.getHealth()+this.shield);
 	}
 }

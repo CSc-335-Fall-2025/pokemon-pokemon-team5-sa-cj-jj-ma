@@ -11,7 +11,10 @@ public class healMove extends Move {
 	}
 	
 	public void doMove(Creature attacker, Creature Defender) {
-		
+		attacker.setHealth(power+attacker.getHealth());
+		if(attacker.getHealth()>attacker.getBaseHealth()) {
+			attacker.setHealth(attacker.getBaseHealth());
+		}
 	}
 }
 
