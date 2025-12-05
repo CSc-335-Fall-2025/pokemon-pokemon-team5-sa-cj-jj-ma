@@ -217,13 +217,11 @@ public class GameView extends Application implements Observer {
 	}
 	
 	public void initializeGame(String name, List<String> pokemonStrs) {
-//		this.controller = new PokemonController(userInput, "Computer", pokemonStrs, 
-//		CreaturePool pool = new CreaturePool();
-//		List<String> randStrs = new ArrayList<>(pool.generateRandom());
-//		String nameStr = name.orElse("");
-//		controller = new PokemonController(nameStr, "computer", pokemonStrs, randStrs);
+		System.out.println("initializing game\n");
+		controller.createSelfTeam(name, pokemonStrs);
+		controller.createComputerTeam();
 		
-//		controller.addSelfTeam(name, pokemonStrs);
+		
 	}
 	
 	public void initializeBattle() {
