@@ -183,7 +183,17 @@ public class GameView extends Application implements Observer {
 				namePrompt.setContentText("Enter your name");
 				
 				Optional<String> input = namePrompt.showAndWait();
-				initializeGame(selectedTeam, input);
+				if (input.isPresent()) {
+					String inputStr = input.get();
+					initializeGame(inputStr, selectedTeam);
+
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Error");
+					alert.setHeaderText("Enter your name");
+					alert.setContentText("Please enter your name");
+					alert.show();
+				}
 				
 				Scene progressionScene = new Scene(progressionMenu, 1280, 720);
 				stage.setScene(progressionScene);
@@ -206,12 +216,14 @@ public class GameView extends Application implements Observer {
 		stage.show();
 	}
 	
-	public void initializeGame(List<String> pokemonStrs, Optional<String> name) {
+	public void initializeGame(String name, List<String> pokemonStrs) {
 //		this.controller = new PokemonController(userInput, "Computer", pokemonStrs, 
 //		CreaturePool pool = new CreaturePool();
 //		List<String> randStrs = new ArrayList<>(pool.generateRandom());
 //		String nameStr = name.orElse("");
 //		controller = new PokemonController(nameStr, "computer", pokemonStrs, randStrs);
+		
+//		controller.addSelfTeam(name, pokemonStrs);
 	}
 	
 	public void initializeBattle() {
