@@ -441,12 +441,59 @@ public class GameView extends Application implements Observer {
 		acceptBox.setAlignment(Pos.CENTER);
 		MainMenu.setBottom(acceptBox);
 		
-		
 		String imgPath = "";
+		
+		BorderPane BattleViewSinglePlayer = new BorderPane();
+		HBox player1 = new HBox(200);
+		
+		VBox team = new VBox(40);
+		Image trainerImage = new Image("/sprites/trainers/lance.png");
+		ImageView trainerView = new ImageView(trainerImage);
+		trainerView.setFitWidth(200);
+		trainerView.setPreserveRatio(true);
+		HBox activeTeam = new HBox(20);
+		Button firstSwapBtn = new Button("Swap");
+		firstSwapBtn.setOnAction(e ->{
+			
+		});
+		Button secondSwapBtn = new Button("Swap");
+		secondSwapBtn.setOnAction(e ->{
+			
+		});
+		Button thirdSwapBtn = new Button("Swap");
+		thirdSwapBtn.setOnAction(e -> {
+			
+		});
+		activeTeam.getChildren().addAll(firstSwapBtn,secondSwapBtn,thirdSwapBtn);
+		team.getChildren().addAll(trainerView,activeTeam);
+		
+		Image activeCreatureImage = new Image("/sprites/pokemon/pikachu.png");
+		ImageView activeCreatureView = new ImageView(activeCreatureImage);
+		
+		VBox clickableMoves = new VBox(20);
+		HBox topRowMoves = new HBox(20);
+		HBox botRowMoves = new HBox(20);
+		Button move1 = new Button("Move1");
+		Button move2 = new Button("Move2");
+		Button move3 = new Button("Move3");
+		Button move4 = new Button("Move4");
+		topRowMoves.getChildren().addAll(move1, move2);
+		botRowMoves.getChildren().addAll(move3,move4);
+		clickableMoves.getChildren().addAll(topRowMoves,botRowMoves);
+		
+		player1.getChildren().addAll(team,activeCreatureView,clickableMoves);
+		BattleViewSinglePlayer.setBottom(player1);
+		
+		
+		
 		BorderPane progressionMenu = new BorderPane();
 		HBox levelsBox = new HBox(120);
 		Button easyBtn = new Button("Easy");
 		easyBtn.setOnAction(e -> {
+			Scene battleScene = new Scene(BattleViewSinglePlayer, 1280,720);
+			stage.setScene(battleScene);
+			stage.setTitle("pokimon");
+			stage.show();
 		});
 		
 		Button mediumBtn = new Button("Medium");
@@ -462,30 +509,6 @@ public class GameView extends Application implements Observer {
 		levelsBox.setAlignment(Pos.CENTER);
 		progressionMenu.setCenter(levelsBox);
 		
-		BorderPane BattleViewSinglePlayerEasy = new BorderPane();
-		HBox player1 = new HBox(200);
-		
-		VBox team = new VBox(40);
-		Image trainerImage = new Image("/sprites/trainers/lance.png");
-		ImageView trainerView = new ImageView(trainerImage);
-		trainerView.setFitWidth(200);
-		trainerView.setPreserveRatio(true);
-		HBox activeTeam = new HBox(20);
-		Button firstSwapBtn = new Button();
-		firstSwapBtn.setOnAction(e ->{
-			
-		});
-		Button secondSwapBtn = new Button();
-		secondSwapBtn.setOnAction(e ->{
-			
-		});
-		Button thirdSwapBtn = new Button();
-		thirdSwapBtn.setOnAction(e -> {
-			
-		});
-		team.getChildren().addAll(trainerView,activeTeam);
-		
-			
 		
 		singlePlayer.setOnAction(e -> {
 			if (selectedTeam.size() == 3)  {
