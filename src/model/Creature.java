@@ -15,6 +15,7 @@ public class Creature {
 	private Move[] moves;
 	private int counter;
 	private String path;
+	private int basehealth;
 	
 	/**
 	 * 
@@ -32,6 +33,7 @@ public class Creature {
 		this.moves = moveArray;
 		this.counter = 0;
 		this.path = path;
+		this.basehealth = health;
 	}
 	public String getName() {
 		return this.name;
@@ -70,6 +72,9 @@ public class Creature {
 	}
 	public int getHeal() {
 		return this.heal;
+	}
+	public int getBaseHealth() {
+		return this.basehealth;
 	}
 	
 }

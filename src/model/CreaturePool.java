@@ -31,33 +31,40 @@ public class CreaturePool {
     }
     
     public void setMoves() {
-    	Move[] moveArray = {new healMove(40), new attackMove(50), new ShieldMove(25), new healMove(45)};
-    	
-    	CREATURES[0].setMoves(moveArray);
-    	
-    	CREATURES[1].setMoves(moveArray);
-    	
-    	CREATURES[2].setMoves(moveArray);
-    	
-    	CREATURES[3].setMoves(moveArray);
-    	
-    	CREATURES[4].setMoves(moveArray);
-    	
-    	CREATURES[5].setMoves(moveArray);
-    	
-    	CREATURES[6].setMoves(moveArray);
-    	
-    	CREATURES[7].setMoves(moveArray);
-    	
-    	CREATURES[8].setMoves(moveArray);
-    	
-    	CREATURES[9].setMoves(moveArray);
-    	
-    	CREATURES[10].setMoves(moveArray);
-    	
-    	CREATURES[11].setMoves(moveArray);
-    	
+//    	Move[] moveArray = {new healMove(40), new attackMove(50), new ShieldMove(25), new healMove(45)};
+//    	CREATURES[0].setMoves(moveArray);
+//    	
+//    	CREATURES[1].setMoves(moveArray);
+//    	
+//    	CREATURES[2].setMoves(moveArray);
+//    	
+//    	CREATURES[3].setMoves(moveArray);
+//    	
+//    	CREATURES[4].setMoves(moveArray);
+//    	
+//    	CREATURES[5].setMoves(moveArray);
+//    	
+//    	CREATURES[6].setMoves(moveArray);
+//    	
+//    	CREATURES[7].setMoves(moveArray);
+//    	
+//    	CREATURES[8].setMoves(moveArray);
+//    	
+//    	CREATURES[9].setMoves(moveArray);
+//    	
+//    	CREATURES[10].setMoves(moveArray);
+//    	
+//    	CREATURES[11].setMoves(moveArray);
+//    	
 //    	CREATURES[12].setMoves(moveArray);
+    	for (int i = 0; i<12;i++) {
+    		Move Move1 = new attackMove(CREATURES[i].getAttack());
+    		Move Move2 = new ShieldMove(CREATURES[i].getDefense());
+    		Move Move3 = new healMove(CREATURES[i].getHeal());
+    		Move Move4 = new attackMove(CREATURES[i].getAttack());
+    		Move[] moveArray = {Move1,Move2,Move3,Move4};
+    		CREATURES[i].setMoves(moveArray);
+    	}
     }
     
     public List<String> generateRandom() {
