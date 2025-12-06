@@ -109,7 +109,7 @@ public class GameView extends Application implements Observer {
 		
 		BorderPane BattleViewSinglePlayer = new BorderPane();
 		HBox player1 = new HBox(200);
-		
+
 		VBox team = new VBox(40);
 		Image trainerImage = new Image("/sprites/trainers/lance.png");
 		ImageView trainerView = new ImageView(trainerImage);
@@ -131,24 +131,73 @@ public class GameView extends Application implements Observer {
 		activeTeam.getChildren().addAll(firstSwapBtn,secondSwapBtn,thirdSwapBtn);
 		team.getChildren().addAll(trainerView,activeTeam);
 		
-		Image activeCreatureImage = new Image("/sprites/pokemon/pikachu.png");
+		Image activeCreatureImage = new Image(controller.getTrainer1().getActiveCreature().getPath());
 		ImageView activeCreatureView = new ImageView(activeCreatureImage);
+		
+		VBox nameAndHealth = new VBox(20);
+		Label pokeName = new Label(controller.getTrainer1().getActiveCreature.getPath());
+		HBox healthAndLabel = new HBox(20);
+		Label healthLabel = new Label("Health: ");
+		Label health = new Label(Integer.toString(controller.getTrainer1().getActiveCreature().getPath()));
+		healthAndLabel.getChildren().addAll(healthLabel, health);
+		nameAndHealth.getChildren().addAll(pokeName, healthAndLabel);
+		
 		
 		VBox clickableMoves = new VBox(20);
 		HBox topRowMoves = new HBox(20);
 		HBox botRowMoves = new HBox(20);
 		Button move1 = new Button("Move1");
+		move1.setOnAction(e->{
+			
+		});
 		Button move2 = new Button("Move2");
+		move2.setOnAction(e->{
+			
+		});
 		Button move3 = new Button("Move3");
+		move3.setOnAction(e->{
+			
+		});
 		Button move4 = new Button("Move4");
+		move4.setOnAction(e->{
+			
+		});
+
 		topRowMoves.getChildren().addAll(move1, move2);
 		botRowMoves.getChildren().addAll(move3,move4);
 		clickableMoves.getChildren().addAll(topRowMoves,botRowMoves);
 		
-		player1.getChildren().addAll(team,activeCreatureView,clickableMoves);
+		player1.getChildren().addAll(team,activeCreatureView, nameAndHealth, clickableMoves);
+		
+		HBox player2 = new HBox(200);
+		
+		VBox nameAndHealth2 = new VBox(20);
+		Label pokeName2 = new Label(controller.getTrainer3().getActiveCreature.getPath());
+		HBox healthAndLabel2 = new HBox(20);
+		Label healthLabel2 = new Label("Health: ");
+		Label health2 = new Label(Integer.toString(controller.getTrainer3().getActiveCreature().getPath()));
+		healthAndLabel.getChildren().addAll(healthLabel2, health2);
+		nameAndHealth.getChildren().addAll(pokeName2, healthAndLabel2);
+		
+		Image activeCreatureImage2 = new Image(controller.getTrainer3().getActiveCreature().getPath());
+		ImageView activeCreatureView2 = new ImageView(activeCreatureImage2);
+		
+		VBox team2 = new VBox(20);
+		Image trainerImage2 = new Image("/sprites/trainers/soa.png");
+		ImageView trainerView2 = new ImageView(trainerImage2);
+		HBox activeTeam2 = new HBox(20);
+		Image activePokemon4 = new Image("/sprites/trainers/soa.png");
+		ImageView ap4 = new ImageView(trainerImage2);
+		Image activePokemon5 = new Image("/sprites/trainers/soa.png");
+		ImageView ap5 = new ImageView(trainerImage2);
+		Image activePokemon6 = new Image("/sprites/trainers/soa.png");
+		ImageView ap6 = new ImageView(trainerImage2);
+		activeTeam2.getChildren().addAll(ap4,ap5,ap6);
+		team2.getChildren().addAll(trainerView2,activeTeam2);
+		player2.getChildren().addAll(nameAndHealth2,activeCreatureView2,team2);
+		
 		BattleViewSinglePlayer.setBottom(player1);
-		
-		
+		BattleViewSinglePlayer.setTop(player2);
 		
 		BorderPane progressionMenu = new BorderPane();
 		HBox levelsBox = new HBox(120);

@@ -31,32 +31,54 @@ public class CreaturePool {
     }
     
     public void setMoves() {
-    	Move[] moveArray = {new healMove(40), new attackMove(50), new ShieldMove(25), new healMove(45)};
-    	
-    	CREATURES[0].setMoves(moveArray);
-    	
-    	CREATURES[1].setMoves(moveArray);
-    	
-    	CREATURES[2].setMoves(moveArray);
-    	
-    	CREATURES[3].setMoves(moveArray);
-    	
-    	CREATURES[4].setMoves(moveArray);
-    	
-    	CREATURES[5].setMoves(moveArray);
-    	
-    	CREATURES[6].setMoves(moveArray);
-    	
-    	CREATURES[7].setMoves(moveArray);
-    	
-    	CREATURES[8].setMoves(moveArray);
-    	
-    	CREATURES[9].setMoves(moveArray);
-    	
-    	CREATURES[10].setMoves(moveArray);
-    	
-    	CREATURES[11].setMoves(moveArray);
-    	
+//    	Move[] moveArray = {new healMove(40), new attackMove(50), new ShieldMove(25), new healMove(45)};
+//    	CREATURES[0].setMoves(moveArray);
+//    	
+//    	CREATURES[1].setMoves(moveArray);
+//    	
+//    	CREATURES[2].setMoves(moveArray);
+//    	
+//    	CREATURES[3].setMoves(moveArray);
+//    	
+//    	CREATURES[4].setMoves(moveArray);
+//    	
+//    	CREATURES[5].setMoves(moveArray);
+//    	
+//    	CREATURES[6].setMoves(moveArray);
+//    	
+//    	CREATURES[7].setMoves(moveArray);
+//    	
+//    	CREATURES[8].setMoves(moveArray);
+//    	
+//    	CREATURES[9].setMoves(moveArray);
+//    	
+//    	CREATURES[10].setMoves(moveArray);
+//    	
+//    	CREATURES[11].setMoves(moveArray);
+//    	
+//    	CREATURES[12].setMoves(moveArray);
+        
+        // ---------------- Safwan: Updated to use correct constructors (String name, int amount) ----------------
+        // Your Move classes no longer support attackMove(int), healMove(int), ShieldMove(int)
+        // So this loop was updated to match your CURRENT Move constructors.
+        for (int i = 0; i < 12; i++) {
+
+            Creature c = CREATURES[i];
+
+            // Safwan: Added names for each move because your Move system requires a name parameter
+            Move Move1 = new attackMove(c.getName() + " Attack 1", c.getAttack());
+            Move Move2 = new ShieldMove(c.getName() + " Shield", c.getDefense());
+
+            // Safwan: Creature has no getHeal() stat, so a reasonable heal value (30) is used for all
+            Move Move3 = new healMove(c.getName() + " Heal", 30);
+
+            Move Move4 = new attackMove(c.getName() + " Attack 2", c.getAttack());
+
+            Move[] moveArray = { Move1, Move2, Move3, Move4 };
+
+            c.setMoves(moveArray);
+        }
+        // ---------------------------------------------------------------------------------------------------------
     }
     
     public List<String> generateRandom() {
