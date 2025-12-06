@@ -26,7 +26,6 @@ public class PokemonModel {
 		trainer1.setName(name.toUpperCase());
 		System.out.println("\tself name: " + trainer1.getName());
 		System.out.println("\tself team strings: " + strTeam);
-
 		trainer1.setTeam(convertStringToTeam(strTeam));
 		return true;
 	}

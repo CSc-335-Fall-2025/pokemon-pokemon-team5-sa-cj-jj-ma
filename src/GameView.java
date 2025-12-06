@@ -41,6 +41,12 @@ public class GameView extends Application implements Observer {
 	public void start(Stage stage) throws Exception {
 		model = new PokemonModel();
 		controller = new PokemonController(model);
+		controller.createComputerTeam();
+		List<String> initialList = new ArrayList<>();
+		initialList.add("pikachu");
+		initialList.add("pikachu");
+		initialList.add("pikachu");
+		controller.createSelfTeam("Ashe", initialList);
 		
 		BorderPane MainMenu = new BorderPane();
 		HBox buttonBox = new HBox(20);
@@ -109,7 +115,7 @@ public class GameView extends Application implements Observer {
 		
 		BorderPane BattleViewSinglePlayer = new BorderPane();
 		HBox player1 = new HBox(200);
-
+		
 		VBox team = new VBox(40);
 		Image trainerImage = new Image("/sprites/trainers/lance.png");
 		ImageView trainerView = new ImageView(trainerImage);
@@ -131,43 +137,29 @@ public class GameView extends Application implements Observer {
 		activeTeam.getChildren().addAll(firstSwapBtn,secondSwapBtn,thirdSwapBtn);
 		team.getChildren().addAll(trainerView,activeTeam);
 		
-		Image activeCreatureImage = new Image(controller.getTrainer1().getActiveCreature().getPath());
+		Image activeCreatureImage = new Image("/sprites/pokemon/pikachu.png");
 		ImageView activeCreatureView = new ImageView(activeCreatureImage);
 		
-		VBox nameAndHealth = new VBox(20);
-		Label pokeName = new Label(controller.getTrainer1().getActiveCreature().getPath());
-		HBox healthAndLabel = new HBox(20);
-		Label healthLabel = new Label("Health: ");
-		Label health = new Label(Integer.toString(controller.getTrainer1().getActiveCreature().getHealth()));
-		healthAndLabel.getChildren().addAll(healthLabel, health);
-		nameAndHealth.getChildren().addAll(pokeName, healthAndLabel);
-		
+		VBox nameAndHealth1 = new VBox(20);
+		Label pokeName1 = new Label(controller.getTrainer3().getActiveCreature().getPath());
+		HBox healthAndLabel1 = new HBox(20);
+		Label healthLabel1 = new Label("Health: ");
+		Label health1 = new Label(Integer.toString(controller.getTrainer3().getActiveCreature().getHealth()));
+		healthAndLabel1.getChildren().addAll(healthLabel1, health1);
+		nameAndHealth1.getChildren().addAll(pokeName1, healthAndLabel1);
 		
 		VBox clickableMoves = new VBox(20);
 		HBox topRowMoves = new HBox(20);
 		HBox botRowMoves = new HBox(20);
 		Button move1 = new Button("Move1");
-		move1.setOnAction(e->{
-			
-		});
 		Button move2 = new Button("Move2");
-		move2.setOnAction(e->{
-			
-		});
 		Button move3 = new Button("Move3");
-		move3.setOnAction(e->{
-			
-		});
 		Button move4 = new Button("Move4");
-		move4.setOnAction(e->{
-			
-		});
-
 		topRowMoves.getChildren().addAll(move1, move2);
 		botRowMoves.getChildren().addAll(move3,move4);
 		clickableMoves.getChildren().addAll(topRowMoves,botRowMoves);
 		
-		player1.getChildren().addAll(team,activeCreatureView, nameAndHealth, clickableMoves);
+		player1.getChildren().addAll(team,activeCreatureView, nameAndHealth1, clickableMoves);
 		
 		HBox player2 = new HBox(200);
 		
@@ -176,8 +168,8 @@ public class GameView extends Application implements Observer {
 		HBox healthAndLabel2 = new HBox(20);
 		Label healthLabel2 = new Label("Health: ");
 		Label health2 = new Label(Integer.toString(controller.getTrainer3().getActiveCreature().getHealth()));
-		healthAndLabel.getChildren().addAll(healthLabel2, health2);
-		nameAndHealth.getChildren().addAll(pokeName2, healthAndLabel2);
+		healthAndLabel2.getChildren().addAll(healthLabel2, health2);
+		nameAndHealth2.getChildren().addAll(pokeName2, healthAndLabel2);
 		
 		Image activeCreatureImage2 = new Image(controller.getTrainer3().getActiveCreature().getPath());
 		ImageView activeCreatureView2 = new ImageView(activeCreatureImage2);
