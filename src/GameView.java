@@ -135,10 +135,10 @@ public class GameView extends Application implements Observer {
 		ImageView activeCreatureView = new ImageView(activeCreatureImage);
 		
 		VBox nameAndHealth = new VBox(20);
-		Label pokeName = new Label(controller.getTrainer1().getActiveCreature.getPath());
+		Label pokeName = new Label(controller.getTrainer1().getActiveCreature().getPath());
 		HBox healthAndLabel = new HBox(20);
 		Label healthLabel = new Label("Health: ");
-		Label health = new Label(Integer.toString(controller.getTrainer1().getActiveCreature().getPath()));
+		Label health = new Label(Integer.toString(controller.getTrainer1().getActiveCreature().getHealth()));
 		healthAndLabel.getChildren().addAll(healthLabel, health);
 		nameAndHealth.getChildren().addAll(pokeName, healthAndLabel);
 		
@@ -172,10 +172,10 @@ public class GameView extends Application implements Observer {
 		HBox player2 = new HBox(200);
 		
 		VBox nameAndHealth2 = new VBox(20);
-		Label pokeName2 = new Label(controller.getTrainer3().getActiveCreature.getPath());
+		Label pokeName2 = new Label(controller.getTrainer3().getActiveCreature().getPath());
 		HBox healthAndLabel2 = new HBox(20);
 		Label healthLabel2 = new Label("Health: ");
-		Label health2 = new Label(Integer.toString(controller.getTrainer3().getActiveCreature().getPath()));
+		Label health2 = new Label(Integer.toString(controller.getTrainer3().getActiveCreature().getHealth()));
 		healthAndLabel.getChildren().addAll(healthLabel2, health2);
 		nameAndHealth.getChildren().addAll(pokeName2, healthAndLabel2);
 		
@@ -266,13 +266,11 @@ public class GameView extends Application implements Observer {
 	}
 	
 	public void initializeGame(String name, List<String> pokemonStrs) {
-//		this.controller = new PokemonController(userInput, "Computer", pokemonStrs, 
-//		CreaturePool pool = new CreaturePool();
-//		List<String> randStrs = new ArrayList<>(pool.generateRandom());
-//		String nameStr = name.orElse("");
-//		controller = new PokemonController(nameStr, "computer", pokemonStrs, randStrs);
+		System.out.println("initializing game\n");
+		controller.createSelfTeam(name, pokemonStrs);
+		controller.createComputerTeam();
 		
-//		controller.addSelfTeam(name, pokemonStrs);
+		
 	}
 	
 	public void initializeBattle() {

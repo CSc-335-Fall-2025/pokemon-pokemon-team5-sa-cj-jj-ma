@@ -9,20 +9,22 @@ import model.Trainer;
 public class PokemonController {
 	private PokemonModel model;
 	private Trainer trainer1;
-	private Trainer[] trainer2;
-	private Trainer[] trainer3;
+	private Trainer trainer2;
+	private Trainer trainer3;
 	
 	public PokemonController(PokemonModel model) {
 		this.model = new PokemonModel();
 		this.trainer1 = new Trainer();
+		this.trainer2 = new Trainer();
+		this.trainer3 = new Trainer();
 	}
 	
 	public boolean createSelfTeam(String name, List<String> creatureStrs) {
+		System.out.println("controller - creating self team");
+		model.initializeSelfTeam(name, creatureStrs);
 		
-		model.initializeSelfTeam(trainer1, name, creatureStrs);
 		
-		
-		return false;
+		return true;
 	}
 	
 //	public boolean createTeammateTeam() {
@@ -30,9 +32,21 @@ public class PokemonController {
 //	}
 	
 	public boolean createComputerTeam() {
-		return false;
+		System.out.println("controller - creating computer team");
+		model.initializeComputerTeam();
+		return true;
 	}
 
+	public Trainer getTrainer1() {
+		return trainer1;
+	}
 	
+	public Trainer getTrainer2() {
+		return trainer2;
+	}
+	
+	public Trainer getTrainer3() {
+		return trainer3;
+	}
 	
 }
