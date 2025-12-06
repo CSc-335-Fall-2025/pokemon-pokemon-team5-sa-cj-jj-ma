@@ -1,92 +1,104 @@
 package model;
 
+import java.util.Random;
+
+/**
+ * Basic Battle Engine
+ *
+ * Updated by Safwan:
+ *   - Removed references to speed, maxHealth, boost systems that don't exist yet
+ *   - Adjusted move execution so it works with current Move subclasses
+ *   - Added safe null checks and faint checks
+ *   - Kept AI very simple so Jett can improve it later
+ *   - Left GUI integration + battle log formatting for Mohammad
+ */
 public class Battle {
 
-    private Trainer player1;
-    private Trainer player2;
-    private Trainer player3;
+    private Trainer player;
+    private Trainer opponent;
+    private Random random = new Random();
 
-    public Battle(Trainer player1, Trainer player2) {
-        this.player1 = player1;
-        this.player2 = player2;
-    }
-    
-    public Battle(Trainer player1, Trainer player2, Trainer player3) {
-        this.player1 = player1;
-        this.player2 = player2;
-        this.player3 = player3;
+    public Battle(Trainer player, Trainer opponent) {
+        this.player = player;
+        this.opponent = opponent;
     }
 
     /**
-     * Runs one turn of combat.
-     * Simple rule:
-     *  damage = attacker.attack - defender.defense
-     * if damage < 1, set to 1.
+     * Executes ONE turn of battle.
+     * - Player always attacks first for now (speed not implemented)
+     * - Jett will expand this later.
      */
-    public String takeTurn() {
+    public String takeTurn(Move playerMove) {
 
-        Creature p = player1.getActiveCreature();
-        Creature a = player2.getActiveCreature();
+        Creature p = player.getActiveCreature();
+        Creature o = opponent.getActiveCreature();
 
-        boolean playerFirst = p.getAttack() >= a.getAttack();
+        Move aiMove = chooseAIMove(o);
 
-        // FIRST ATTACKER
-        if (playerFirst) {
+        StringBuilder log = new StringBuilder();
 
-            attack(p, a);
-            if (a.getHealth() <= 0) {
-                player2.autoSwap();
-                return player1.getName() + "'s " + p.getName() + " knocked out " + a.getName();
-            }
+        // PLAYER MOVE
+        log.append(player.getName())
+           .append("'s ")
+           .append(p.getName())
+           .append(" used ")
+           .append(playerMove.getName())
+           .append("!\n");
 
-            // player2 attacks second
-            attack(a, p);
-            if (p.getHealth() <= 0) {
-                player1.autoSwap();
-                return player2.getName() + "'s " + a.getName() + " knocked out " + p.getName();
-            }
+        playerMove.doMove(p, o);
 
-        } else {
-
-            attack(a, p);
-            if (p.getHealth() <= 0) {
-                player1.autoSwap();
-                return player2.getName() + "'s " + a.getName() + " knocked out " + p.getName();
-            }
-
-            attack(p, a);
-            if (a.getHealth() <= 0) {
-                player2.autoSwap();
-                return player1.getName() + "'s " + p.getName() + " knocked out " + a.getName();
-            }
+        if (o.isFainted()) {
+            log.append(opponent.getName())
+               .append("'s ")
+               .append(o.getName())
+               .append(" fainted!\n");
+            opponent.autoSwap();
+            return log.toString();
         }
 
-        return "Both creatures attacked!";
+        // AI MOVE
+        log.append(opponent.getName())
+           .append("'s ")
+           .append(o.getName())
+           .append(" used ")
+           .append(aiMove.getName())
+           .append("!\n");
+
+        aiMove.doMove(o, p);
+
+        if (p.isFainted()) {
+            log.append(player.getName())
+               .append("'s ")
+               .append(p.getName())
+               .append(" fainted!\n");
+            player.autoSwap();
+        }
+
+        return log.toString();
     }
 
     /**
-     * Damage formula for Sprint 1.
+     * Very basic AI:
+     * - Uses first attackMove if it has one
+     * - Otherwise random move
+     *
+     * Jett will upgrade this in Sprint 4.
      */
-    private void attack(Creature attacker, Creature defender) {
-        int damage = attacker.getAttack() - defender.getDefense();
-        if (damage < 1) damage = 1;
-
-        defender.setHealth(defender.getHealth() - damage);
+    private Move chooseAIMove(Creature c) {
+        for (Move m : c.getMoves()) {
+            if (m instanceof attackMove) return m;
+        }
+        Move[] moves = c.getMoves();
+        return moves[random.nextInt(moves.length)];
     }
 
-    /**
-     * Returns true when a trainer has no living creatures left.
-     */
     public boolean isBattleOver() {
-        return !player1.hasLivingCreature() || !player2.hasLivingCreature();
+        return !player.hasLivingCreature() || !opponent.hasLivingCreature();
     }
 
-    /**
-     * Returns the winner if the battle has ended.
-     */
     public Trainer getWinner() {
-        if (!player1.hasLivingCreature()) return player2;
-        if (!player2.hasLivingCreature()) return player1;
+        if (!player.hasLivingCreature()) return opponent;
+        if (!opponent.hasLivingCreature()) return player;
         return null;
     }
 }

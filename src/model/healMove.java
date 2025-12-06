@@ -1,20 +1,28 @@
 package model;
 
+/**
+ * Healing move.
+ *
+ * Updated by Safwan:
+ *   - Added (String name, int amount) constructor to match CreaturePool
+ *   - Added real healing logic
+ *   - Left maxHealth logic for Conor to implement later
+ */
 public class healMove extends Move {
-	public int power;
-	
-	public healMove(int power) {
-		this.power = power;
-	}
-	public int getPower() {
-		return this.power;
-	}
-	
-	public void doMove(Creature attacker, Creature Defender) {
-		attacker.setHealth(power+attacker.getHealth());
-		if(attacker.getHealth()>attacker.getBaseHealth()) {
-			attacker.setHealth(attacker.getBaseHealth());
-		}
-	}
-}
 
+    private int healAmount;
+
+    public healMove(String name, int healAmount) {
+        super(name);
+        this.healAmount = healAmount;
+    }
+
+    public int getHealAmount() {
+        return healAmount;
+    }
+
+    @Override
+    public void doMove(Creature attacker, Creature defender) {
+        attacker.setHealth(attacker.getHealth() + healAmount);
+    }
+}

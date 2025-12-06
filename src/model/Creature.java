@@ -76,5 +76,17 @@ public class Creature {
 	public int getBaseHealth() {
 		return this.basehealth;
 	}
+	public boolean isFainted() {
+	    return this.health <= 0;
+	}
+
+	/**
+	 * Added by Safwan:
+	 * Needed for ShieldMove.
+	 */
+	public void setDefense(int newDefense) {
+	    this.defense = newDefense;
+	}
+
 	
 }

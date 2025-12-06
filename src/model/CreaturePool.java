@@ -57,14 +57,28 @@ public class CreaturePool {
 //    	CREATURES[11].setMoves(moveArray);
 //    	
 //    	CREATURES[12].setMoves(moveArray);
-    	for (int i = 0; i<12;i++) {
-    		Move Move1 = new attackMove(CREATURES[i].getAttack());
-    		Move Move2 = new ShieldMove(CREATURES[i].getDefense());
-    		Move Move3 = new healMove(CREATURES[i].getHeal());
-    		Move Move4 = new attackMove(CREATURES[i].getAttack());
-    		Move[] moveArray = {Move1,Move2,Move3,Move4};
-    		CREATURES[i].setMoves(moveArray);
-    	}
+        
+        // ---------------- Safwan: Updated to use correct constructors (String name, int amount) ----------------
+        // Your Move classes no longer support attackMove(int), healMove(int), ShieldMove(int)
+        // So this loop was updated to match your CURRENT Move constructors.
+        for (int i = 0; i < 12; i++) {
+
+            Creature c = CREATURES[i];
+
+            // Safwan: Added names for each move because your Move system requires a name parameter
+            Move Move1 = new attackMove(c.getName() + " Attack 1", c.getAttack());
+            Move Move2 = new ShieldMove(c.getName() + " Shield", c.getDefense());
+
+            // Safwan: Creature has no getHeal() stat, so a reasonable heal value (30) is used for all
+            Move Move3 = new healMove(c.getName() + " Heal", 30);
+
+            Move Move4 = new attackMove(c.getName() + " Attack 2", c.getAttack());
+
+            Move[] moveArray = { Move1, Move2, Move3, Move4 };
+
+            c.setMoves(moveArray);
+        }
+        // ---------------------------------------------------------------------------------------------------------
     }
     
     public List<String> generateRandom() {
