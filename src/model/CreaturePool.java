@@ -21,7 +21,7 @@ public class CreaturePool {
         new Creature("Dratini",     105, 60, 45, 50, new Move[4], "/sprites/pokemon/dratini.png"),
         new Creature("Meowth",      85,  55, 30, 50, new Move[4], "/sprites/pokemon/meowth.png")
     };
-
+    
     /**
      * Returns the full list of all available creatures.
      */

@@ -12,18 +12,33 @@ public class PokemonModel {
 	private CreaturePool pool;
 	
 	public PokemonModel() {
-		this.trainer1 = null;
-		this.trainer2 = null;
-		this.trainer3 = null;
+		this.trainer1 = new Trainer();
+		this.trainer2 = new Trainer();
+		this.trainer3 = new Trainer();
 		this.battle = null;
-		this.pool = null;
+		this.pool = new CreaturePool();
 		
 	}
 	
 	
 	public boolean initializeSelfTeam(String name, List<String> strTeam) {
-		trainer1.setName(name);
+		System.out.println("model - initializing self team");
+		trainer1.setName(name.toUpperCase());
+		System.out.println("\tself name: " + trainer1.getName());
+		System.out.println("\tself team strings: " + strTeam);
+
 		trainer1.setTeam(convertStringToTeam(strTeam));
+		return true;
+	}
+	
+	public boolean initializeComputerTeam() {
+		System.out.println("model - initializing self team");
+		trainer3.setName("COMPUTER");
+		List<String> randTeam = new ArrayList<>(pool.generateRandom());
+		trainer3.setTeam(convertStringToTeam(randTeam));
+		System.out.println("\tcomputer name: " + trainer3.getName());
+		System.out.println("\tcomputer team strings: " + randTeam);
+		return true;
 	}
 	
 	public List<Creature> convertStringToTeam(List<String> strTeam) {
