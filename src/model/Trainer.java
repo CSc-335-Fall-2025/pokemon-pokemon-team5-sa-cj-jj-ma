@@ -34,6 +34,7 @@ public class Trainer {
     
     public void setTeam(List<Creature> creatures) {
         this.team = creatures;
+        this.activeCreature = team.get(activeIndex);
     }
     
     
