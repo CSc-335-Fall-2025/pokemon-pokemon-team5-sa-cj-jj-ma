@@ -296,6 +296,7 @@ public class GameView extends Application implements Observer {
 			if (!playedOnce) {
 				battleScene = new Scene(BattleViewSinglePlayer, 1280,720);
 			}
+			controller.setDifficulty(0);
 			stage.setScene(battleScene);
 			stage.setTitle("pokimon");
 			stage.show();
@@ -304,12 +305,27 @@ public class GameView extends Application implements Observer {
 		
 		Button mediumBtn = new Button("Medium");
 		mediumBtn.setOnAction(e ->{
-		
+			trainerImage2 = new Image("/sprites/trainers/lunick.png");
+			trainerView2.setImage(trainerImage2);
+			if (!playedOnce) {
+				battleScene = new Scene(BattleViewSinglePlayer, 1280,720);
+			}
+			stage.setScene(battleScene);
+			stage.setTitle("pokimon");
+			stage.show();
 		});
 		
 		Button hardBtn = new Button("Hard");
 		hardBtn.setOnAction(e ->{
-			
+			trainerImage2 = new Image("/sprites/trainers/solana.png");
+			trainerView2.setImage(trainerImage2);
+			if (!playedOnce) {
+				battleScene = new Scene(BattleViewSinglePlayer, 1280,720);
+			}
+			controller.setDifficulty(2);
+			stage.setScene(battleScene);
+			stage.setTitle("pokimon");
+			stage.show();
 		});
 		levelsBox.getChildren().addAll(easyBtn, mediumBtn, hardBtn);
 		levelsBox.setAlignment(Pos.CENTER);
@@ -407,9 +423,12 @@ public class GameView extends Application implements Observer {
 		if (controller.isBattleOver()) {
 			System.out.println("Game over");
 			playedOnce = true;
-			stage.setScene(scene);
-			stage.setTitle("Pokemen");
-			stage.show();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Someone Won!");
+			alert.setHeaderText(null);
+			alert.setContentText(controller.getWinner());
+			alert.showAndWait();
+			stage.close();
 		}
 	}
 	
@@ -421,14 +440,6 @@ public class GameView extends Application implements Observer {
 
 		
 		update(model, null);
-		
-	}
-	
-	public void initializeBattle() {
-		
-	}
-	
-	public void initializeProgression() {
 		
 	}
 

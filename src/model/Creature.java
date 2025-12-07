@@ -31,7 +31,7 @@ public class Creature {
 		this.health = health;
 		this.attack = attack;
 		this.defense = defense;
-		this.health = heal;
+		this.heal = heal;
 		this.moves = moveArray;
 		this.counter = 0;
 		this.path = path;
@@ -43,6 +43,9 @@ public class Creature {
 		return this.name;
 	}
 	public int getHealth() {
+		if (this.health<=0) {
+			return 0;
+		}
 		return this.health;
 	}
 	public void setHealth(int newhealth) {

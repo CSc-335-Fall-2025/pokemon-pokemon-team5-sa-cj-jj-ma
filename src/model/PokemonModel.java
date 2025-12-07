@@ -122,5 +122,20 @@ public class PokemonModel extends Observable{
 		return trainer3;
 	}
 	
-	
+	public void setDifficulty(int diff) {
+		if (diff == 0) {
+			for (Creature c : trainer3.getTeam()) {
+				c.setHealth((int) Math.round(c.getBaseHealth()*.8));
+				System.out.println(Math.round(c.getBaseHealth()*.8));
+
+			}
+		} else if (diff == 2) {
+			for (Creature c : trainer3.getTeam()) {
+				c.setHealth((int) Math.round(c.getBaseHealth()*1.2));
+				System.out.println(Math.round(c.getBaseHealth()*1.2));
+			}
+		}
+		setChanged();
+		notifyObservers();
+	}
 }

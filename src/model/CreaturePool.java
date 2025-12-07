@@ -14,10 +14,10 @@ public class CreaturePool {
 
     private static final Creature[] CREATURES = {
   
-        new Creature("Pikachu",      90,  55, 40, 50, new ArrayList<Move>(), "/sprites/pokemon/pikachu.png"),
+        new Creature("Pikachu",      90,  55, 40, 100, new ArrayList<Move>(), "/sprites/pokemon/pikachu.png"),
         new Creature("Bulbasaur",   100, 50, 45, 50, new ArrayList<Move>(), "/sprites/pokemon/bulbasaur.png"),
         new Creature("Charmander",   95,  52, 38, 50, new ArrayList<Move>(), "/sprites/pokemon/charmander.png"),
-        new Creature("Squirtle",    105, 48, 55, 50, new ArrayList<Move>(), "/sprites/pokemon/squirtle.png"),
+        new Creature("Squirtle",    105, 48, 55, 120, new ArrayList<Move>(), "/sprites/pokemon/squirtle.png"),
         new Creature("Jigglypuff",  130, 45, 20, 50, new ArrayList<Move>(), "/sprites/pokemon/jigglypuff.png"),
         new Creature("Yoshi",       115, 50, 35, 50, new ArrayList<Move>(), "/sprites/pokemon/yoshi.png"),
         new Creature("Poliwhirl",   110, 53, 50, 50, new ArrayList<Move>(), "/sprites/pokemon/poliwhirl.png"),

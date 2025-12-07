@@ -100,9 +100,9 @@ public class PokemonController {
     /**
      * Returns the winner if the battle has ended.
      */
-    public Trainer getWinner() {
-        if (!model.getTrainer1().hasLivingCreature()) return model.getTrainer3();
-        if (!model.getTrainer3().hasLivingCreature()) return model.getTrainer1();
+    public String getWinner() {
+        if (!model.getTrainer1().hasLivingCreature()) return "The Computer won :(";
+        if (!model.getTrainer3().hasLivingCreature()) return "You have won!";
         return null;
     }
 
@@ -117,6 +117,11 @@ public class PokemonController {
 	
 	public Trainer getTrainer3() {
 		return model.getTrainer3();
+	}
+	
+	public void setDifficulty(int diff) {
+		model.setDifficulty(diff);
+		System.out.println("GOT HERE");
 	}
 	
 }
