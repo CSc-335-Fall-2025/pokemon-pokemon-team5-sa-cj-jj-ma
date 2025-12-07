@@ -23,17 +23,26 @@ public class PokemonModel extends Observable{
 	}
 	
 	
-	public boolean initializeSelfTeam(String name, List<String> strTeam) {
-		System.out.println("model - initializing self team");
-		trainer1.setName(name.toUpperCase());
+	public boolean initializeTeam(String name, List<String> strTeam, int playerNum) {
+		Trainer currTrainer = null;
+		System.out.println("model - initializing self team for player " + playerNum);
+		if (playerNum == 1) {
+			currTrainer = trainer1;
+		} else if (playerNum == 2) {
+			currTrainer = trainer2;
+		} else {
+			return false;
+		}
+		
+		currTrainer.setName(name.toUpperCase());
 		System.out.println("\tself name: " + trainer1.getName());
 		System.out.println("\tself team strings: " + strTeam);
-		trainer1.setTeam(convertStringToTeam(strTeam));
+		currTrainer.setTeam(convertStringToTeam(strTeam));
 		
-		for (Creature c : trainer1.getTeam()) {
+		for (Creature c : currTrainer.getTeam()) {
 			System.out.println(c);
 		}
-		System.out.println("Active: " + trainer1.getActiveCreature());
+		System.out.println("Active: " + currTrainer.getActiveCreature());
 		
 		setChanged();
 		notifyObservers();

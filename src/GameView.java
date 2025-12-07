@@ -34,9 +34,10 @@ public class GameView extends Application implements Observer {
 	private Scene scene;
 	private BorderPane MainMenu;
 	private Stage stage;
-	
+	private Scene multiplayerPick;
 	private Scene progressionScene;
 	private BorderPane progressionMenu;
+	private Scene localMultiplayerView;
 	
 	private Scene battleScene;
 	private BorderPane BattleViewSinglePlayer;
@@ -48,6 +49,9 @@ public class GameView extends Application implements Observer {
 	private HBox healthAndLabel1;
 	private Label healthLabel1;
 	private Label health1;
+	private List<String> pokemonStrs;
+	private List<String> secondSelected = new ArrayList<>();
+	private List<String> selectedTeam = new ArrayList();
 	
 	private VBox clickableMoves;
 	private HBox topRowMoves;
@@ -56,6 +60,8 @@ public class GameView extends Application implements Observer {
 	private Button move2;
 	private Button move3;
 	private Button move4;
+	private TextInputDialog namePrompt;
+	private TextInputDialog namePrompt2;
 	
 	private VBox team2;
 	private Image trainerImage2;
@@ -81,6 +87,7 @@ public class GameView extends Application implements Observer {
 	private Image swapBut2; 
 	private ImageView swapButView2;
 	private Image swapBut3;
+	private String input1;
 	private ImageView swapButView3;
 
 	private boolean playedOnce;
@@ -101,20 +108,20 @@ public class GameView extends Application implements Observer {
 		this.stage = stage;
 		HBox buttonBox = new HBox(20);
 		Button singlePlayer = new Button("Single Player");
-		Button multiPlayerVersus = new Button("Multiplayer Versus");
-		Button multiPlayerTogether = new Button("Play Together Versus CPU");
+		Button localMultiplayer = new Button("Local Multiplayer");
+		Button multiplayerOnline = new Button("Multiplayer Online");
 		buttonBox.getChildren().add(singlePlayer);
-		buttonBox.getChildren().add(multiPlayerVersus);
-		buttonBox.getChildren().add(multiPlayerTogether);
+		buttonBox.getChildren().add(localMultiplayer);
+		buttonBox.getChildren().add(multiplayerOnline);
 		buttonBox.setAlignment(Pos.CENTER);
 		
 		MainMenu.setTop(buttonBox);
 		
-		List<String> selectedTeam = new ArrayList<>();
+		selectedTeam = new ArrayList<>();
 	
 		HBox pokemonPool = new HBox(15);
 		
-		List<String> pokemonStrs = new ArrayList<>(Arrays.asList("pikachu", "charmander", "squirtle", "bulbasaur", "jigglypuff", "yoshi", "poliwhirl", "gloom", "psyduck", "goldeen", "dratini", "meowth"));
+		pokemonStrs = new ArrayList<>(Arrays.asList("pikachu", "charmander", "squirtle", "bulbasaur", "jigglypuff", "yoshi", "poliwhirl", "gloom", "psyduck", "goldeen", "dratini", "meowth"));
 			
 		
 		for (String poke : pokemonStrs) {
@@ -156,16 +163,6 @@ public class GameView extends Application implements Observer {
 		
 		pokemonPool.setAlignment(Pos.CENTER);
 		MainMenu.setCenter(pokemonPool);
-
-		VBox acceptBox = new VBox(10);
-		Label acceptLabel = new Label("Select this team?");
-		Button acceptBtn = new Button("Accept");
-		acceptBox.getChildren().add(acceptLabel);
-		acceptBox.getChildren().add(acceptBtn);
-		acceptBox.setAlignment(Pos.CENTER);
-		MainMenu.setBottom(acceptBox);
-		
-		String imgPath = "";
 		
 		BattleViewSinglePlayer = new BorderPane();
 		HBox player1 = new HBox(200);
@@ -336,7 +333,7 @@ public class GameView extends Application implements Observer {
 		
 		singlePlayer.setOnAction(e -> {
 			if (selectedTeam.size() == 3)  {
-				TextInputDialog namePrompt = new TextInputDialog("Name");
+				namePrompt = new TextInputDialog("Name");
 				
 				namePrompt.setTitle("Name prompt");
 				namePrompt.setHeaderText("Enter your name");
@@ -345,6 +342,7 @@ public class GameView extends Application implements Observer {
 				Optional<String> input = namePrompt.showAndWait();
 				if (input.isPresent()) {
 					String inputStr = input.get();
+					input1 = inputStr;
 					initializeGame(inputStr, selectedTeam);
 					progressionScene = new Scene(progressionMenu, 1280, 720);
 					stage.setScene(progressionScene);
@@ -364,6 +362,38 @@ public class GameView extends Application implements Observer {
 				alert.show();
 			}
 			
+		});
+		
+		localMultiplayer.setOnAction(e->{
+			if (selectedTeam.size() == 3)  {
+				namePrompt = new TextInputDialog("Name");
+				
+				namePrompt.setTitle("Name prompt");
+				namePrompt.setHeaderText("Enter your name");
+				namePrompt.setContentText("Enter your name");
+				
+				Optional<String> input = namePrompt.showAndWait();
+				if (input.isPresent()) {
+					String inputStr = input.get();
+					input1 = inputStr;
+					//initializeGame(inputStr, selectedTeam);
+					multiplayerPick = new Scene(secondPlayerPicking(), 1280, 720);
+					stage.setScene(multiplayerPick);
+					stage.setTitle("Second Player Picks");
+					stage.show();
+
+				} else {
+					
+				}
+			
+			}
+			else {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Member");
+				alert.setHeaderText("Too little pokemone");
+				alert.setContentText("Please select 3 pokemone");
+				alert.show();
+			}
 		});
 		
 		scene = new Scene(MainMenu, 1280,720);
@@ -431,7 +461,7 @@ public class GameView extends Application implements Observer {
 	
 	public void initializeGame(String name, List<String> pokemonStrs) {
 		System.out.println("initializing game\n");
-		controller.createSelfTeam(name, pokemonStrs);
+		controller.createTeam(name, pokemonStrs, 1);
 		controller.createComputerTeam(pokemonStrs);
 		System.out.println("Path HELPPPPP: " + controller.getTrainer1().getName());
 
@@ -439,5 +469,98 @@ public class GameView extends Application implements Observer {
 		update(model, null);
 		
 	}
+	
+	
+	
+	public BorderPane secondPlayerPicking() {
+		BorderPane rtrn = new BorderPane();
+		HBox pokemonPool = new HBox(15);
+		String secondInput = "Player 2";
+					
+		for (String poke : pokemonStrs) {
+				Button button = new Button();
+				Image image = new Image("/sprites/pokemon/" + poke + ".png");
+				ImageView imageView = new ImageView(image);
+				imageView.setFitHeight(70);
+				imageView.setFitWidth(70);
+			
+	//			imageView.setPreserveRatio(true);
+				button.setGraphic(imageView);
+				button.setStyle("-fx-background-color: transparent;");
+				
+				button.setOnAction(e -> {
+					if (secondSelected.contains(poke)) {
+						secondSelected.remove(poke);
+						imageView.setFitHeight(70);
+						imageView.setFitWidth(70);
+					} else {
+						if (secondSelected.size() < 3) {
+							secondSelected.add(poke);
+							imageView.setFitHeight(80);
+							imageView.setFitWidth(80);
+						} else {
+							Alert alert = new Alert(AlertType.INFORMATION);
+							alert.setTitle("Too many Pokemon!");
+							alert.setHeaderText("Too many Pokemon");
+							alert.setContentText("Deselect a Pokemon before adding a new one");
+							alert.show();
+						}
+						
+					}
+				});
+			
+			pokemonPool.getChildren().add(button);
+		}
+		pokemonPool.setAlignment(Pos.CENTER);
+		rtrn.setCenter(pokemonPool);
+		
+		Label label = new Label("Second player: Select your team.");
+		label.setAlignment(Pos.CENTER);
+		rtrn.setTop(label);
+		
+		Button acceptButton = new Button("Accept");
+		acceptButton.setOnAction(e->{
+			if (secondSelected.size() !=3) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Too little Pokemon");
+				alert.setHeaderText("To little pokemon");
+				alert.setContentText("Please select more pokemon before accepting");
+				alert.showAndWait();
+			} else {
+				namePrompt2 = new TextInputDialog("Name");
+				
+				namePrompt2.setTitle("Name prompt");
+				namePrompt2.setHeaderText("Enter your name");
+				namePrompt2.setContentText("Enter your name");
+				
+				Optional<String> input = namePrompt2.showAndWait();
+				if (input.isPresent()) {
+					//localMultiplayerView = new Scene(getLocalMultiplayerBattleView(),1280,720);
+					initializeLocalMultiplayer(input1,selectedTeam,input.get(), secondSelected);
+					stage.setScene(localMultiplayerView);
+					stage.setTitle("Battle!");
+					stage.show();
+				}
+			}
+		});
+		
+		rtrn.setBottom(acceptButton);
+		rtrn.setAlignment(acceptButton, Pos.CENTER);
+		rtrn.setAlignment(label, Pos.CENTER);
+		return rtrn;
+	}
+	
+	public void initializeLocalMultiplayer(String name, List<String> pokemonStrs, String name2, List<String> pokemonStrs2) {
+		System.out.println("initializing multiplayer game\n");
+		controller.createTeam(name, pokemonStrs, 1);
+		controller.createTeam(name2, pokemonStrs2, 2);
+		System.out.println("Path HELPPPPP: " + controller.getTrainer1().getName());
 
+		
+		update(model, null);
+	}
+	
+//	public BorderPane getLocalMultiplayerBattleView() {
+//		
+//	}
 }

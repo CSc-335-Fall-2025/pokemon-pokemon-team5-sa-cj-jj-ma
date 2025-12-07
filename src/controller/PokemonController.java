@@ -17,9 +17,9 @@ public class PokemonController {
 
 	}
 	
-	public boolean createSelfTeam(String name, List<String> creatureStrs) {
+	public boolean createTeam(String name, List<String> creatureStrs, int playerNum) {
 		System.out.println("controller - creating self team");
-		model.initializeSelfTeam(name, creatureStrs);
+		model.initializeTeam(name, creatureStrs, playerNum);
 		return true;
 	}
 	
