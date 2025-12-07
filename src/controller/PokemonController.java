@@ -17,9 +17,9 @@ public class PokemonController {
 
 	}
 	
-	public boolean createSelfTeam(String name, List<String> creatureStrs) {
+	public boolean createTeam(String name, List<String> creatureStrs, int playerNum) {
 		System.out.println("controller - creating self team");
-		model.initializeSelfTeam(name, creatureStrs);
+		model.initializeTeam(name, creatureStrs, playerNum);
 		return true;
 	}
 	
@@ -39,23 +39,31 @@ public class PokemonController {
      *  damage = attacker.attack - defender.defense
      * if damage < 1, set to 1.
      */
-    public void playerTurn(String moveStr) {
+    public void playerTurn(Trainer attackingTrainer, String moveStr) {
     	System.out.println("player turn: " + moveStr);
-        Creature attacker = model.getTrainer1().getActiveCreature();
-        Creature defender = model.getTrainer3().getActiveCreature();
+
+    	Trainer defendingTrainer = null;
+    	if (attackingTrainer.equals(model.getTrainer1()) ) {
+    		defendingTrainer = model.getTrainer2();
+    	} else if (attackingTrainer.equals(model.getTrainer2()) ) {
+        	defendingTrainer = model.getTrainer1();
+    	}
+    	
+        Creature attacker = attackingTrainer.getActiveCreature();
+        Creature defender = defendingTrainer.getActiveCreature();
 
         doMove(attacker, defender, moveStr.toLowerCase());
         
         if (defender.getHealth() <= 0) {
-            model.getTrainer3().autoSwap();
+            defendingTrainer.autoSwap();
             System.out.println(model.getTrainer1() + "'s " + attacker.getName() + " knocked out " + defender.getName());
         }
-
     }
 
+    
 	public void computerTurn() {
 		
-        Creature attacker = model.getTrainer3().getActiveCreature();
+        Creature attacker = model.getTrainer2().getActiveCreature();
         Creature defender = model.getTrainer1().getActiveCreature();
         
 		Random rand = new Random();
@@ -68,7 +76,7 @@ public class PokemonController {
 		
         if (defender.isCreatureFainted()) {
             model.getTrainer1().autoSwap();
-            System.out.println(model.getTrainer3() + "'s " + attacker.getName() + " knocked out " + defender.getName());
+            System.out.println(model.getTrainer2() + "'s " + attacker.getName() + " knocked out " + defender.getName());
         }
 	}
 
@@ -154,7 +162,7 @@ public class PokemonController {
      * Returns true when a trainer has no living creatures left.
      */
     public boolean isBattleOver() {
-        return !model.getTrainer1().hasLivingCreature() || !model.getTrainer3().hasLivingCreature();
+        return !model.getTrainer1().hasLivingCreature() || !model.getTrainer2().hasLivingCreature();
     }
 
     /**
@@ -162,7 +170,7 @@ public class PokemonController {
      */
     public String getWinner() {
         if (!model.getTrainer1().hasLivingCreature()) return "The Computer won :(";
-        if (!model.getTrainer3().hasLivingCreature()) return "You have won!";
+        if (!model.getTrainer2().hasLivingCreature()) return "You have won!";
         return null;
     }
 
@@ -175,9 +183,9 @@ public class PokemonController {
 		return model.getTrainer2();
 	}
 	
-	public Trainer getTrainer3() {
-		return model.getTrainer3();
-	}
+//	public Trainer getTrainer3() {
+//		return model.getTrainer3();
+//	}
 	
 	public void setDifficulty(int diff) {
 		model.setDifficulty(diff);

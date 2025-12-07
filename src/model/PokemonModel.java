@@ -15,7 +15,7 @@ public class PokemonModel extends Observable{
 	public PokemonModel() {
 		this.trainer1 = new Trainer();
 		this.trainer2 = new Trainer();
-		this.trainer3 = new Trainer();
+//		this.trainer3 = new Trainer();
 //		this.battle = null;
 		this.pool = new CreaturePool();
 		pool.setMoves();
@@ -23,17 +23,26 @@ public class PokemonModel extends Observable{
 	}
 	
 	
-	public boolean initializeSelfTeam(String name, List<String> strTeam) {
-		System.out.println("model - initializing self team");
-		trainer1.setName(name.toUpperCase());
+	public boolean initializeTeam(String name, List<String> strTeam, int playerNum) {
+		Trainer currTrainer = null;
+		System.out.println("model - initializing self team for player " + playerNum);
+		if (playerNum == 1) {
+			currTrainer = trainer1;
+		} else if (playerNum == 2) {
+			currTrainer = trainer2;
+		} else {
+			return false;
+		}
+		
+		currTrainer.setName(name.toUpperCase());
 		System.out.println("\tself name: " + trainer1.getName());
 		System.out.println("\tself team strings: " + strTeam);
-		trainer1.setTeam(convertStringToTeam(strTeam));
+		currTrainer.setTeam(convertStringToTeam(strTeam));
 		
-		for (Creature c : trainer1.getTeam()) {
+		for (Creature c : currTrainer.getTeam()) {
 			System.out.println(c);
 		}
-		System.out.println("Active: " + trainer1.getActiveCreature());
+		System.out.println("Active: " + currTrainer.getActiveCreature());
 		
 		setChanged();
 		notifyObservers();
@@ -44,14 +53,14 @@ public class PokemonModel extends Observable{
 		System.out.println("model - initializing computer team");
 		trainer3.setName("COMPUTER");
 		List<String> randTeam = new ArrayList<>(pool.generateRandom(pokeStrs));
-		trainer3.setTeam(convertStringToTeam(randTeam));
-		for (Creature c : trainer3.getTeam()) {
+		trainer2.setTeam(convertStringToTeam(randTeam));
+		for (Creature c : trainer2.getTeam()) {
 			System.out.println(c);
 		}
-		System.out.println("\tcomputer name: " + trainer3.getName());
+		System.out.println("\tcomputer name: " + trainer2.getName());
 		System.out.println("\tcomputer team strings: " + randTeam);
 		
-		System.out.println("Active: " + trainer3.getActiveCreature());
+		System.out.println("Active: " + trainer2.getActiveCreature());
 
 		setChanged();
 		notifyObservers();
@@ -118,17 +127,17 @@ public class PokemonModel extends Observable{
 		return trainer2;
 	}
 	
-	public Trainer getTrainer3() {
-		return trainer3;
-	}
+//	public Trainer getTrainer3() {
+//		return trainer3;
+//	}
 	
 	public boolean setDifficulty(int diff) {
 		if (diff == 0) {
-			for (Creature c : trainer3.getTeam()) {
+			for (Creature c : trainer2.getTeam()) {
 				c.setHealth((int) Math.round(c.getHealth()*.8));
 			}
 		} else if (diff == 2) {
-			for (Creature c : trainer3.getTeam()) {
+			for (Creature c : trainer2.getTeam()) {
 				c.setHealth((int) Math.round(c.getHealth()*1.2));
 			}
 		}
