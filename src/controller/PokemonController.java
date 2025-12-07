@@ -169,8 +169,8 @@ public class PokemonController {
      * Returns the winner if the battle has ended.
      */
     public String getWinner() {
-        if (!model.getTrainer1().hasLivingCreature()) return "The Computer won :(";
-        if (!model.getTrainer2().hasLivingCreature()) return "You have won!";
+        if (!model.getTrainer1().hasLivingCreature()) return model.getTrainer2().getName()+" won!";
+        if (!model.getTrainer2().hasLivingCreature()) return model.getTrainer1().getName()+" won!";
         return null;
     }
 

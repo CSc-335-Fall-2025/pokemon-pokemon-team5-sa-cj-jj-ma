@@ -491,7 +491,7 @@ public class GameView extends Application implements Observer {
 		System.out.println("initializing game\n");
 		controller.createTeam(name, pokemonStrs, 1);
 		controller.createComputerTeam(pokemonStrs);
-		System.out.println("Path HELPPPPP: " + controller.getTrainer1().getName());
+//		System.out.println("Path HELPPPPP: " + controller.getTrainer1().getName());
 
 		
 		update(model, null);
@@ -523,13 +523,21 @@ public class GameView extends Application implements Observer {
 						imageView.setFitWidth(70);
 					} else {
 						if (secondSelected.size() < 3) {
-							secondSelected.add(poke);
-							imageView.setFitHeight(80);
-							imageView.setFitWidth(80);
+							if(selectedTeam.contains(poke)) {
+								Alert alertt = new Alert(AlertType.INFORMATION);
+								alertt.setTitle("Same pokemon as player 1");
+								alertt.setHeaderText("Same Pokemon as player 1");
+								alertt.setContentText("Please choose a different pokemon");
+								alertt.showAndWait();
+							} else {
+								secondSelected.add(poke);
+								imageView.setFitHeight(80);
+								imageView.setFitWidth(80);
+							}
 						} else {
 							Alert alert = new Alert(AlertType.INFORMATION);
 							alert.setTitle("Too many Pokemon!");
-							alert.setHeaderText("Too many Pokemon");
+							alert.setHeaderText("Too many Pokemon!");
 							alert.setContentText("Deselect a Pokemon before adding a new one");
 							alert.show();
 						}
@@ -548,7 +556,7 @@ public class GameView extends Application implements Observer {
 		
 		Button acceptButton = new Button("Accept");
 		acceptButton.setOnAction(e->{
-			if (secondSelected.size() !=3) {
+			if (secondSelected.size() <3) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Too little Pokemon");
 				alert.setHeaderText("To little pokemon");
@@ -582,7 +590,7 @@ public class GameView extends Application implements Observer {
 		System.out.println("initializing multiplayer game\n");
 		controller.createTeam(name, pokemonStrs, 1);
 		controller.createTeam(name2, pokemonStrs2, 2);
-		System.out.println("Path HELPPPPP: " + controller.getTrainer1().getName());
+//		System.out.println("Path HELPPPPP: " + controller.getTrainer1().getName());
 
 		
 		update(model, null);
@@ -733,7 +741,7 @@ public class GameView extends Application implements Observer {
 		VBox team2 = new VBox(40);
 		Image trainerImage2 = new Image("/sprites/trainers/dawnfront.png");
 		ImageView trainerView2 = new ImageView(trainerImage2);
-		trainerView2.setFitWidth(200);
+		trainerView2.setFitWidth(100);
 		trainerView2.setPreserveRatio(true);
 		HBox activeTeam2 = new HBox(20);
 		

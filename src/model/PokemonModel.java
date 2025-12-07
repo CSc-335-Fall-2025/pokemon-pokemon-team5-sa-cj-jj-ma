@@ -51,7 +51,7 @@ public class PokemonModel extends Observable{
 	
 	public boolean initializeComputerTeam(List<String> pokeStrs) {
 		System.out.println("model - initializing computer team");
-		trainer3.setName("COMPUTER");
+		trainer2.setName("Computer");
 		List<String> randTeam = new ArrayList<>(pool.generateRandom(pokeStrs));
 		trainer2.setTeam(convertStringToTeam(randTeam));
 		for (Creature c : trainer2.getTeam()) {
