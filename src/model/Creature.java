@@ -46,6 +46,9 @@ public class Creature {
 	}
 	
 	public int getHealth() {
+		if (currHealth<=0) {
+			return 0;
+		}
 		return this.currHealth;
 	}
 	public void setHealth(int newHealth) {

@@ -125,15 +125,11 @@ public class PokemonModel extends Observable{
 	public boolean setDifficulty(int diff) {
 		if (diff == 0) {
 			for (Creature c : trainer3.getTeam()) {
-				c.setHealth((int) Math.round(c.getHealth()*.1));
-				
-				System.out.println(Math.round(c.getHealth()*.1));
-
+				c.setHealth((int) Math.round(c.getHealth()*.8));
 			}
 		} else if (diff == 2) {
 			for (Creature c : trainer3.getTeam()) {
-				c.setHealth((int) Math.round(c.getHealth()*10));
-				System.out.println(Math.round(c.getHealth()*10));
+				c.setHealth((int) Math.round(c.getHealth()*1.2));
 			}
 		}
 		setChanged();

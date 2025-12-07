@@ -346,21 +346,15 @@ public class GameView extends Application implements Observer {
 				if (input.isPresent()) {
 					String inputStr = input.get();
 					initializeGame(inputStr, selectedTeam);
+					progressionScene = new Scene(progressionMenu, 1280, 720);
+					stage.setScene(progressionScene);
+					stage.setTitle("Progression");
+					stage.show();
 
 				} else {
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Error");
-					alert.setHeaderText("Enter your name");
-					alert.setContentText("Please enter your name");
-					alert.show();
+					
 				}
-				
-				if (!playedOnce) {
-					progressionScene = new Scene(progressionMenu, 1280, 720);
-				}
-				stage.setScene(progressionScene);
-				stage.setTitle("Progression");
-				stage.show();
+			
 			}
 			else {
 				Alert alert = new Alert(AlertType.INFORMATION);
