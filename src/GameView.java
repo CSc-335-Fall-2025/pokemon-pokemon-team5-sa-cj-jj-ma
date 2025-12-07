@@ -297,6 +297,7 @@ public class GameView extends Application implements Observer {
 				battleScene = new Scene(BattleViewSinglePlayer, 1280,720);
 			}
 			controller.setDifficulty(0);
+			update(model, null);
 			stage.setScene(battleScene);
 			stage.setTitle("pokimon");
 			stage.show();
@@ -323,6 +324,7 @@ public class GameView extends Application implements Observer {
 				battleScene = new Scene(BattleViewSinglePlayer, 1280,720);
 			}
 			controller.setDifficulty(2);
+			update(model,null);
 			stage.setScene(battleScene);
 			stage.setTitle("pokimon");
 			stage.show();
@@ -403,6 +405,7 @@ public class GameView extends Application implements Observer {
 		activeCreatureView2.setImage(activeCreatureImage2);
 		
 		pokeName2.setText(controller.getTrainer3().getActiveCreature().getName());
+		System.out.println("NEW PRINT" + controller.getTrainer3().getActiveCreature().getHealth());
 		health2.setText(Integer.toString(controller.getTrainer3().getActiveCreature().getHealth()));
 		
 		swapBut1 = new Image(controller.getTrainer1().getCreature1().getPath());
@@ -435,7 +438,7 @@ public class GameView extends Application implements Observer {
 	public void initializeGame(String name, List<String> pokemonStrs) {
 		System.out.println("initializing game\n");
 		controller.createSelfTeam(name, pokemonStrs);
-		controller.createComputerTeam();
+		controller.createComputerTeam(pokemonStrs);
 		System.out.println("Path HELPPPPP: " + controller.getTrainer1().getName());
 
 		

@@ -40,10 +40,10 @@ public class PokemonModel extends Observable{
 		return true;
 	}
 	
-	public boolean initializeComputerTeam() {
+	public boolean initializeComputerTeam(List<String> pokeStrs) {
 		System.out.println("model - initializing computer team");
 		trainer3.setName("COMPUTER");
-		List<String> randTeam = new ArrayList<>(pool.generateRandom());
+		List<String> randTeam = new ArrayList<>(pool.generateRandom(pokeStrs));
 		trainer3.setTeam(convertStringToTeam(randTeam));
 		for (Creature c : trainer3.getTeam()) {
 			System.out.println(c);
@@ -122,20 +122,22 @@ public class PokemonModel extends Observable{
 		return trainer3;
 	}
 	
-	public void setDifficulty(int diff) {
+	public boolean setDifficulty(int diff) {
 		if (diff == 0) {
 			for (Creature c : trainer3.getTeam()) {
-				c.setHealth((int) Math.round(c.getBaseHealth()*.8));
-				System.out.println(Math.round(c.getBaseHealth()*.8));
+				c.setHealth((int) Math.round(c.getHealth()*.1));
+				
+				System.out.println(Math.round(c.getHealth()*.1));
 
 			}
 		} else if (diff == 2) {
 			for (Creature c : trainer3.getTeam()) {
-				c.setHealth((int) Math.round(c.getBaseHealth()*1.2));
-				System.out.println(Math.round(c.getBaseHealth()*1.2));
+				c.setHealth((int) Math.round(c.getHealth()*10));
+				System.out.println(Math.round(c.getHealth()*10));
 			}
 		}
 		setChanged();
 		notifyObservers();
+		return true;
 	}
 }

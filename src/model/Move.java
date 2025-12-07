@@ -6,11 +6,11 @@ public class Move {
 	}
 	
 	public enum Type {
-		NORMAL, FIRE, WATER, GRASS, ELECTRIC, POISON, DRAGON, FAIRY
+		NORMAL, FIRE, WATER, GRASS, ELECTRIC, POISON, ICE, DRAGON, FAIRY
 	}
 	
 	public enum StatusEffect {
-		HP_UP, ATTACK_UP, ATTACK_DOWN, DEFENSE_UP, DEFENSE_DOWN
+		HP_UP, ATTACK_UP, ATTACK_DOWN, DEFENSE_UP, DEFENSE_DOWN, NO_EFFECT
 	}
 	
 	private String name;
@@ -18,7 +18,7 @@ public class Move {
 	private Type moveType;
 	private StatusEffect effect;
 	private int power; 
-	private int effectAmt;
+	private int effectLevel;
 	
 	/**
 	 * Constructor for moves under the "PHYSICAL" category which inflict damage on the opponent
@@ -44,11 +44,11 @@ public class Move {
 	 * @param effect
 	 * @param effectAmt
 	 */
-	public Move(String name, Category moveCategory, StatusEffect effect, int effectAmt) {
+	public Move(String name, Category moveCategory, StatusEffect effect, int effectLevel) {
 		this.name = name;
 		this.moveCategory = moveCategory;
 		this.effect = effect;
-		this.effectAmt = effectAmt;
+		this.effectLevel = effectLevel;
 	}
 
 	/**
@@ -89,8 +89,8 @@ public class Move {
 	/**
 	 * @return the amount of change from a status move's effect
 	 */
-	public int getEffectAmt() {
-		return effectAmt;
+	public int getEffectLevel() {
+		return effectLevel;
 	}
 	
 }
