@@ -77,4 +77,7 @@ public class Creature {
 		return this.basehealth;
 	}
 	
+	public String toString() {
+		return "Poke Name: " + name + "\n";
+	}
 }

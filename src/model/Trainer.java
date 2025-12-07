@@ -14,6 +14,7 @@ public class Trainer {
         this.team = null;
         this.activeCreature = null;
         this.activeIndex = 0; // start with the first creature
+        
     }
 
     public String getName() {
@@ -28,6 +29,19 @@ public class Trainer {
         return team;
     }
 
+    public Creature getCreature1() {
+    	return team.get(0);
+    }
+    
+    public Creature getCreature2() {
+    	return team.get(1);
+
+    }
+    
+    public Creature getCreature3() {
+    	return team.get(2);
+    }
+    
     public void setName(String name) {
         this.name = name;
     }

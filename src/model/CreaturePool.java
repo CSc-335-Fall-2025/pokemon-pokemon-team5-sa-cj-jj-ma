@@ -8,7 +8,7 @@ public class CreaturePool {
 
     private static final Creature[] CREATURES = {
   
-        new Creature("Pikachu",      90,  55, 40, 50, new Move[4], "/sprites/pokemon/pickachu.png"),
+        new Creature("Pikachu",      90,  55, 40, 50, new Move[4], "/sprites/pokemon/pikachu.png"),
         new Creature("Bulbasaur",   100, 50, 45, 50, new Move[4], "/sprites/pokemon/bulbasaur.png"),
         new Creature("Charmander",   95,  52, 38, 50, new Move[4], "/sprites/pokemon/charmander.png"),
         new Creature("Squirtle",    105, 48, 55, 50, new Move[4], "/sprites/pokemon/squirtle.png"),

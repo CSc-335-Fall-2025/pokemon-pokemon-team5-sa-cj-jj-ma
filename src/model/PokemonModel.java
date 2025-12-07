@@ -2,8 +2,9 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-public class PokemonModel {
+public class PokemonModel extends Observable{
 	
 	private Trainer trainer1;
 	private Trainer trainer2;
@@ -27,16 +28,32 @@ public class PokemonModel {
 		System.out.println("\tself name: " + trainer1.getName());
 		System.out.println("\tself team strings: " + strTeam);
 		trainer1.setTeam(convertStringToTeam(strTeam));
+		
+		for (Creature c : trainer1.getTeam()) {
+			System.out.println(c);
+		}
+		System.out.println("Active: " + trainer1.getActiveCreature());
+		
+		setChanged();
+		notifyObservers();
 		return true;
 	}
 	
 	public boolean initializeComputerTeam() {
-		System.out.println("model - initializing self team");
+		System.out.println("model - initializing computer team");
 		trainer3.setName("COMPUTER");
 		List<String> randTeam = new ArrayList<>(pool.generateRandom());
 		trainer3.setTeam(convertStringToTeam(randTeam));
+		for (Creature c : trainer3.getTeam()) {
+			System.out.println(c);
+		}
 		System.out.println("\tcomputer name: " + trainer3.getName());
 		System.out.println("\tcomputer team strings: " + randTeam);
+		
+		System.out.println("Active: " + trainer3.getActiveCreature());
+
+		setChanged();
+		notifyObservers();
 		return true;
 	}
 	
@@ -92,6 +109,17 @@ public class PokemonModel {
 
 	}
 	
+	public Trainer getTrainer1() {
+		return trainer1;
+	}
+	
+	public Trainer getTrainer2() {
+		return trainer2;
+	}
+	
+	public Trainer getTrainer3() {
+		return trainer3;
+	}
 	
 	
 }

@@ -36,15 +36,15 @@ public class PokemonController {
 	}
 
 	public Trainer getTrainer1() {
-		return trainer1;
+		return model.getTrainer1();
 	}
 	
 	public Trainer getTrainer2() {
-		return trainer2;
+		return model.getTrainer2();
 	}
 	
 	public Trainer getTrainer3() {
-		return trainer3;
+		return model.getTrainer3();
 	}
 	
 }
