@@ -6,13 +6,15 @@
  */
 package model;
 
+import java.util.List;
+
 public class Creature {
 	private String name;
 	private int health;
 	private int attack;
 	private int defense;
 	private int heal;
-	private Move[] moves;
+	private List<Move> moves;
 	private int counter;
 	private String path;
 	private int basehealth;
@@ -24,7 +26,7 @@ public class Creature {
 	 * @param attack
 	 * @param defense
 	 */
-	public Creature(String name, int health, int attack, int defense, int heal, Move[] moveArray, String path) {
+	public Creature(String name, int health, int attack, int defense, int heal, List<Move> moveArray, String path) {
 		this.name = name;
 		this.health = health;
 		this.attack = attack;
@@ -35,6 +37,8 @@ public class Creature {
 		this.path = path;
 		this.basehealth = health;
 	}
+	
+
 	public String getName() {
 		return this.name;
 	}
@@ -50,10 +54,10 @@ public class Creature {
 	public int getDefense() {
 		return this.defense;
 	}
-	public Move[] getMoves() {
+	public List<Move> getMoves() {
 		return this.moves;
 	}
-	public void setMoves(Move[] newMoves) {
+	public void setMoves(List<Move> newMoves) {
 		this.moves = newMoves;
 	}
 	public int getCounter(){

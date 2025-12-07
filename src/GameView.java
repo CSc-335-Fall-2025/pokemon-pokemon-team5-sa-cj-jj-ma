@@ -31,6 +31,16 @@ public class GameView extends Application implements Observer {
 	private PokemonModel model;
 	private PokemonController controller;
 	
+	private Scene scene;
+	private BorderPane MainMenu;
+	private Stage stage;
+	
+	private Scene progressionScene;
+	private BorderPane progressionMenu;
+	
+	private Scene battleScene;
+	private BorderPane BattleViewSinglePlayer;
+	
 	private Image activeCreatureImage1;
 	private ImageView activeCreatureView1;
 	private VBox nameAndHealth1;
@@ -38,6 +48,14 @@ public class GameView extends Application implements Observer {
 	private HBox healthAndLabel1;
 	private Label healthLabel1;
 	private Label health1;
+	
+	private VBox clickableMoves;
+	private HBox topRowMoves;
+	private HBox botRowMoves;
+	private Button move1;
+	private Button move2;
+	private Button move3;
+	private Button move4;
 	
 	private VBox team2;
 	private Image trainerImage2;
@@ -65,13 +83,13 @@ public class GameView extends Application implements Observer {
 	private Image swapBut3;
 	private ImageView swapButView3;
 
-
+	private boolean playedOnce;
 	@Override
 	public void start(Stage stage) throws Exception {
 		model = new PokemonModel();
 		controller = new PokemonController(model);
 		model.addObserver(this);
-		
+		playedOnce = false;
 //		controller.createComputerTeam();
 //		List<String> initialList = new ArrayList<>();
 //		initialList.add("pikachu");
@@ -79,7 +97,8 @@ public class GameView extends Application implements Observer {
 //		initialList.add("pikachu");
 //		controller.createSelfTeam("Ashe", initialList);
 		
-		BorderPane MainMenu = new BorderPane();
+		MainMenu = new BorderPane();
+		this.stage = stage;
 		HBox buttonBox = new HBox(20);
 		Button singlePlayer = new Button("Single Player");
 		Button multiPlayerVersus = new Button("Multiplayer Versus");
@@ -148,7 +167,7 @@ public class GameView extends Application implements Observer {
 		
 		String imgPath = "";
 		
-		BorderPane BattleViewSinglePlayer = new BorderPane();
+		BattleViewSinglePlayer = new BorderPane();
 		HBox player1 = new HBox(200);
 		
 		VBox team = new VBox(40);
@@ -205,13 +224,33 @@ public class GameView extends Application implements Observer {
 		healthAndLabel1.getChildren().addAll(healthLabel1, health1);
 		nameAndHealth1.getChildren().addAll(pokeName1, healthAndLabel1);
 		
-		VBox clickableMoves = new VBox(20);
-		HBox topRowMoves = new HBox(20);
-		HBox botRowMoves = new HBox(20);
-		Button move1 = new Button("Move1");
-		Button move2 = new Button("Move2");
-		Button move3 = new Button("Move3");
-		Button move4 = new Button("Move4");
+		clickableMoves = new VBox(20);
+		topRowMoves = new HBox(20);
+		botRowMoves = new HBox(20);
+		move1 = new Button("Move1");
+		move1.setOnAction(e -> {
+			controller.playerTurn(controller.getTrainer1().getActiveCreature().getMoves().get(0).getName());
+			controller.computerTurn();
+			update(model, null);
+		});
+		move2 = new Button("Move2");
+		move2.setOnAction(e -> {
+			controller.playerTurn(controller.getTrainer1().getActiveCreature().getMoves().get(1).getName());
+			controller.computerTurn();
+			update(model, null);
+		});
+		move3 = new Button("Move3");
+		move3.setOnAction(e -> {
+			controller.playerTurn(controller.getTrainer1().getActiveCreature().getMoves().get(2).getName());
+			controller.computerTurn();
+			update(model, null);
+		});
+		move4 = new Button("Move4");
+		move4.setOnAction(e -> {
+			controller.playerTurn(controller.getTrainer1().getActiveCreature().getMoves().get(3).getName());
+			controller.computerTurn();
+			update(model, null);
+		});
 		topRowMoves.getChildren().addAll(move1, move2);
 		botRowMoves.getChildren().addAll(move3,move4);
 		clickableMoves.getChildren().addAll(topRowMoves,botRowMoves);
@@ -248,13 +287,15 @@ public class GameView extends Application implements Observer {
 		BattleViewSinglePlayer.setBottom(player1);
 		BattleViewSinglePlayer.setTop(player2);
 		
-		BorderPane progressionMenu = new BorderPane();
+		progressionMenu = new BorderPane();
 		HBox levelsBox = new HBox(120);
 		Button easyBtn = new Button("Easy");
 		easyBtn.setOnAction(e -> {
 			trainerImage2 = new Image("/sprites/trainers/soa.png");
 			trainerView2.setImage(trainerImage2);
-			Scene battleScene = new Scene(BattleViewSinglePlayer, 1280,720);
+			if (!playedOnce) {
+				battleScene = new Scene(BattleViewSinglePlayer, 1280,720);
+			}
 			stage.setScene(battleScene);
 			stage.setTitle("pokimon");
 			stage.show();
@@ -296,7 +337,9 @@ public class GameView extends Application implements Observer {
 					alert.show();
 				}
 				
-				Scene progressionScene = new Scene(progressionMenu, 1280, 720);
+				if (!playedOnce) {
+					progressionScene = new Scene(progressionMenu, 1280, 720);
+				}
 				stage.setScene(progressionScene);
 				stage.setTitle("Progression");
 				stage.show();
@@ -311,7 +354,7 @@ public class GameView extends Application implements Observer {
 			
 		});
 		
-		Scene scene = new Scene(MainMenu, 1280,720);
+		scene = new Scene(MainMenu, 1280,720);
 		stage.setScene(scene);
 		stage.setTitle("Pokemen");
 		stage.show();
@@ -355,6 +398,19 @@ public class GameView extends Application implements Observer {
 		swapBut3 = new Image(controller.getTrainer1().getCreature3().getPath());
 		swapButView3.setImage(swapBut3);
 		
+		System.out.println(controller.getTrainer1().getActiveCreature().getMoves().get(0));
+		move1.setText(controller.getTrainer1().getActiveCreature().getMoves().get(0).getName());
+		move2.setText(controller.getTrainer1().getActiveCreature().getMoves().get(1).getName());
+		move3.setText(controller.getTrainer1().getActiveCreature().getMoves().get(2).getName());
+		move4.setText(controller.getTrainer1().getActiveCreature().getMoves().get(3).getName());
+		
+		if (controller.isBattleOver()) {
+			System.out.println("Game over");
+			playedOnce = true;
+			stage.setScene(scene);
+			stage.setTitle("Pokemen");
+			stage.show();
+		}
 	}
 	
 	public void initializeGame(String name, List<String> pokemonStrs) {
@@ -363,6 +419,7 @@ public class GameView extends Application implements Observer {
 		controller.createComputerTeam();
 		System.out.println("Path HELPPPPP: " + controller.getTrainer1().getName());
 
+		
 		update(model, null);
 		
 	}

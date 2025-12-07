@@ -9,15 +9,16 @@ public class PokemonModel extends Observable{
 	private Trainer trainer1;
 	private Trainer trainer2;
 	private Trainer trainer3;
-	private Battle battle;
+//	private Battle battle;
 	private CreaturePool pool;
 	
 	public PokemonModel() {
 		this.trainer1 = new Trainer();
 		this.trainer2 = new Trainer();
 		this.trainer3 = new Trainer();
-		this.battle = null;
+//		this.battle = null;
 		this.pool = new CreaturePool();
+		pool.setMoves();
 		
 	}
 	
