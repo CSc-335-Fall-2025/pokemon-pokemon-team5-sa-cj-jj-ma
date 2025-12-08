@@ -7,42 +7,62 @@ import model.Creature;
 import model.Move;
 import model.PokemonModel;
 import model.Trainer;
-
+/**
+ * @author - Conor, Jett, Safwan, Mohammad
+ * File: PokemonControlle.java
+ * Class: CSC 335 Fall 2025
+ * Prupose: This class will deal to the model class to 
+ * change for of the input and have output
+ */
 public class PokemonController {
-	private PokemonModel model;
-
+	private PokemonModel model;  // this is a model instance
 	
+	/**
+	 * 
+	 * @param model: it is for model variable form passing
+	 * 
+	 */
 	public PokemonController(PokemonModel model) {
 		this.model = new PokemonModel();
 
 	}
 	
+	/**
+	 * This method to reset all health for pokemon creature
+	 */
 	public void resetAllHealth() {
 		model.resetHealth();
 	}
 	
+	/**
+	 * 
+	 * @param name: this is for name of team
+	 * @param creatureStrs: this is for pokemoon creature in string
+	 * @param playerNum: to create a number for the model to know which player
+	 * @return it returns true when it create the team
+	 */
 	public boolean createTeam(String name, List<String> creatureStrs, int playerNum) {
 		System.out.println("controller - creating self team");
 		model.initializeTeam(name, creatureStrs, playerNum);
 		return true;
 	}
 	
-//	public boolean createTeammateTeam() {
-//		return false;
-//	}
-	
+	/**
+	 * 
+	 * @param pokeStrs: it will take a random pokemons from model
+	 * @return it returns true when it create the team
+	 */
 	public boolean createComputerTeam(List<String> pokeStrs) {
 		System.out.println("controller - creating computer team");
 		model.initializeComputerTeam(pokeStrs);
 		return true;
 	}
-
-    /**
-     * Runs one turn of combat.
-     * Simple rule:
-     *  damage = attacker.attack - defender.defense
-     * if damage < 1, set to 1.
-     */
+	
+	/**
+	 * 
+	 * @param attackingTrainer: this is a trainer class where it target the attack player
+	 * @param moveStr: this is a move string
+	 */
     public void playerTurn(Trainer attackingTrainer, String moveStr) {
     	System.out.println("player turn: " + moveStr);
 
@@ -65,6 +85,10 @@ public class PokemonController {
     }
 
     
+    /**
+     * This method when the computer get the turn, and this will get 
+     * random attack from creature pool and use it here in this method.
+     */
 	public void computerTurn() {
 		
         Creature attacker = model.getTrainer2().getActiveCreature();
@@ -84,9 +108,12 @@ public class PokemonController {
         }
 	}
 
-    /**
-     * Damage formula for Sprint 1.
-     */
+	/**
+	 * this method will handel move for the trainer where it will use the move string
+	 * @param attacker: this instance will the attacker
+	 * @param defender: this instance will be the target player
+	 * @param moveStr: this instance will be the move string
+	 */
     private void doMove(Creature attacker, Creature defender, String moveStr) {
     	for (Move m : attacker.getMoves()) {
 			if (m.getName().toLowerCase().equals(moveStr)) {
@@ -136,6 +163,12 @@ public class PokemonController {
 		}
     }
     
+    /**
+     * This method will handle status for the creature move for the attacker
+     * @param affected: target pokemon creature
+     * @param level: to use the calculation of status
+     * @return it returns the calculation of status
+     */
     public int setAttackChange(Creature affected, int level) {
     	int numerator = 2;
     	int denominator = 2;
@@ -149,6 +182,12 @@ public class PokemonController {
 		return affected.getAttack() * numerator / denominator;
 	}
 	
+    /**
+     * This method will handle status for the creature move for the defender
+     * @param affected: target pokemon creature
+     * @param level: to use the calculation of status
+     * @return it returns the calculation of status
+     */
     public int setDefenseChange(Creature affected, int level) {
     	int numerator = 2;
     	int denominator = 2;
@@ -168,9 +207,11 @@ public class PokemonController {
     public boolean isBattleOver() {
         return !model.getTrainer1().hasLivingCreature() || !model.getTrainer2().hasLivingCreature();
     }
-
+    
     /**
-     * Returns the winner if the battle has ended.
+     * 
+     * @return Returns the string of the winner if the battle has ended. 
+     * Otherwise, it return the null
      */
     public String getWinner() {
         if (!model.getTrainer1().hasLivingCreature()) return model.getTrainer2().getName()+" won!";
@@ -179,23 +220,32 @@ public class PokemonController {
     }
 
 
+    /** 
+     * @return it return trainer 1
+     */
 	public Trainer getTrainer1() {
 		return model.getTrainer1();
 	}
 	
+	/** 
+     * @return it return trainer 2
+     */
 	public Trainer getTrainer2() {
 		return model.getTrainer2();
 	}
 	
-//	public Trainer getTrainer3() {
-//		return model.getTrainer3();
-//	}
-	
+	/**
+	 * This mothod to set the difficulty wither easy, medium, or hard
+	 * @param diff: the difficulty integer
+	 */
 	public void setDifficulty(int diff) {
 		model.setDifficulty(diff);
 		System.out.println("GOT HERE");
 	}
 	
+	/**
+	 * This method to rest all game like trainer and creature and make a new game
+	 */
 	public void resetAll() {
 		model.resetAll();
 	}
