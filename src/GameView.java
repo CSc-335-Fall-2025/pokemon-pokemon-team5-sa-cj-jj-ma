@@ -64,6 +64,7 @@ public class GameView extends Application implements Observer {
 	private Button move4;
 	private TextInputDialog namePrompt;
 	private TextInputDialog namePrompt2;
+	private int gamemode = 0;
 	
 	private VBox team2;
 	private Image trainerImage2;
@@ -91,6 +92,7 @@ public class GameView extends Application implements Observer {
 	private Image swapBut3;
 	private String input1;
 	private ImageView swapButView3;
+	private boolean playedOnceSinglePlayer = false;
 
 	private boolean playedOnce;
 	private VBox clickableMoves2;
@@ -312,9 +314,10 @@ public class GameView extends Application implements Observer {
 		easyBtn.setOnAction(e -> {
 			trainerImage2 = new Image("/sprites/trainers/soa.png");
 			trainerView2.setImage(trainerImage2);
-			if (!playedOnce) {
-				battleScene = new Scene(BattleViewSinglePlayer, 1280,720);
-			}
+//			if (!playedOnceSinglePlayer) {
+			battleScene = new Scene(BattleViewSinglePlayer, 1280,720);
+//			}
+			playedOnceSinglePlayer = true;
 			controller.setDifficulty(0);
 			update(model, null);
 			stage.setScene(battleScene);
@@ -327,9 +330,10 @@ public class GameView extends Application implements Observer {
 		mediumBtn.setOnAction(e ->{
 			trainerImage2 = new Image("/sprites/trainers/lunick.png");
 			trainerView2.setImage(trainerImage2);
-			if (!playedOnce) {
+//			if (!playedOnce) {
 				battleScene = new Scene(BattleViewSinglePlayer, 1280,720);
-			}
+//			}
+			playedOnceSinglePlayer = true;
 			stage.setScene(battleScene);
 			stage.setTitle("pokimon");
 			stage.show();
@@ -339,9 +343,10 @@ public class GameView extends Application implements Observer {
 		hardBtn.setOnAction(e ->{
 			trainerImage2 = new Image("/sprites/trainers/solana.png");
 			trainerView2.setImage(trainerImage2);
-			if (!playedOnce) {
+//			if (!playedOnce) {
 				battleScene = new Scene(BattleViewSinglePlayer, 1280,720);
-			}
+//			}
+			playedOnceSinglePlayer = true;
 			controller.setDifficulty(2);
 			update(model,null);
 			stage.setScene(battleScene);
@@ -365,6 +370,7 @@ public class GameView extends Application implements Observer {
 				if (input.isPresent()) {
 					String inputStr = input.get();
 					input1 = inputStr;
+					gamemode = 1;
 					initializeGame(inputStr, selectedTeam);
 					progressionScene = new Scene(progressionMenu, 1280, 720);
 					stage.setScene(progressionScene);
@@ -398,6 +404,7 @@ public class GameView extends Application implements Observer {
 				if (input.isPresent()) {
 					String inputStr = input.get();
 					input1 = inputStr;
+					gamemode =2;
 //					initializeGame(inputStr, selectedTeam);
 					multiplayerPick = new Scene(secondPlayerPicking(), 1280, 720);
 					stage.setScene(multiplayerPick);
@@ -442,13 +449,14 @@ public class GameView extends Application implements Observer {
 		}
 		
 		debug();
-
-//		activePokemon4 = new Image(controller.getTrainer2().getCreature1().getPath());
-//		ap4.setImage(activePokemon4);
-//		activePokemon5 = new Image(controller.getTrainer2().getCreature2().getPath());
-//		ap5.setImage(activePokemon5);
-//		activePokemon6 = new Image(controller.getTrainer2().getCreature3().getPath());
-//		ap6.setImage(activePokemon6);
+		if (gamemode ==1) {
+		activePokemon4 = new Image(controller.getTrainer2().getCreature1().getPath());
+		ap4.setImage(activePokemon4);
+		activePokemon5 = new Image(controller.getTrainer2().getCreature2().getPath());
+		ap5.setImage(activePokemon5);
+		activePokemon6 = new Image(controller.getTrainer2().getCreature3().getPath());
+		ap6.setImage(activePokemon6);
+		}
 		
 		activeCreatureImage2 = new Image(controller.getTrainer2().getActiveCreature().getPath());
 		activeCreatureView2.setImage(activeCreatureImage2);
@@ -466,26 +474,28 @@ public class GameView extends Application implements Observer {
 		swapBut3 = new Image(controller.getTrainer1().getCreature3().getPath());
 		swapButView3.setImage(swapBut3);
 		
-		swapBut4 = new Image(controller.getTrainer2().getCreature1().getPath());
-		swapButView4.setImage(swapBut4);
+		if (gamemode!=1) {
+			swapBut4 = new Image(controller.getTrainer2().getCreature1().getPath());
+			swapButView4.setImage(swapBut4);
+			
+			swapBut5 = new Image(controller.getTrainer2().getCreature2().getPath());
+			swapButView5.setImage(swapBut5);
 		
-		swapBut5 = new Image(controller.getTrainer2().getCreature2().getPath());
-		swapButView5.setImage(swapBut5);
-	
-		swapBut6 = new Image(controller.getTrainer2().getCreature3().getPath());
-		swapButView6.setImage(swapBut6);
-		
-//		System.out.println(controller.getTrainer1().getActiveCreature().getMoves().get(0));
-		move1.setText(controller.getTrainer1().getActiveCreature().getMoves().get(0).getName());
-		move2.setText(controller.getTrainer1().getActiveCreature().getMoves().get(1).getName());
-		move3.setText(controller.getTrainer1().getActiveCreature().getMoves().get(2).getName());
-		move4.setText(controller.getTrainer1().getActiveCreature().getMoves().get(3).getName());
-		
-		move5.setText(controller.getTrainer2().getActiveCreature().getMoves().get(0).getName());
-		move6.setText(controller.getTrainer2().getActiveCreature().getMoves().get(1).getName());
-		move7.setText(controller.getTrainer2().getActiveCreature().getMoves().get(2).getName());
-		move8.setText(controller.getTrainer2().getActiveCreature().getMoves().get(3).getName());
-		
+			swapBut6 = new Image(controller.getTrainer2().getCreature3().getPath());
+			swapButView6.setImage(swapBut6);
+			
+			
+	//		System.out.println(controller.getTrainer1().getActiveCreature().getMoves().get(0));
+			move1.setText(controller.getTrainer1().getActiveCreature().getMoves().get(0).getName());
+			move2.setText(controller.getTrainer1().getActiveCreature().getMoves().get(1).getName());
+			move3.setText(controller.getTrainer1().getActiveCreature().getMoves().get(2).getName());
+			move4.setText(controller.getTrainer1().getActiveCreature().getMoves().get(3).getName());
+			
+			move5.setText(controller.getTrainer2().getActiveCreature().getMoves().get(0).getName());
+			move6.setText(controller.getTrainer2().getActiveCreature().getMoves().get(1).getName());
+			move7.setText(controller.getTrainer2().getActiveCreature().getMoves().get(2).getName());
+			move8.setText(controller.getTrainer2().getActiveCreature().getMoves().get(3).getName());
+		}
 		if (controller.isBattleOver()) {
 			debug();
 			System.out.println("Game over");
@@ -496,8 +506,11 @@ public class GameView extends Application implements Observer {
 			alert.setContentText(controller.getWinner());
 			alert.showAndWait();
 			controller.resetAllHealth();
-
+			secondSelected.clear();
+			gamemode = 0;
+			
 			initializeProgram();
+			
 			
 		}
 		
