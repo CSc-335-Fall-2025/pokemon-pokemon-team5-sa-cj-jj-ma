@@ -9,20 +9,25 @@ public class PokemonModel extends Observable{
 	private Trainer trainer1;
 	private Trainer trainer2;
 	private Trainer trainer3;
-//	private Battle battle;
 	private CreaturePool pool;
 	
 	public PokemonModel() {
 		this.trainer1 = new Trainer();
 		this.trainer2 = new Trainer();
-//		this.trainer3 = new Trainer();
-//		this.battle = null;
 		this.pool = new CreaturePool();
 		pool.setMoves();
 		
 	}
 	
-	
+	public void resetHealth() {
+		for (Creature c : trainer1.getTeam()) {
+			c.setHealth(c.getBaseHealth());
+		}
+		
+		for (Creature c : trainer2.getTeam()) {
+			c.setHealth(c.getBaseHealth());
+		}
+	}
 	public boolean initializeTeam(String name, List<String> strTeam, int playerNum) {
 		Trainer currTrainer = null;
 		System.out.println("model - initializing self team for player " + playerNum);
@@ -51,7 +56,7 @@ public class PokemonModel extends Observable{
 	
 	public boolean initializeComputerTeam(List<String> pokeStrs) {
 		System.out.println("model - initializing computer team");
-		trainer3.setName("COMPUTER");
+		trainer2.setName("Computer");
 		List<String> randTeam = new ArrayList<>(pool.generateRandom(pokeStrs));
 		trainer2.setTeam(convertStringToTeam(randTeam));
 		for (Creature c : trainer2.getTeam()) {
@@ -144,5 +149,14 @@ public class PokemonModel extends Observable{
 		setChanged();
 		notifyObservers();
 		return true;
+	}
+	
+	public void resetAll() {
+		trainer1 = new Trainer();
+		trainer2 = new Trainer();
+		pool = new CreaturePool();
+		pool.setMoves();
+		setChanged();
+		notifyObservers();
 	}
 }

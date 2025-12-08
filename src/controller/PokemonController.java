@@ -17,6 +17,10 @@ public class PokemonController {
 
 	}
 	
+	public void resetAllHealth() {
+		model.resetHealth();
+	}
+	
 	public boolean createTeam(String name, List<String> creatureStrs, int playerNum) {
 		System.out.println("controller - creating self team");
 		model.initializeTeam(name, creatureStrs, playerNum);
@@ -169,8 +173,8 @@ public class PokemonController {
      * Returns the winner if the battle has ended.
      */
     public String getWinner() {
-        if (!model.getTrainer1().hasLivingCreature()) return "The Computer won :(";
-        if (!model.getTrainer2().hasLivingCreature()) return "You have won!";
+        if (!model.getTrainer1().hasLivingCreature()) return model.getTrainer2().getName()+" won!";
+        if (!model.getTrainer2().hasLivingCreature()) return model.getTrainer1().getName()+" won!";
         return null;
     }
 
@@ -190,6 +194,10 @@ public class PokemonController {
 	public void setDifficulty(int diff) {
 		model.setDifficulty(diff);
 		System.out.println("GOT HERE");
+	}
+	
+	public void resetAll() {
+		model.resetAll();
 	}
 	
 }
