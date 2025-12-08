@@ -8,7 +8,6 @@ public class PokemonModel extends Observable{
 	
 	private Trainer trainer1;
 	private Trainer trainer2;
-	private Trainer trainer3;
 	private CreaturePool pool;
 	
 	public PokemonModel() {
@@ -20,12 +19,10 @@ public class PokemonModel extends Observable{
 	}
 	
 	public void resetHealth() {
-		for (Creature c : trainer1.getTeam()) {
+		for (Creature c : pool.getAllCreatures()) {
 			c.setHealth(c.getBaseHealth());
-		}
-		
-		for (Creature c : trainer2.getTeam()) {
-			c.setHealth(c.getBaseHealth());
+			c.setAttack(c.getBaseAttack());
+			c.setDefense(c.getBaseDefense());
 		}
 	}
 	public boolean initializeTeam(String name, List<String> strTeam, int playerNum) {
@@ -122,6 +119,81 @@ public class PokemonModel extends Observable{
 		
 		return retTeam;
 
+	}
+	
+	public void callMove(Creature attacker, Creature defender, String moveStr) {
+		for (Move m : attacker.getMoves()) {
+			if (m.getName().toLowerCase().equals(moveStr)) {
+				if (m.getMoveCategory().equals(Move.Category.PHYSICAL)) {
+					int damageAmt = m.getPower() * attacker.getAttack() / defender.getDefense();
+					
+					defender.setHealth(defender.getHealth() - damageAmt);
+
+					System.out.println(attacker.getName() + " attacked " + defender.getName() + " for " + damageAmt + " damage.");
+				}
+				
+				if (m.getMoveCategory().equals(Move.Category.STATUS)) {
+
+					int changedTotal;
+					
+					switch (m.getEffect()) {
+					case HP_UP:
+						changedTotal = attacker.getHealth() + (attacker.getHealth() / 2);
+						attacker.setHealth(Math.min(changedTotal, attacker.getBaseHealth()));
+						break;
+					case ATTACK_UP:
+						changedTotal = setAttackChange(attacker, m.getEffectLevel());
+						attacker.setAttack(changedTotal);
+						System.out.println(attacker.getName() + " changed " + attacker.getName() + "'s attack to " + changedTotal);
+						break;
+					case ATTACK_DOWN:
+						changedTotal = setAttackChange(defender, -m.getEffectLevel());
+						defender.setAttack(changedTotal);
+						System.out.println(attacker.getName() + " changed " + defender.getName() + "'s attack to " + changedTotal);
+						break;
+					case DEFENSE_UP:
+						changedTotal = setDefenseChange(attacker, m.getEffectLevel());
+						attacker.setAttack(changedTotal);
+						System.out.println(attacker.getName() + " changed " + attacker.getName() + "'s defense to " + changedTotal);
+						break;
+					case DEFENSE_DOWN:
+						changedTotal = setDefenseChange(defender, -m.getEffectLevel());
+						defender.setDefense(changedTotal);
+						System.out.println(attacker.getName() + " changed " + defender.getName() + "'s defense to " + changedTotal);
+
+						break;
+					case NO_EFFECT:
+						break;
+					}
+				}
+			}
+		}
+	}
+	
+	public int setAttackChange(Creature affected, int level) {
+    	int numerator = 2;
+    	int denominator = 2;
+    	
+    	if (level > 0) {
+			numerator = 2 + level;
+		} else if (level < 0) {
+			denominator = 2 - level;
+		}
+		
+		return affected.getAttack() * numerator / denominator;
+	}
+	
+    public int setDefenseChange(Creature affected, int level) {
+    	int numerator = 2;
+    	int denominator = 2;
+    	
+    	if (level > 0) {
+			numerator = 2 + level;
+		} else if (level < 0) {
+			denominator = 2 - level;
+		}
+		
+		return affected.getDefense() * numerator / denominator;
 	}
 	
 	public Trainer getTrainer1() {

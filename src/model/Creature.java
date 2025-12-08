@@ -11,9 +11,11 @@ import java.util.List;
 public class Creature {
 	private String name;
 	private int baseHealth;
+	private int baseAttack;
+	private int baseDefense;
+	private int health;
 	private int attack;
 	private int defense;
-	private int currHealth;
 	private List<Move> moves;
 	private int counter;
 	private String path;
@@ -28,9 +30,11 @@ public class Creature {
 	public Creature(String name, int health, int attack, int defense, List<Move> moveArray, String path) {
 		this.name = name;
 		this.baseHealth = health;
+		this.baseAttack = attack;
+		this.baseDefense = defense;
+		this.health = health;
 		this.attack = attack;
 		this.defense = defense;
-		this.currHealth = health;
 		this.moves = moveArray;
 		this.counter = 0;
 		this.path = path;
@@ -46,14 +50,19 @@ public class Creature {
 	}
 	
 	public int getHealth() {
-		if (currHealth<=0) {
+		if (health<=0) {
 			return 0;
 		}
-		return this.currHealth;
+		return this.health;
 	}
 	public void setHealth(int newHealth) {
-		this.currHealth = newHealth;
+		this.health = newHealth;
 	}
+	
+	public int getBaseAttack() {
+		return this.baseAttack;
+	}
+	
 	public int getAttack() {
 		return this.attack;
 	}
@@ -61,6 +70,11 @@ public class Creature {
 	public void setAttack(int newAttack) {
 		this.attack = newAttack;
 	}
+	
+	public int getBaseDefense() {
+		return this.baseDefense;
+	}
+	
 	public int getDefense() {
 		return this.defense;
 	}

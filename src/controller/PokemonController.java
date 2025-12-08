@@ -90,88 +90,21 @@ public class PokemonController {
             model.getTrainer1().autoSwap();
             System.out.println(model.getTrainer2() + "'s " + attacker.getName() + " knocked out " + defender.getName());
         }
+        
+        currTurn = 1;
 	}
 
     /**
      * Damage formula for Sprint 1.
      */
     private void doMove(Creature attacker, Creature defender, String moveStr) {
-    	for (Move m : attacker.getMoves()) {
-			if (m.getName().toLowerCase().equals(moveStr)) {
-				if (m.getMoveCategory().equals(Move.Category.PHYSICAL)) {
-					int damageAmt = m.getPower() * attacker.getAttack() / defender.getDefense();
-					
-					defender.setHealth(defender.getHealth() - damageAmt);
-
-					System.out.println(attacker.getName() + " attacked " + defender.getName() + " for " + damageAmt + " damage.");
-				}
-				
-				if (m.getMoveCategory().equals(Move.Category.STATUS)) {
-
-					int changedTotal;
-					
-					switch (m.getEffect()) {
-					case HP_UP:
-						changedTotal = attacker.getHealth() + (attacker.getHealth() / 2);
-						attacker.setHealth(Math.min(changedTotal, attacker.getBaseHealth()));
-						break;
-					case ATTACK_UP:
-						changedTotal = setAttackChange(attacker, m.getEffectLevel());
-						attacker.setAttack(changedTotal);
-						System.out.println(attacker.getName() + " changed " + attacker.getName() + "'s attack to " + changedTotal);
-						break;
-					case ATTACK_DOWN:
-						changedTotal = setAttackChange(defender, -m.getEffectLevel());
-						defender.setAttack(changedTotal);
-						System.out.println(attacker.getName() + " changed " + defender.getName() + "'s attack to " + changedTotal);
-						break;
-					case DEFENSE_UP:
-						changedTotal = setDefenseChange(attacker, m.getEffectLevel());
-						attacker.setAttack(changedTotal);
-						System.out.println(attacker.getName() + " changed " + attacker.getName() + "'s defense to " + changedTotal);
-						break;
-					case DEFENSE_DOWN:
-						changedTotal = setDefenseChange(defender, -m.getEffectLevel());
-						defender.setDefense(changedTotal);
-						System.out.println(attacker.getName() + " changed " + defender.getName() + "'s defense to " + changedTotal);
-
-						break;
-					case NO_EFFECT:
-						break;
-					}
-				}
-			}
-		}
+    	model.callMove(attacker, defender, moveStr);
     }
     
-    public int setAttackChange(Creature affected, int level) {
-    	int numerator = 2;
-    	int denominator = 2;
-    	
-    	if (level > 0) {
-			numerator = 2 + level;
-		} else if (level < 0) {
-			denominator = 2 - level;
-		}
-		
-		return affected.getAttack() * numerator / denominator;
-	}
-	
-    public int setDefenseChange(Creature affected, int level) {
-    	int numerator = 2;
-    	int denominator = 2;
-    	
-    	if (level > 0) {
-			numerator = 2 + level;
-		} else if (level < 0) {
-			denominator = 2 - level;
-		}
-		
-		return affected.getDefense() * numerator / denominator;
-	}
+    
     
     /**
-     * Returns true when a trainer has no living creatures left.
+     * Returns true when a trainer has no living creatures left. 
      */
     public boolean isBattleOver() {
         return !model.getTrainer1().hasLivingCreature() || !model.getTrainer2().hasLivingCreature();
