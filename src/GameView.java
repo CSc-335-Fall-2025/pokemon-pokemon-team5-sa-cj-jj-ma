@@ -34,6 +34,7 @@ public class GameView extends Application implements Observer {
 	private Scene scene;
 	private BorderPane MainMenu;
 	private Stage stage;
+	private Stage originalStage;
 	private Scene multiplayerPick;
 	private Scene progressionScene;
 	private BorderPane progressionMenu;
@@ -107,19 +108,26 @@ public class GameView extends Application implements Observer {
 	private ImageView swapButView5;
 	@Override
 	public void start(Stage stage) throws Exception {
+		this.originalStage = stage;
+		initializeProgram();
+	}
+	
+	public void refresh() {
+		model = null;
 		model = new PokemonModel();
+		controller = null;
 		controller = new PokemonController(model);
 		model.addObserver(this);
-		playedOnce = false;
-//		controller.createComputerTeam();
-//		List<String> initialList = new ArrayList<>();
-//		initialList.add("pikachu");
-//		initialList.add("pikachu");
-//		initialList.add("pikachu");
-//		controller.createSelfTeam("Ashe", initialList);
+	}
+	public void initializeProgram() {
+		System.out.println("initializing program...");
+		// initializeProgram
+		refresh();
+//		playedOnce = false;
 		
+		// CreateMainMenu
 		MainMenu = new BorderPane();
-		this.stage = stage;
+		this.stage = originalStage;
 		HBox buttonBox = new HBox(20);
 		Button singlePlayer = new Button("Single Player");
 		Button localMultiplayer = new Button("Local Multiplayer");
@@ -390,7 +398,7 @@ public class GameView extends Application implements Observer {
 				if (input.isPresent()) {
 					String inputStr = input.get();
 					input1 = inputStr;
-					//initializeGame(inputStr, selectedTeam);
+//					initializeGame(inputStr, selectedTeam);
 					multiplayerPick = new Scene(secondPlayerPicking(), 1280, 720);
 					stage.setScene(multiplayerPick);
 					stage.setTitle("Second Player Picks");
@@ -418,6 +426,7 @@ public class GameView extends Application implements Observer {
 	
 	@Override
 	public void update(Observable o, Object arg) {
+		
 		System.out.println(controller.getTrainer1().getActiveCreature().getPath());
 		System.out.println(controller.getTrainer2().getActiveCreature().getPath());
 		
@@ -431,6 +440,8 @@ public class GameView extends Application implements Observer {
 			System.out.println(c);
 
 		}
+		
+		debug();
 
 //		activePokemon4 = new Image(controller.getTrainer2().getCreature1().getPath());
 //		ap4.setImage(activePokemon4);
@@ -476,6 +487,7 @@ public class GameView extends Application implements Observer {
 		move8.setText(controller.getTrainer2().getActiveCreature().getMoves().get(3).getName());
 		
 		if (controller.isBattleOver()) {
+			debug();
 			System.out.println("Game over");
 			playedOnce = true;
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -483,9 +495,33 @@ public class GameView extends Application implements Observer {
 			alert.setHeaderText(null);
 			alert.setContentText(controller.getWinner());
 			alert.showAndWait();
-			stage.close();
+			controller.resetAllHealth();
+
+			initializeProgram();
+			
 		}
+		
 	}
+	
+	public void debug() {
+		System.out.println("team1:");
+		System.out.println(controller.getTrainer1().getCreature1().getName() + " : " + controller.getTrainer1().getCreature1().getHealth());
+		System.out.println(controller.getTrainer1().getCreature2().getName() + " : " + controller.getTrainer1().getCreature2().getHealth());
+		System.out.println(controller.getTrainer1().getCreature3().getName() + " : " + controller.getTrainer1().getCreature3().getHealth());
+		
+		System.out.println("team2:");
+		System.out.println(controller.getTrainer2().getCreature1().getName() + " : " + controller.getTrainer2().getCreature1().getHealth());
+		System.out.println(controller.getTrainer2().getCreature2().getName() + " : " + controller.getTrainer2().getCreature2().getHealth());
+		System.out.println(controller.getTrainer2().getCreature3().getName() + " : " + controller.getTrainer2().getCreature3().getHealth());
+	}
+	
+//	public void resetToMainMenu() {
+//		controller.resetAll();
+//		stage.setScene(scene);
+//		stage.setTitle("pokemon");
+//		stage.show();
+//		update(model, null);
+//	}
 	
 	public void initializeGame(String name, List<String> pokemonStrs) {
 		System.out.println("initializing game\n");
