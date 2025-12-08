@@ -1,14 +1,36 @@
 package model;
 
+/**
+ * @author conorjanesky, mohammed, jett, safwan
+ * File: Move.java
+ * Class: CSC 335 Fall 2025
+ * Purpose: This is the moves
+ * for all of the pokemon.
+ * Our Pokemons moves are taken 
+ * from a ppol of moves 
+ * to create a combination of moves
+ * that is unique to that pokemon.
+ * This is that pool.
+ */
 public class Move {
+	/**
+	 * this is the enum for the category of moves
+	 */
 	public enum Category {
 		PHYSICAL, STATUS
 	}
 	
+	/**
+	 * This is the enum for the
+	 * type of pokemon.
+	 */
 	public enum Type {
 		NORMAL, FIRE, WATER, GRASS, ELECTRIC, POISON, ICE, DRAGON, FAIRY
 	}
 	
+	/**
+	 * this is the enum for the type of move (status)
+	 */
 	public enum StatusEffect {
 		HP_UP, ATTACK_UP, ATTACK_DOWN, DEFENSE_UP, DEFENSE_DOWN, NO_EFFECT
 	}

@@ -25,13 +25,19 @@ import model.Creature;
 import model.CreaturePool;
 //import model.CreaturePool;
 import model.PokemonModel;
-
+/**
+ * @author conorjanesky, mohammed, jett, safwan
+ * file: GameView.java
+ * Class: CSC 335 Fall 2025
+ * Purpose: This is the GUI class
+ * This launches a single window where all of the battles take place,
+ * the players are able to pick their pokemon, and the
+ * user (in single player) can progress up the difficulties
+ */
 @SuppressWarnings("deprecation")
 public class GameView extends Application implements Observer {
-	
 	private PokemonModel model;
 	private PokemonController controller;
-	
 	private Scene scene;
 	private BorderPane MainMenu;
 	private Stage stage;
@@ -41,10 +47,8 @@ public class GameView extends Application implements Observer {
 	private BorderPane progressionMenu;
 	private Scene localMultiplayerView;
 	private BorderPane BattleViewMultiPlayerLocal;
-	
 	private Scene battleScene;
 	private BorderPane BattleViewSinglePlayer;
-	
 	private Image activeCreatureImage1;
 	private ImageView activeCreatureView1;
 	private VBox nameAndHealth1;
@@ -55,7 +59,6 @@ public class GameView extends Application implements Observer {
 	private List<String> pokemonStrs;
 	private List<String> secondSelected = new ArrayList<>();
 	private List<String> selectedTeam = new ArrayList();
-	
 	private VBox clickableMoves;
 	private HBox topRowMoves;
 	private HBox botRowMoves;
@@ -67,7 +70,6 @@ public class GameView extends Application implements Observer {
 	private TextInputDialog namePrompt2;
 	private int gamemode = 0;
 	private int beaten = 1;
-	
 	private VBox team2;
 	private Image trainerImage2;
 	private ImageView trainerView2;
@@ -78,7 +80,6 @@ public class GameView extends Application implements Observer {
 	private ImageView ap5;
 	private Image activePokemon6;
 	private ImageView ap6;
-	
 	private Image activeCreatureImage2;
 	private ImageView activeCreatureView2;
 	private VBox nameAndHealth2;
@@ -86,7 +87,6 @@ public class GameView extends Application implements Observer {
 	private HBox healthAndLabel2;
 	private Label healthLabel2;
 	private Label health2;
-	
 	private Image swapBut1;
 	private ImageView swapButView1;
 	private Image swapBut2; 
@@ -95,7 +95,6 @@ public class GameView extends Application implements Observer {
 	private String input1;
 	private ImageView swapButView3;
 	private boolean playedOnceSinglePlayer = false;
-
 	private boolean playedOnce;
 	private VBox clickableMoves2;
 	private HBox topRowMoves2;
@@ -111,11 +110,22 @@ public class GameView extends Application implements Observer {
 	private ImageView swapButView6;
 	private ImageView swapButView5;
 	@Override
+	/**
+	 * @param stage - this is the stage that will come up 
+	 * This preveres the inital stage so we can alwyas go back to it, and then initliaizes
+	 * our program
+	 * 
+	 */
 	public void start(Stage stage) throws Exception {
 		this.originalStage = stage;
 		initializeProgram();
 	}
 	
+	/**
+	 * This refreshes the game so it sets all of the 
+	 * trainers back to emtpy, its creates a new model and controller
+	 * so a new battle can take place.
+	 */
 	public void refresh() {
 		model = null;
 		model = new PokemonModel();
@@ -123,6 +133,13 @@ public class GameView extends Application implements Observer {
 		controller = new PokemonController(model);
 		model.addObserver(this);
 	}
+	/**
+	 * this initializes our program. 
+	 * it builds the mainmenu GUI and the progression gui 
+	 * and the singleplayer battle gui
+	 * It also shows the stage for the first time to the
+	 * user at the main menn gui.
+	 */
 	public void initializeProgram() {
 		System.out.println("initializing program...");
 		// initializeProgram
@@ -151,7 +168,7 @@ public class GameView extends Application implements Observer {
 		
 		pokemonStrs = new ArrayList<>(Arrays.asList("pikachu", "charmander", "squirtle", "bulbasaur", "jigglypuff", "yoshi", "poliwhirl", "gloom", "psyduck", "goldeen", "dratini", "meowth"));
 			
-		
+		// This builds the buttons that user can click to add pokemon to their team
 		for (String poke : pokemonStrs) {
 				Button button = new Button();
 				Image image = new Image("/sprites/pokemon/" + poke + ".png");
@@ -188,10 +205,11 @@ public class GameView extends Application implements Observer {
 		}
 		
 		
-		
+		// this adds the buttons to the mainmenu gui
 		pokemonPool.setAlignment(Pos.CENTER);
 		MainMenu.setCenter(pokemonPool);
 		
+		// this is where we start making singleplayer
 		BattleViewSinglePlayer = new BorderPane();
 		HBox player1 = new HBox(150);
 		
@@ -289,6 +307,7 @@ public class GameView extends Application implements Observer {
 		player1.getChildren().addAll(team,activeCreatureView1, nameAndHealth1, clickableMoves);
 		player1.setAlignment(Pos.CENTER);
 		
+		// this is where we start making player 2 for the battle
 		HBox player2 = new HBox(300);
 		
 		nameAndHealth2 = new VBox(20);
@@ -326,6 +345,7 @@ public class GameView extends Application implements Observer {
 		BattleViewSinglePlayer.setBottom(player1);
 		BattleViewSinglePlayer.setTop(player2);
 		
+		// here is where we start making the progression menu
 		progressionMenu = new BorderPane();
 		HBox levelsBox = new HBox(120);
 		Button easyBtn = new Button("Easy");
@@ -384,7 +404,7 @@ public class GameView extends Application implements Observer {
 		levelsBox.setAlignment(Pos.CENTER);
 		progressionMenu.setCenter(levelsBox);
 		
-		
+		// if single player, is clicked it will progress to the progression menu and set the gamemode
 		singlePlayer.setOnAction(e -> {
 			if (selectedTeam.size() == 3)  {
 				namePrompt = new TextInputDialog("Name");
@@ -419,6 +439,7 @@ public class GameView extends Application implements Observer {
 			
 		});
 		
+		// if local multiplayer is clicked it will prgoress to the gui where the second player picks their team
 		localMultiplayer.setOnAction(e->{
 			if (selectedTeam.size() == 3)  {
 				namePrompt = new TextInputDialog("Name");
@@ -452,6 +473,7 @@ public class GameView extends Application implements Observer {
 			}
 		});
 		
+		// this initially shows the main menu GUI which can then access all the other GUIs
 		scene = new Scene(MainMenu, 1280,720);
 		stage.setScene(scene);
 		stage.setTitle("Pokemen");
@@ -459,8 +481,15 @@ public class GameView extends Application implements Observer {
 	}
 	
 	@Override
+	/**
+	 * This is the update function so any time the 
+	 * GUI changes the model, the model changes, and the 
+	 * gui can track what is happening in the model.
+	 * @param o -this is the observable changed model
+	 * @param arg these are the things that changed in observable
+	 */
 	public void update(Observable o, Object arg) {
-		
+		// These update the ctive creautre images everytime that they are changed by the user
 		System.out.println(controller.getTrainer1().getActiveCreature().getPath());
 		System.out.println(controller.getTrainer2().getActiveCreature().getPath());
 		
@@ -476,6 +505,7 @@ public class GameView extends Application implements Observer {
 		}
 		
 		debug();
+		// if the game mode is single player, then it will update the trainer sprites and the creature sprites (not buttons)
 		if (gamemode ==1) {
 		activePokemon4 = new Image(controller.getTrainer2().getCreature1().getPath());
 		ap4.setImage(activePokemon4);
@@ -488,10 +518,12 @@ public class GameView extends Application implements Observer {
 		activeCreatureImage2 = new Image(controller.getTrainer2().getActiveCreature().getPath());
 		activeCreatureView2.setImage(activeCreatureImage2);
 		
+		// these update the GUI element that displays which pokemon is active and its current health
 		pokeName2.setText(controller.getTrainer2().getActiveCreature().getName());
 		System.out.println("NEW PRINT" + controller.getTrainer2().getActiveCreature().getHealth());
 		health2.setText(Integer.toString(controller.getTrainer2().getActiveCreature().getHealth()));
 		
+		// these update the swapbuttons so they are the alwys player 1s creatures
 		swapBut1 = new Image(controller.getTrainer1().getCreature1().getPath());
 		swapButView1.setImage(swapBut1);
 		
@@ -500,7 +532,12 @@ public class GameView extends Application implements Observer {
 		
 		swapBut3 = new Image(controller.getTrainer1().getCreature3().getPath());
 		swapButView3.setImage(swapBut3);
+		move1.setText(controller.getTrainer1().getActiveCreature().getMoves().get(0).getName());
+		move2.setText(controller.getTrainer1().getActiveCreature().getMoves().get(1).getName());
+		move3.setText(controller.getTrainer1().getActiveCreature().getMoves().get(2).getName());
+		move4.setText(controller.getTrainer1().getActiveCreature().getMoves().get(3).getName());
 		
+		// if the gamemode is multiplayer the we also want toupdate the plyer 2 eleemnts
 		if (gamemode!=1) {
 			swapBut4 = new Image(controller.getTrainer2().getCreature1().getPath());
 			swapButView4.setImage(swapBut4);
@@ -513,16 +550,18 @@ public class GameView extends Application implements Observer {
 			
 			
 	//		System.out.println(controller.getTrainer1().getActiveCreature().getMoves().get(0));
-			move1.setText(controller.getTrainer1().getActiveCreature().getMoves().get(0).getName());
-			move2.setText(controller.getTrainer1().getActiveCreature().getMoves().get(1).getName());
-			move3.setText(controller.getTrainer1().getActiveCreature().getMoves().get(2).getName());
-			move4.setText(controller.getTrainer1().getActiveCreature().getMoves().get(3).getName());
+//			move1.setText(controller.getTrainer1().getActiveCreature().getMoves().get(0).getName());
+//			move2.setText(controller.getTrainer1().getActiveCreature().getMoves().get(1).getName());
+//			move3.setText(controller.getTrainer1().getActiveCreature().getMoves().get(2).getName());
+//			move4.setText(controller.getTrainer1().getActiveCreature().getMoves().get(3).getName());
 			
 			move5.setText(controller.getTrainer2().getActiveCreature().getMoves().get(0).getName());
 			move6.setText(controller.getTrainer2().getActiveCreature().getMoves().get(1).getName());
 			move7.setText(controller.getTrainer2().getActiveCreature().getMoves().get(2).getName());
 			move8.setText(controller.getTrainer2().getActiveCreature().getMoves().get(3).getName());
 		}
+		
+		// this checks if the battle is over, if it is display the winner and perform a reset
 		if (controller.isBattleOver()) {
 			debug();
 			System.out.println("Game over");
@@ -545,6 +584,9 @@ public class GameView extends Application implements Observer {
 		
 	}
 	
+	/**
+	 * this is a debugging class that prints the information necessary used for debugging purposes
+	 */
 	public void debug() {
 		System.out.println("team1:");
 		System.out.println(controller.getTrainer1().getCreature1().getName() + " : " + controller.getTrainer1().getCreature1().getHealth());
@@ -557,32 +599,34 @@ public class GameView extends Application implements Observer {
 		System.out.println(controller.getTrainer2().getCreature3().getName() + " : " + controller.getTrainer2().getCreature3().getHealth());
 	}
 	
-//	public void resetToMainMenu() {
-//		controller.resetAll();
-//		stage.setScene(scene);
-//		stage.setTitle("pokemon");
-//		stage.show();
-//		update(model, null);
-//	}
-	
+	/**
+	 * this initializtes  the single player model and sets the 
+	 * teamsto contain the approriate creatures ect...
+	 * @param name
+	 * @param pokemonStrs
+	 */
 	public void initializeGame(String name, List<String> pokemonStrs) {
 		System.out.println("initializing game\n");
+		// creates player1 
 		controller.createTeam(name, pokemonStrs, 1);
+		// creaes player 2 (cimputer)
 		controller.createComputerTeam(pokemonStrs);
 //		System.out.println("Path HELPPPPP: " + controller.getTrainer1().getName());
-
-		
-		update(model, null);
-		
+		update(model, null);	
 	}
 	
-	
-	
+	/**
+	 * This creates a border pane that contains the menu
+	 * for the second player to pick their pokemon
+	 * @return rtrtn, border pane that has the second player menu
+	 */
 	public BorderPane secondPlayerPicking() {
+		// this follows the same structure as the first player
 		BorderPane rtrn = new BorderPane();
 		HBox pokemonPool = new HBox(15);
 		String secondInput = "Player 2";
-					
+		
+		// creates 12 buttons with the creatures and adds them to an hbox
 		for (String poke : pokemonStrs) {
 				Button button = new Button();
 				Image image = new Image("/sprites/pokemon/" + poke + ".png");
@@ -625,6 +669,7 @@ public class GameView extends Application implements Observer {
 			
 			pokemonPool.getChildren().add(button);
 		}
+		// we also create a label to instruct the second user and accept the team
 		pokemonPool.setAlignment(Pos.CENTER);
 		rtrn.setCenter(pokemonPool);
 		
@@ -633,6 +678,7 @@ public class GameView extends Application implements Observer {
 		label.setPadding(new Insets(70,0,0,0));
 		rtrn.setTop(label);
 		
+		// here we also do logic to check if they have the right amount of pokemon
 		Button acceptButton = new Button("Accept");
 		acceptButton.setOnAction(e->{
 			if (secondSelected.size() <3) {
@@ -659,6 +705,7 @@ public class GameView extends Application implements Observer {
 			}
 		});
 		
+		// return the borderpane
 		rtrn.setBottom(acceptButton);
 		rtrn.setPadding(new Insets(0,0,70,0));
 		rtrn.setAlignment(acceptButton, Pos.CENTER);
@@ -666,8 +713,16 @@ public class GameView extends Application implements Observer {
 		return rtrn;
 	}
 	
+	/**
+	 * This initializes the game for local multiplayer
+	 * @param name - name of the first player
+	 * @param pokemonStrs - the team of the first player
+	 * @param name2 - name of the second player
+	 * @param pokemonStrs2 - the team of the second player
+	 */
 	public void initializeLocalMultiplayer(String name, List<String> pokemonStrs, String name2, List<String> pokemonStrs2) {
 		System.out.println("initializing multiplayer game\n");
+		// creates both teams 
 		controller.createTeam(name, pokemonStrs, 1);
 		controller.createTeam(name2, pokemonStrs2, 2);
 //		System.out.println("Path HELPPPPP: " + controller.getTrainer1().getName());
@@ -675,11 +730,17 @@ public class GameView extends Application implements Observer {
 		
 		update(model, null);
 	}
-	
+	/**
+	 * this creates the border pane that where both teams
+	 * will fight
+	 * @return BattleViewMultiplayerLocal - the borderpane that they will fight in
+	 */
 	public BorderPane getLocalMultiplayerBattleView() {
+		// the construction of the battleview follows the same elements and pattern from singleplayer
 		BattleViewMultiPlayerLocal = new BorderPane();
+		// this creates player 1 with the different GUI elements
 		HBox player1 = new HBox(150);
-		
+
 		VBox team = new VBox(40);
 		Image trainerImage = new Image("/sprites/trainers/lance.png");
 		ImageView trainerView = new ImageView(trainerImage);
@@ -769,6 +830,7 @@ public class GameView extends Application implements Observer {
 		
 		player1.getChildren().addAll(team,activeCreatureView1, nameAndHealth1, clickableMoves);
 		
+		// now we create player two with the same GUI elements
 		HBox player2 = new HBox(150);
 		
 		nameAndHealth2 = new VBox(20);
@@ -817,21 +879,6 @@ public class GameView extends Application implements Observer {
 		activeCreatureView2.setFitWidth(200);
 		activeCreatureView2.setPreserveRatio(true);
 		
-//		team2 = new VBox(20);
-//		trainerImage2 = new Image("/sprites/trainers/soa.png");
-//		trainerView2 = new ImageView(trainerImage2);
-//		activeTeam2 = new HBox(20);
-//		activePokemon4 = new Image("/sprites/trainers/soa.png");
-//		ap4 = new ImageView(trainerImage2);
-//		activePokemon5 = new Image("/sprites/trainers/soa.png");
-//		ap5 = new ImageView(trainerImage2);
-//		activePokemon6 = new Image("/sprites/trainers/soa.png");
-//		ap6 = new ImageView(trainerImage2);
-//		activeTeam2.getChildren().addAll(ap4,ap5,ap6);
-//		team2.getChildren().addAll(trainerView2,activeTeam2);
-//		player2.getChildren().addAll(nameAndHealth2,activeCreatureView2,team2);
-		
-		
 		VBox team2 = new VBox(40);
 		Image trainerImage2 = new Image("/sprites/trainers/dawnfront.png");
 		ImageView trainerView2 = new ImageView(trainerImage2);
@@ -879,11 +926,8 @@ public class GameView extends Application implements Observer {
 		BattleViewMultiPlayerLocal.setBottom(player1);
 		BattleViewMultiPlayerLocal.setTop(player2);
 		
+		// after adding all the elements for both players to the borderpane, we return it
 		return BattleViewMultiPlayerLocal;
 
 	}
-	
-//	public BorderPane getLocalMultiplayerBattleView() {
-//		
-//	}
 }
