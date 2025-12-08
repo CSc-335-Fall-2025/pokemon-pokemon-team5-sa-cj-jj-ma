@@ -289,6 +289,7 @@ public class GameView extends Application implements Observer {
 		clickableMoves.setAlignment(Pos.CENTER);
 		
 		player1.getChildren().addAll(team,activeCreatureView1, nameAndHealth1, clickableMoves);
+		player1.setAlignment(Pos.CENTER);
 		
 		HBox player2 = new HBox(300);
 		
@@ -322,6 +323,7 @@ public class GameView extends Application implements Observer {
 		team2.getChildren().addAll(trainerView2,activeTeam2);
 		team2.setAlignment(Pos.CENTER);
 		player2.getChildren().addAll(nameAndHealth2,activeCreatureView2,team2);
+		player2.setAlignment(Pos.CENTER);
 		
 		BattleViewSinglePlayer.setBottom(player1);
 		BattleViewSinglePlayer.setTop(player2);
@@ -812,7 +814,7 @@ public class GameView extends Application implements Observer {
 		botRowMoves2.setAlignment(Pos.CENTER);
 		clickableMoves2.getChildren().addAll(topRowMoves2,botRowMoves2);
 		clickableMoves2.setAlignment(Pos.CENTER);
-		clickableMoves2.setPadding(new Insets(0,0,0,50));
+		clickableMoves2.setPadding(new Insets(0,0,0,20));
 		
 		activeCreatureImage2 = new Image("/sprites/pokemon/pikachu.png");
 		activeCreatureView2 = new ImageView(activeCreatureImage2);
@@ -878,6 +880,8 @@ public class GameView extends Application implements Observer {
 		team2.getChildren().addAll(trainerView2,activeTeam2);
 		team2.setAlignment(Pos.CENTER);
 		player2.getChildren().addAll(clickableMoves2, nameAndHealth2, activeCreatureView2, team2);
+		player2.setAlignment(Pos.CENTER);
+		player1.setAlignment(Pos.CENTER);
 
 		BattleViewMultiPlayerLocal.setBottom(player1);
 		BattleViewMultiPlayerLocal.setTop(player2);
