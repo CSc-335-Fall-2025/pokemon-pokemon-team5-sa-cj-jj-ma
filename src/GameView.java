@@ -8,6 +8,7 @@ import java.util.Optional;
 import controller.PokemonController;
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -106,6 +107,19 @@ public class GameView extends Application implements Observer {
 	private Image swapBut6;
 	private ImageView swapButView6;
 	private ImageView swapButView5;
+	
+	private int battleMode = 0;
+	private Button firstSwapBtn;
+	private Button secondSwapBtn;
+	private Button thirdSwapBtn;
+	private Button firstSwapBtn2;
+	private Button secondSwapBtn2;
+	private Button thirdSwapBtn2;
+	
+	private Button swapBtn;
+	private ImageView swapBtnView;
+	private Image swapBtnImg;
+	
 	@Override
 	public void start(Stage stage) throws Exception {
 		this.originalStage = stage;
@@ -186,136 +200,20 @@ public class GameView extends Application implements Observer {
 		pokemonPool.setAlignment(Pos.CENTER);
 		MainMenu.setCenter(pokemonPool);
 		
-		BattleViewSinglePlayer = new BorderPane();
-		HBox player1 = new HBox(200);
 		
-		VBox team = new VBox(40);
-		Image trainerImage = new Image("/sprites/trainers/lance.png");
-		ImageView trainerView = new ImageView(trainerImage);
-		trainerView.setFitWidth(200);
-		trainerView.setPreserveRatio(true);
-		HBox activeTeam = new HBox(20);
-		
-		
-		Button firstSwapBtn = new Button();
-		swapBut1 = new Image("/sprites/trainers/lance.png");
-		swapButView1 = new ImageView(swapBut1);
-		firstSwapBtn.setGraphic(swapButView1);
-		firstSwapBtn.setStyle("-fx-background-color: transparent;");
-		firstSwapBtn.setOnAction(e ->{
-			controller.getTrainer1().manualSwap(controller.getTrainer1().getCreature1());
-			update(model, null);
-
-		});
-		
-		Button secondSwapBtn = new Button();
-		swapBut2 = new Image("/sprites/trainers/lance.png");
-		swapButView2 = new ImageView(swapBut2);
-		secondSwapBtn.setGraphic(swapButView2);
-		secondSwapBtn.setStyle("-fx-background-color: transparent;");
-		secondSwapBtn.setOnAction(e ->{
-			controller.getTrainer1().manualSwap(controller.getTrainer1().getCreature2());
-			update(model, null);
-
-		});
-		
-		swapBut3 = new Image("/sprites/trainers/lance.png");
-		swapButView3 = new ImageView(swapBut3);
-		Button thirdSwapBtn = new Button();
-		thirdSwapBtn.setGraphic(swapButView3);
-		thirdSwapBtn.setStyle("-fx-background-color: transparent;");
-		thirdSwapBtn.setOnAction(e -> {
-			controller.getTrainer1().manualSwap(controller.getTrainer1().getCreature3());
-			update(model, null);
-		});
-		
-		activeTeam.getChildren().addAll(firstSwapBtn,secondSwapBtn,thirdSwapBtn);
-		team.getChildren().addAll(trainerView,activeTeam);
-		
-		activeCreatureImage1 = new Image("/sprites/pokemon/bulbasaur.png");
-		activeCreatureView1 = new ImageView(activeCreatureImage1);
-		
-		nameAndHealth1 = new VBox(20);
-		pokeName1 = new Label("Default name");
-		healthAndLabel1 = new HBox(20);
-		healthLabel1 = new Label("Health: ");
-		health1 = new Label("Default health");
-		healthAndLabel1.getChildren().addAll(healthLabel1, health1);
-		nameAndHealth1.getChildren().addAll(pokeName1, healthAndLabel1);
-		
-		clickableMoves = new VBox(20);
-		topRowMoves = new HBox(20);
-		botRowMoves = new HBox(20);
-		move1 = new Button("Move1");
-		move1.setOnAction(e -> {
-			controller.playerTurn(controller.getTrainer1(), controller.getTrainer1().getActiveCreature().getMoves().get(0).getName());
-			controller.computerTurn();
-			update(model, null);
-		});
-		move2 = new Button("Move2");
-		move2.setOnAction(e -> {
-			controller.playerTurn(controller.getTrainer1(), controller.getTrainer1().getActiveCreature().getMoves().get(1).getName());
-			controller.computerTurn();
-			update(model, null);
-		});
-		move3 = new Button("Move3");
-		move3.setOnAction(e -> {
-			controller.playerTurn(controller.getTrainer1(), controller.getTrainer1().getActiveCreature().getMoves().get(2).getName());
-			controller.computerTurn();
-			update(model, null);
-		});
-		move4 = new Button("Move4");
-		move4.setOnAction(e -> {
-			controller.playerTurn(controller.getTrainer1(), controller.getTrainer1().getActiveCreature().getMoves().get(3).getName());
-			controller.computerTurn();
-			update(model, null);
-		});
-		topRowMoves.getChildren().addAll(move1, move2);
-		botRowMoves.getChildren().addAll(move3,move4);
-		clickableMoves.getChildren().addAll(topRowMoves,botRowMoves);
-		
-		player1.getChildren().addAll(team,activeCreatureView1, nameAndHealth1, clickableMoves);
-		
-		HBox player2 = new HBox(200);
-		
-		nameAndHealth2 = new VBox(20);
-		pokeName2 = new Label("Default name");
-		healthAndLabel2 = new HBox(20);
-		healthLabel2 = new Label("Health: ");
-		health2 = new Label("Default health");
-		healthAndLabel2.getChildren().addAll(healthLabel2, health2);
-		nameAndHealth2.getChildren().addAll(pokeName2, healthAndLabel2);
-		
-		activeCreatureImage2 = new Image("/sprites/pokemon/pikachu.png");
-		activeCreatureView2 = new ImageView(activeCreatureImage2);
-		
-		team2 = new VBox(20);
-		trainerImage2 = new Image("/sprites/trainers/soa.png");
-		trainerView2 = new ImageView(trainerImage2);
-		activeTeam2 = new HBox(20);
-		activePokemon4 = new Image("/sprites/trainers/soa.png");
-		ap4 = new ImageView(trainerImage2);
-		activePokemon5 = new Image("/sprites/trainers/soa.png");
-		ap5 = new ImageView(trainerImage2);
-		activePokemon6 = new Image("/sprites/trainers/soa.png");
-		ap6 = new ImageView(trainerImage2);
-		activeTeam2.getChildren().addAll(ap4,ap5,ap6);
-		team2.getChildren().addAll(trainerView2,activeTeam2);
-		player2.getChildren().addAll(nameAndHealth2,activeCreatureView2,team2);
-		
-		BattleViewSinglePlayer.setBottom(player1);
-		BattleViewSinglePlayer.setTop(player2);
 		
 		progressionMenu = new BorderPane();
 		HBox levelsBox = new HBox(120);
 		Button easyBtn = new Button("Easy");
 		easyBtn.setOnAction(e -> {
+			
+			if (!playedOnce) {
+				battleScene = new Scene(getSinglePlayerBattleView(), 1280,720);
+			}
+			initializeGame(input1, selectedTeam);
+			controller.setDifficulty(0);
 			trainerImage2 = new Image("/sprites/trainers/soa.png");
 			trainerView2.setImage(trainerImage2);
-			if (!playedOnce) {
-				battleScene = new Scene(BattleViewSinglePlayer, 1280,720);
-			}
-			controller.setDifficulty(0);
 			update(model, null);
 			stage.setScene(battleScene);
 			stage.setTitle("pokimon");
@@ -325,10 +223,12 @@ public class GameView extends Application implements Observer {
 		
 		Button mediumBtn = new Button("Medium");
 		mediumBtn.setOnAction(e ->{
+			initializeGame(input1, selectedTeam);
 			trainerImage2 = new Image("/sprites/trainers/lunick.png");
 			trainerView2.setImage(trainerImage2);
+			update(model, null);
 			if (!playedOnce) {
-				battleScene = new Scene(BattleViewSinglePlayer, 1280,720);
+				battleScene = new Scene(getSinglePlayerBattleView(), 1280,720);
 			}
 			stage.setScene(battleScene);
 			stage.setTitle("pokimon");
@@ -337,12 +237,13 @@ public class GameView extends Application implements Observer {
 		
 		Button hardBtn = new Button("Hard");
 		hardBtn.setOnAction(e ->{
+			if (!playedOnce) {
+				battleScene = new Scene(getSinglePlayerBattleView(), 1280,720);
+			}
+			initializeGame(input1, selectedTeam);
+			controller.setDifficulty(2);
 			trainerImage2 = new Image("/sprites/trainers/solana.png");
 			trainerView2.setImage(trainerImage2);
-			if (!playedOnce) {
-				battleScene = new Scene(BattleViewSinglePlayer, 1280,720);
-			}
-			controller.setDifficulty(2);
 			update(model,null);
 			stage.setScene(battleScene);
 			stage.setTitle("pokimon");
@@ -365,7 +266,7 @@ public class GameView extends Application implements Observer {
 				if (input.isPresent()) {
 					String inputStr = input.get();
 					input1 = inputStr;
-					initializeGame(inputStr, selectedTeam);
+					battleMode = 1;
 					progressionScene = new Scene(progressionMenu, 1280, 720);
 					stage.setScene(progressionScene);
 					stage.setTitle("Progression");
@@ -466,14 +367,18 @@ public class GameView extends Application implements Observer {
 		swapBut3 = new Image(controller.getTrainer1().getCreature3().getPath());
 		swapButView3.setImage(swapBut3);
 		
-		swapBut4 = new Image(controller.getTrainer2().getCreature1().getPath());
-		swapButView4.setImage(swapBut4);
+		if (battleMode == 2) {
+			swapBut4 = new Image(controller.getTrainer2().getCreature1().getPath());
+			swapButView4.setImage(swapBut4);
+			
+			swapBut5 = new Image(controller.getTrainer2().getCreature2().getPath());
+			swapButView5.setImage(swapBut5);
 		
-		swapBut5 = new Image(controller.getTrainer2().getCreature2().getPath());
-		swapButView5.setImage(swapBut5);
-	
-		swapBut6 = new Image(controller.getTrainer2().getCreature3().getPath());
-		swapButView6.setImage(swapBut6);
+			swapBut6 = new Image(controller.getTrainer2().getCreature3().getPath());
+			swapButView6.setImage(swapBut6);
+			
+			
+		}
 		
 //		System.out.println(controller.getTrainer1().getActiveCreature().getMoves().get(0));
 		move1.setText(controller.getTrainer1().getActiveCreature().getMoves().get(0).getName());
@@ -481,11 +386,53 @@ public class GameView extends Application implements Observer {
 		move3.setText(controller.getTrainer1().getActiveCreature().getMoves().get(2).getName());
 		move4.setText(controller.getTrainer1().getActiveCreature().getMoves().get(3).getName());
 		
-		move5.setText(controller.getTrainer2().getActiveCreature().getMoves().get(0).getName());
-		move6.setText(controller.getTrainer2().getActiveCreature().getMoves().get(1).getName());
-		move7.setText(controller.getTrainer2().getActiveCreature().getMoves().get(2).getName());
-		move8.setText(controller.getTrainer2().getActiveCreature().getMoves().get(3).getName());
+		if (battleMode == 2) {
+			move5.setText(controller.getTrainer2().getActiveCreature().getMoves().get(0).getName());
+			move6.setText(controller.getTrainer2().getActiveCreature().getMoves().get(1).getName());
+			move7.setText(controller.getTrainer2().getActiveCreature().getMoves().get(2).getName());
+			move8.setText(controller.getTrainer2().getActiveCreature().getMoves().get(3).getName());
+		}
 		
+		if (controller.getCurrTurn() == 1) {
+			move1.setDisable(false);
+			move2.setDisable(false);
+			move3.setDisable(false);
+			move4.setDisable(false);
+			
+			move5.setDisable(true);
+			move6.setDisable(true);
+			move7.setDisable(true);
+			move8.setDisable(true);
+			
+			firstSwapBtn.setDisable(false);
+			secondSwapBtn.setDisable(false);
+			thirdSwapBtn.setDisable(false);
+			
+			firstSwapBtn2.setDisable(true);
+			secondSwapBtn2.setDisable(true);
+			thirdSwapBtn2.setDisable(true);
+
+		} else if (controller.getCurrTurn() == 2) {
+			move1.setDisable(true);
+			move2.setDisable(true);
+			move3.setDisable(true);
+			move4.setDisable(true);
+			
+			move5.setDisable(false);
+			move6.setDisable(false);
+			move7.setDisable(false);
+			move8.setDisable(false);
+			
+			firstSwapBtn.setDisable(true);
+			secondSwapBtn.setDisable(true);
+			thirdSwapBtn.setDisable(true);
+			
+			firstSwapBtn2.setDisable(false);
+			secondSwapBtn2.setDisable(false);
+			thirdSwapBtn2.setDisable(false);
+		}
+		
+
 		if (controller.isBattleOver()) {
 			debug();
 			System.out.println("Game over");
@@ -607,11 +554,14 @@ public class GameView extends Application implements Observer {
 				
 				Optional<String> input = namePrompt2.showAndWait();
 				if (input.isPresent()) {
+					battleMode = 2;
 					localMultiplayerView = new Scene(getLocalMultiplayerBattleView(),1280,720);
-					initializeLocalMultiplayer(input1,selectedTeam,input.get(), secondSelected);
 					stage.setScene(localMultiplayerView);
 					stage.setTitle("Battle!");
 					stage.show();
+					
+					initializeLocalMultiplayer(input1,selectedTeam,input.get(), secondSelected);
+
 				}
 			}
 		});
@@ -628,12 +578,11 @@ public class GameView extends Application implements Observer {
 		controller.createTeam(name2, pokemonStrs2, 2);
 //		System.out.println("Path HELPPPPP: " + controller.getTrainer1().getName());
 
-		
 		update(model, null);
 	}
 	
-	public BorderPane getLocalMultiplayerBattleView() {
-		BattleViewMultiPlayerLocal = new BorderPane();
+	public BorderPane getSinglePlayerBattleView() {
+		BattleViewSinglePlayer = new BorderPane();
 		HBox player1 = new HBox(200);
 		
 		VBox team = new VBox(40);
@@ -644,7 +593,10 @@ public class GameView extends Application implements Observer {
 		HBox activeTeam = new HBox(20);
 		
 		
-		Button firstSwapBtn = new Button();
+		activeCreatureImage1 = new Image("/sprites/pokemon/bulbasaur.png");
+		activeCreatureView1 = new ImageView(activeCreatureImage1);
+		
+		firstSwapBtn = new Button();
 		swapBut1 = new Image("/sprites/trainers/lance.png");
 		swapButView1 = new ImageView(swapBut1);
 		firstSwapBtn.setGraphic(swapButView1);
@@ -655,7 +607,7 @@ public class GameView extends Application implements Observer {
 
 		});
 		
-		Button secondSwapBtn = new Button();
+		secondSwapBtn = new Button();
 		swapBut2 = new Image("/sprites/trainers/lance.png");
 		swapButView2 = new ImageView(swapBut2);
 		secondSwapBtn.setGraphic(swapButView2);
@@ -668,7 +620,7 @@ public class GameView extends Application implements Observer {
 		
 		swapBut3 = new Image("/sprites/trainers/lance.png");
 		swapButView3 = new ImageView(swapBut3);
-		Button thirdSwapBtn = new Button();
+		thirdSwapBtn = new Button();
 		thirdSwapBtn.setGraphic(swapButView3);
 		thirdSwapBtn.setStyle("-fx-background-color: transparent;");
 		thirdSwapBtn.setOnAction(e -> {
@@ -677,6 +629,142 @@ public class GameView extends Application implements Observer {
 		});
 		
 		activeTeam.getChildren().addAll(firstSwapBtn,secondSwapBtn,thirdSwapBtn);
+		team.getChildren().addAll(trainerView,activeTeam);
+		
+		
+		
+		nameAndHealth1 = new VBox(20);
+		pokeName1 = new Label("Default name");
+		healthAndLabel1 = new HBox(20);
+		healthLabel1 = new Label("Health: ");
+		health1 = new Label("Default health");
+		healthAndLabel1.getChildren().addAll(healthLabel1, health1);
+		nameAndHealth1.getChildren().addAll(pokeName1, healthAndLabel1);
+		
+		clickableMoves = new VBox(20);
+		topRowMoves = new HBox(20);
+		botRowMoves = new HBox(20);
+		move1 = new Button("Move1");
+		move1.setOnAction(e -> {
+			controller.playerTurn(controller.getTrainer1(), controller.getTrainer1().getActiveCreature().getMoves().get(0).getName());
+			controller.computerTurn();
+			update(model, null);
+		});
+		move2 = new Button("Move2");
+		move2.setOnAction(e -> {
+			controller.playerTurn(controller.getTrainer1(), controller.getTrainer1().getActiveCreature().getMoves().get(1).getName());
+			controller.computerTurn();
+			update(model, null);
+		});
+		move3 = new Button("Move3");
+		move3.setOnAction(e -> {
+			controller.playerTurn(controller.getTrainer1(), controller.getTrainer1().getActiveCreature().getMoves().get(2).getName());
+			controller.computerTurn();
+			update(model, null);
+		});
+		move4 = new Button("Move4");
+		move4.setOnAction(e -> {
+			controller.playerTurn(controller.getTrainer1(), controller.getTrainer1().getActiveCreature().getMoves().get(3).getName());
+			controller.computerTurn();
+			update(model, null);
+		});
+		topRowMoves.getChildren().addAll(move1, move2);
+		botRowMoves.getChildren().addAll(move3,move4);
+		clickableMoves.getChildren().addAll(topRowMoves,botRowMoves);
+		
+		player1.getChildren().addAll(team,activeCreatureView1, nameAndHealth1, clickableMoves);
+		
+		HBox player2 = new HBox(200);
+		
+		nameAndHealth2 = new VBox(20);
+		pokeName2 = new Label("Default name");
+		healthAndLabel2 = new HBox(20);
+		healthLabel2 = new Label("Health: ");
+		health2 = new Label("Default health");
+		healthAndLabel2.getChildren().addAll(healthLabel2, health2);
+		nameAndHealth2.getChildren().addAll(pokeName2, healthAndLabel2);
+		
+		activeCreatureImage2 = new Image("/sprites/pokemon/pikachu.png");
+		activeCreatureView2 = new ImageView(activeCreatureImage2);
+		
+		team2 = new VBox(20);
+		trainerImage2 = new Image("/sprites/trainers/soa.png");
+		trainerView2 = new ImageView(trainerImage2);
+		activeTeam2 = new HBox(20);
+		activePokemon4 = new Image("/sprites/trainers/soa.png");
+		ap4 = new ImageView(trainerImage2);
+		activePokemon5 = new Image("/sprites/trainers/soa.png");
+		ap5 = new ImageView(trainerImage2);
+		activePokemon6 = new Image("/sprites/trainers/soa.png");
+		ap6 = new ImageView(trainerImage2);
+		activeTeam2.getChildren().addAll(ap4,ap5,ap6);
+		team2.getChildren().addAll(trainerView2,activeTeam2);
+		player2.getChildren().addAll(nameAndHealth2,activeCreatureView2,team2);
+		
+		BattleViewSinglePlayer.setBottom(player1);
+		BattleViewSinglePlayer.setTop(player2);
+		
+		return BattleViewSinglePlayer;
+	}
+	public BorderPane getLocalMultiplayerBattleView() {
+		BattleViewMultiPlayerLocal = new BorderPane();
+		HBox player1 = new HBox(200);
+		
+		VBox team = new VBox(40);
+		Image trainerImage = new Image("/sprites/trainers/lance.png");
+		ImageView trainerView = new ImageView(trainerImage);
+		trainerView.setFitWidth(200);
+		trainerView.setPreserveRatio(true);
+		HBox activeTeam = new HBox(20);
+		
+		for (Creature c : controller.getTrainer1().getTeam()) {
+			swapBtn = new Button();
+			swapBtnImg = new Image("/sprites/trainers/lance.png");
+			swapBtnView = new ImageView(swapBut1);
+			swapBtn.setGraphic(swapButView1);
+			swapBtn.setStyle("-fx-background-color: transparent;");
+			swapBtn.setOnAction(e ->{
+				controller.getTrainer1().manualSwap(c);
+				update(model, null);
+
+			});
+			
+			activeTeam.getChildren().add(swapBtn);
+
+		}
+//		firstSwapBtn = new Button();
+//		swapBut1 = new Image("/sprites/trainers/lance.png");
+//		swapButView1 = new ImageView(swapBut1);
+//		firstSwapBtn.setGraphic(swapButView1);
+//		firstSwapBtn.setStyle("-fx-background-color: transparent;");
+//		firstSwapBtn.setOnAction(e ->{
+//			controller.getTrainer1().manualSwap(controller.getTrainer1().getCreature1());
+//			update(model, null);
+//
+//		});
+//		
+//		secondSwapBtn = new Button();
+//		swapBut2 = new Image("/sprites/trainers/lance.png");
+//		swapButView2 = new ImageView(swapBut2);
+//		secondSwapBtn.setGraphic(swapButView2);
+//		secondSwapBtn.setStyle("-fx-background-color: transparent;");
+//		secondSwapBtn.setOnAction(e ->{
+//			controller.getTrainer1().manualSwap(controller.getTrainer1().getCreature2());
+//			update(model, null);
+//
+//		});
+//		
+//		swapBut3 = new Image("/sprites/trainers/lance.png");
+//		swapButView3 = new ImageView(swapBut3);
+//		thirdSwapBtn = new Button();
+//		thirdSwapBtn.setGraphic(swapButView3);
+//		thirdSwapBtn.setStyle("-fx-background-color: transparent;");
+//		thirdSwapBtn.setOnAction(e -> {
+//			controller.getTrainer1().manualSwap(controller.getTrainer1().getCreature3());
+//			update(model, null);
+//		});
+		
+//		activeTeam.getChildren().addAll(firstSwapBtn,secondSwapBtn,thirdSwapBtn);
 		team.getChildren().addAll(trainerView,activeTeam);
 		
 		activeCreatureImage1 = new Image("/sprites/pokemon/bulbasaur.png");
@@ -713,6 +801,7 @@ public class GameView extends Application implements Observer {
 			controller.playerTurn(controller.getTrainer1(), controller.getTrainer1().getActiveCreature().getMoves().get(3).getName());
 			update(model, null);
 		});
+		
 		topRowMoves.getChildren().addAll(move1, move2);
 		botRowMoves.getChildren().addAll(move3,move4);
 		clickableMoves.getChildren().addAll(topRowMoves,botRowMoves);
@@ -733,6 +822,7 @@ public class GameView extends Application implements Observer {
 		topRowMoves2 = new HBox(20);
 		botRowMoves2 = new HBox(20);
 		move5 = new Button("Move1");
+		
 		move5.setOnAction(e -> {
 			controller.playerTurn(controller.getTrainer2(), controller.getTrainer2().getActiveCreature().getMoves().get(0).getName());
 			update(model, null);
@@ -752,27 +842,13 @@ public class GameView extends Application implements Observer {
 			controller.playerTurn(controller.getTrainer2(), controller.getTrainer2().getActiveCreature().getMoves().get(3).getName());
 			update(model, null);
 		});
+		
 		topRowMoves2.getChildren().addAll(move5, move6);
 		botRowMoves2.getChildren().addAll(move7,move8);
 		clickableMoves2.getChildren().addAll(topRowMoves2,botRowMoves2);
 		
 		activeCreatureImage2 = new Image("/sprites/pokemon/pikachu.png");
-		activeCreatureView2 = new ImageView(activeCreatureImage2);
-		
-//		team2 = new VBox(20);
-//		trainerImage2 = new Image("/sprites/trainers/soa.png");
-//		trainerView2 = new ImageView(trainerImage2);
-//		activeTeam2 = new HBox(20);
-//		activePokemon4 = new Image("/sprites/trainers/soa.png");
-//		ap4 = new ImageView(trainerImage2);
-//		activePokemon5 = new Image("/sprites/trainers/soa.png");
-//		ap5 = new ImageView(trainerImage2);
-//		activePokemon6 = new Image("/sprites/trainers/soa.png");
-//		ap6 = new ImageView(trainerImage2);
-//		activeTeam2.getChildren().addAll(ap4,ap5,ap6);
-//		team2.getChildren().addAll(trainerView2,activeTeam2);
-//		player2.getChildren().addAll(nameAndHealth2,activeCreatureView2,team2);
-		
+		activeCreatureView2 = new ImageView(activeCreatureImage2);	
 		
 		VBox team2 = new VBox(40);
 		Image trainerImage2 = new Image("/sprites/trainers/dawnfront.png");
@@ -782,7 +858,7 @@ public class GameView extends Application implements Observer {
 		HBox activeTeam2 = new HBox(20);
 		
 		
-		Button firstSwapBtn2 = new Button();
+		firstSwapBtn2 = new Button();
 		swapBut4 = new Image("/sprites/trainers/lance.png");
 		swapButView4 = new ImageView(swapBut4);
 		firstSwapBtn2.setGraphic(swapButView4);
@@ -793,7 +869,7 @@ public class GameView extends Application implements Observer {
 
 		});
 		
-		Button secondSwapBtn2 = new Button();
+		secondSwapBtn2 = new Button();
 		swapBut5 = new Image("/sprites/trainers/lance.png");
 		swapButView5 = new ImageView(swapBut5);
 		secondSwapBtn2.setGraphic(swapButView5);
@@ -804,7 +880,7 @@ public class GameView extends Application implements Observer {
 
 		});
 		
-		Button thirdSwapBtn2 = new Button();
+		thirdSwapBtn2 = new Button();
 		swapBut6 = new Image("/sprites/trainers/lance.png");
 		swapButView6 = new ImageView(swapBut6);
 		thirdSwapBtn2.setGraphic(swapButView6);
@@ -817,7 +893,7 @@ public class GameView extends Application implements Observer {
 		activeTeam2.getChildren().addAll(firstSwapBtn2,secondSwapBtn2,thirdSwapBtn2);
 		team2.getChildren().addAll(trainerView2,activeTeam2);
 		player2.getChildren().addAll(clickableMoves2, nameAndHealth2, activeCreatureView2, team2);
-
+		
 		BattleViewMultiPlayerLocal.setBottom(player1);
 		BattleViewMultiPlayerLocal.setTop(player2);
 		

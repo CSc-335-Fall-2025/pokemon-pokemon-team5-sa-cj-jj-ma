@@ -10,11 +10,13 @@ import model.Trainer;
 
 public class PokemonController {
 	private PokemonModel model;
+	private int currTurn;
 
 	
 	public PokemonController(PokemonModel model) {
 		this.model = new PokemonModel();
-
+		currTurn = 1;
+		
 	}
 	
 	public void resetAllHealth() {
@@ -61,6 +63,12 @@ public class PokemonController {
         if (defender.getHealth() <= 0) {
             defendingTrainer.autoSwap();
             System.out.println(model.getTrainer1() + "'s " + attacker.getName() + " knocked out " + defender.getName());
+        }
+        
+        if (currTurn == 1) {
+        	currTurn = 2;
+        } else if (currTurn == 2) {
+        	currTurn = 1;
         }
     }
 
@@ -198,6 +206,11 @@ public class PokemonController {
 	
 	public void resetAll() {
 		model.resetAll();
+	}
+
+	public int getCurrTurn() {
+		// TODO Auto-generated method stub
+		return currTurn;
 	}
 	
 }
