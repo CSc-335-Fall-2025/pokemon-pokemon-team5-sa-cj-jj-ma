@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import controller.PokemonController;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -135,10 +136,12 @@ public class GameView extends Application implements Observer {
 		Button singlePlayer = new Button("Single Player");
 		Button localMultiplayer = new Button("Local Multiplayer");
 		Button multiplayerOnline = new Button("Multiplayer Online");
+		multiplayerOnline.setDisable(true);
 		buttonBox.getChildren().add(singlePlayer);
 		buttonBox.getChildren().add(localMultiplayer);
 		buttonBox.getChildren().add(multiplayerOnline);
 		buttonBox.setAlignment(Pos.CENTER);
+		buttonBox.setPadding(new Insets(70,0,0,0));
 		
 		MainMenu.setTop(buttonBox);
 		
@@ -190,7 +193,7 @@ public class GameView extends Application implements Observer {
 		MainMenu.setCenter(pokemonPool);
 		
 		BattleViewSinglePlayer = new BorderPane();
-		HBox player1 = new HBox(200);
+		HBox player1 = new HBox(150);
 		
 		VBox team = new VBox(40);
 		Image trainerImage = new Image("/sprites/trainers/lance.png");
@@ -234,9 +237,12 @@ public class GameView extends Application implements Observer {
 		
 		activeTeam.getChildren().addAll(firstSwapBtn,secondSwapBtn,thirdSwapBtn);
 		team.getChildren().addAll(trainerView,activeTeam);
+		team.setAlignment(Pos.CENTER);
 		
 		activeCreatureImage1 = new Image("/sprites/pokemon/bulbasaur.png");
 		activeCreatureView1 = new ImageView(activeCreatureImage1);
+		activeCreatureView1.setFitWidth(200);
+		activeCreatureView1.setPreserveRatio(true);
 		
 		nameAndHealth1 = new VBox(20);
 		pokeName1 = new Label("Default name");
@@ -244,7 +250,9 @@ public class GameView extends Application implements Observer {
 		healthLabel1 = new Label("Health: ");
 		health1 = new Label("Default health");
 		healthAndLabel1.getChildren().addAll(healthLabel1, health1);
+		healthAndLabel1.setAlignment(Pos.CENTER);
 		nameAndHealth1.getChildren().addAll(pokeName1, healthAndLabel1);
+		nameAndHealth1.setAlignment(Pos.CENTER);
 		
 		clickableMoves = new VBox(20);
 		topRowMoves = new HBox(20);
@@ -274,12 +282,15 @@ public class GameView extends Application implements Observer {
 			update(model, null);
 		});
 		topRowMoves.getChildren().addAll(move1, move2);
+		topRowMoves.setAlignment(Pos.CENTER);
 		botRowMoves.getChildren().addAll(move3,move4);
+		botRowMoves.setAlignment(Pos.CENTER);
 		clickableMoves.getChildren().addAll(topRowMoves,botRowMoves);
+		clickableMoves.setAlignment(Pos.CENTER);
 		
 		player1.getChildren().addAll(team,activeCreatureView1, nameAndHealth1, clickableMoves);
 		
-		HBox player2 = new HBox(200);
+		HBox player2 = new HBox(300);
 		
 		nameAndHealth2 = new VBox(20);
 		pokeName2 = new Label("Default name");
@@ -287,10 +298,15 @@ public class GameView extends Application implements Observer {
 		healthLabel2 = new Label("Health: ");
 		health2 = new Label("Default health");
 		healthAndLabel2.getChildren().addAll(healthLabel2, health2);
+		healthAndLabel2.setAlignment(Pos.CENTER);
 		nameAndHealth2.getChildren().addAll(pokeName2, healthAndLabel2);
+		nameAndHealth2.setAlignment(Pos.CENTER);
+		nameAndHealth2.setPadding(new Insets(0,0,0,50));
 		
 		activeCreatureImage2 = new Image("/sprites/pokemon/pikachu.png");
 		activeCreatureView2 = new ImageView(activeCreatureImage2);
+		activeCreatureView2.setFitWidth(200);
+		activeCreatureView2.setPreserveRatio(true);
 		
 		team2 = new VBox(20);
 		trainerImage2 = new Image("/sprites/trainers/soa.png");
@@ -304,6 +320,7 @@ public class GameView extends Application implements Observer {
 		ap6 = new ImageView(trainerImage2);
 		activeTeam2.getChildren().addAll(ap4,ap5,ap6);
 		team2.getChildren().addAll(trainerView2,activeTeam2);
+		team2.setAlignment(Pos.CENTER);
 		player2.getChildren().addAll(nameAndHealth2,activeCreatureView2,team2);
 		
 		BattleViewSinglePlayer.setBottom(player1);
@@ -611,8 +628,9 @@ public class GameView extends Application implements Observer {
 		pokemonPool.setAlignment(Pos.CENTER);
 		rtrn.setCenter(pokemonPool);
 		
-		Label label = new Label("Second player: Select your team.");
+		Label label = new Label("Second player please select your team");
 		label.setAlignment(Pos.CENTER);
+		label.setPadding(new Insets(70,0,0,0));
 		rtrn.setTop(label);
 		
 		Button acceptButton = new Button("Accept");
@@ -642,6 +660,7 @@ public class GameView extends Application implements Observer {
 		});
 		
 		rtrn.setBottom(acceptButton);
+		rtrn.setPadding(new Insets(0,0,70,0));
 		rtrn.setAlignment(acceptButton, Pos.CENTER);
 		rtrn.setAlignment(label, Pos.CENTER);
 		return rtrn;
@@ -659,7 +678,7 @@ public class GameView extends Application implements Observer {
 	
 	public BorderPane getLocalMultiplayerBattleView() {
 		BattleViewMultiPlayerLocal = new BorderPane();
-		HBox player1 = new HBox(200);
+		HBox player1 = new HBox(150);
 		
 		VBox team = new VBox(40);
 		Image trainerImage = new Image("/sprites/trainers/lance.png");
@@ -703,9 +722,12 @@ public class GameView extends Application implements Observer {
 		
 		activeTeam.getChildren().addAll(firstSwapBtn,secondSwapBtn,thirdSwapBtn);
 		team.getChildren().addAll(trainerView,activeTeam);
+		team.setAlignment(Pos.CENTER);
 		
 		activeCreatureImage1 = new Image("/sprites/pokemon/bulbasaur.png");
 		activeCreatureView1 = new ImageView(activeCreatureImage1);
+		activeCreatureView1.setFitWidth(200);
+		activeCreatureView1.setPreserveRatio(true);
 		
 		nameAndHealth1 = new VBox(20);
 		pokeName1 = new Label("Default name");
@@ -713,7 +735,9 @@ public class GameView extends Application implements Observer {
 		healthLabel1 = new Label("Health: ");
 		health1 = new Label("Default health");
 		healthAndLabel1.getChildren().addAll(healthLabel1, health1);
+		healthAndLabel1.setAlignment(Pos.CENTER);
 		nameAndHealth1.getChildren().addAll(pokeName1, healthAndLabel1);
+		nameAndHealth1.setAlignment(Pos.CENTER);
 		
 		clickableMoves = new VBox(20);
 		topRowMoves = new HBox(20);
@@ -739,12 +763,15 @@ public class GameView extends Application implements Observer {
 			update(model, null);
 		});
 		topRowMoves.getChildren().addAll(move1, move2);
+		topRowMoves.setAlignment(Pos.CENTER);
 		botRowMoves.getChildren().addAll(move3,move4);
+		botRowMoves.setAlignment(Pos.CENTER);
 		clickableMoves.getChildren().addAll(topRowMoves,botRowMoves);
+		clickableMoves.setAlignment(Pos.CENTER);
 		
 		player1.getChildren().addAll(team,activeCreatureView1, nameAndHealth1, clickableMoves);
 		
-		HBox player2 = new HBox(200);
+		HBox player2 = new HBox(150);
 		
 		nameAndHealth2 = new VBox(20);
 		pokeName2 = new Label("Default name");
@@ -752,7 +779,9 @@ public class GameView extends Application implements Observer {
 		healthLabel2 = new Label("Health: ");
 		health2 = new Label("Default health");
 		healthAndLabel2.getChildren().addAll(healthLabel2, health2);
+		healthAndLabel2.setAlignment(Pos.CENTER);
 		nameAndHealth2.getChildren().addAll(pokeName2, healthAndLabel2);
+		nameAndHealth2.setAlignment(Pos.CENTER);
 		
 		clickableMoves2 = new VBox(20);
 		topRowMoves2 = new HBox(20);
@@ -778,11 +807,17 @@ public class GameView extends Application implements Observer {
 			update(model, null);
 		});
 		topRowMoves2.getChildren().addAll(move5, move6);
+		topRowMoves2.setAlignment(Pos.CENTER);
 		botRowMoves2.getChildren().addAll(move7,move8);
+		botRowMoves2.setAlignment(Pos.CENTER);
 		clickableMoves2.getChildren().addAll(topRowMoves2,botRowMoves2);
+		clickableMoves2.setAlignment(Pos.CENTER);
+		clickableMoves2.setPadding(new Insets(0,0,0,50));
 		
 		activeCreatureImage2 = new Image("/sprites/pokemon/pikachu.png");
 		activeCreatureView2 = new ImageView(activeCreatureImage2);
+		activeCreatureView2.setFitWidth(200);
+		activeCreatureView2.setPreserveRatio(true);
 		
 //		team2 = new VBox(20);
 //		trainerImage2 = new Image("/sprites/trainers/soa.png");
@@ -841,6 +876,7 @@ public class GameView extends Application implements Observer {
 		
 		activeTeam2.getChildren().addAll(firstSwapBtn2,secondSwapBtn2,thirdSwapBtn2);
 		team2.getChildren().addAll(trainerView2,activeTeam2);
+		team2.setAlignment(Pos.CENTER);
 		player2.getChildren().addAll(clickableMoves2, nameAndHealth2, activeCreatureView2, team2);
 
 		BattleViewMultiPlayerLocal.setBottom(player1);
