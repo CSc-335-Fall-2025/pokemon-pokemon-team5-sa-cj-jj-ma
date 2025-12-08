@@ -207,7 +207,6 @@ public class GameView extends Application implements Observer {
 		swapBut1 = new Image("/sprites/trainers/lance.png");
 		swapButView1 = new ImageView(swapBut1);
 		firstSwapBtn.setGraphic(swapButView1);
-		firstSwapBtn.setStyle("-fx-background-color: transparent;");
 		firstSwapBtn.setOnAction(e ->{
 			controller.getTrainer1().manualSwap(controller.getTrainer1().getCreature1());
 			update(model, null);
@@ -218,7 +217,6 @@ public class GameView extends Application implements Observer {
 		swapBut2 = new Image("/sprites/trainers/lance.png");
 		swapButView2 = new ImageView(swapBut2);
 		secondSwapBtn.setGraphic(swapButView2);
-		secondSwapBtn.setStyle("-fx-background-color: transparent;");
 		secondSwapBtn.setOnAction(e ->{
 			controller.getTrainer1().manualSwap(controller.getTrainer1().getCreature2());
 			update(model, null);
@@ -229,7 +227,6 @@ public class GameView extends Application implements Observer {
 		swapButView3 = new ImageView(swapBut3);
 		Button thirdSwapBtn = new Button();
 		thirdSwapBtn.setGraphic(swapButView3);
-		thirdSwapBtn.setStyle("-fx-background-color: transparent;");
 		thirdSwapBtn.setOnAction(e -> {
 			controller.getTrainer1().manualSwap(controller.getTrainer1().getCreature3());
 			update(model, null);
@@ -694,7 +691,6 @@ public class GameView extends Application implements Observer {
 		swapBut1 = new Image("/sprites/trainers/lance.png");
 		swapButView1 = new ImageView(swapBut1);
 		firstSwapBtn.setGraphic(swapButView1);
-		firstSwapBtn.setStyle("-fx-background-color: transparent;");
 		firstSwapBtn.setOnAction(e ->{
 			controller.getTrainer1().manualSwap(controller.getTrainer1().getCreature1());
 			update(model, null);
@@ -705,7 +701,6 @@ public class GameView extends Application implements Observer {
 		swapBut2 = new Image("/sprites/trainers/lance.png");
 		swapButView2 = new ImageView(swapBut2);
 		secondSwapBtn.setGraphic(swapButView2);
-		secondSwapBtn.setStyle("-fx-background-color: transparent;");
 		secondSwapBtn.setOnAction(e ->{
 			controller.getTrainer1().manualSwap(controller.getTrainer1().getCreature2());
 			update(model, null);
@@ -716,7 +711,6 @@ public class GameView extends Application implements Observer {
 		swapButView3 = new ImageView(swapBut3);
 		Button thirdSwapBtn = new Button();
 		thirdSwapBtn.setGraphic(swapButView3);
-		thirdSwapBtn.setStyle("-fx-background-color: transparent;");
 		thirdSwapBtn.setOnAction(e -> {
 			controller.getTrainer1().manualSwap(controller.getTrainer1().getCreature3());
 			update(model, null);
@@ -848,7 +842,6 @@ public class GameView extends Application implements Observer {
 		swapBut4 = new Image("/sprites/trainers/lance.png");
 		swapButView4 = new ImageView(swapBut4);
 		firstSwapBtn2.setGraphic(swapButView4);
-		firstSwapBtn2.setStyle("-fx-background-color: transparent;");
 		firstSwapBtn2.setOnAction(e ->{
 			controller.getTrainer2().manualSwap(controller.getTrainer2().getCreature1());
 			update(model, null);
@@ -859,7 +852,6 @@ public class GameView extends Application implements Observer {
 		swapBut5 = new Image("/sprites/trainers/lance.png");
 		swapButView5 = new ImageView(swapBut5);
 		secondSwapBtn2.setGraphic(swapButView5);
-		secondSwapBtn2.setStyle("-fx-background-color: transparent;");
 		secondSwapBtn2.setOnAction(e ->{
 			controller.getTrainer2().manualSwap(controller.getTrainer2().getCreature2());
 			update(model, null);
@@ -870,7 +862,6 @@ public class GameView extends Application implements Observer {
 		swapBut6 = new Image("/sprites/trainers/lance.png");
 		swapButView6 = new ImageView(swapBut6);
 		thirdSwapBtn2.setGraphic(swapButView6);
-		thirdSwapBtn2.setStyle("-fx-background-color: transparent;");
 		thirdSwapBtn2.setOnAction(e -> {
 			controller.getTrainer2().manualSwap(controller.getTrainer2().getCreature3());
 			update(model, null);
