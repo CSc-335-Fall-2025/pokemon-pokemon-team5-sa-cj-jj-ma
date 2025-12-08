@@ -65,6 +65,7 @@ public class GameView extends Application implements Observer {
 	private TextInputDialog namePrompt;
 	private TextInputDialog namePrompt2;
 	private int gamemode = 0;
+	private int beaten = 1;
 	
 	private VBox team2;
 	private Image trainerImage2;
@@ -338,6 +339,10 @@ public class GameView extends Application implements Observer {
 			stage.setTitle("pokimon");
 			stage.show();
 		});
+		mediumBtn.setDisable(true);
+		if(beaten >=2) {
+			mediumBtn.setDisable(false);
+		}
 		
 		Button hardBtn = new Button("Hard");
 		hardBtn.setOnAction(e ->{
@@ -353,6 +358,11 @@ public class GameView extends Application implements Observer {
 			stage.setTitle("pokimon");
 			stage.show();
 		});
+		hardBtn.setDisable(true);
+		if(beaten >=3) {
+			hardBtn.setDisable(false);
+		}
+		
 		levelsBox.getChildren().addAll(easyBtn, mediumBtn, hardBtn);
 		levelsBox.setAlignment(Pos.CENTER);
 		progressionMenu.setCenter(levelsBox);
@@ -505,10 +515,12 @@ public class GameView extends Application implements Observer {
 			alert.setHeaderText(null);
 			alert.setContentText(controller.getWinner());
 			alert.showAndWait();
+			if (gamemode== 1 && controller.getWinner().contains("!!!")) {
+				beaten++;
+			}
+			gamemode = 0;
 			controller.resetAllHealth();
 			secondSelected.clear();
-			gamemode = 0;
-			
 			initializeProgram();
 			
 			

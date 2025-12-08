@@ -174,7 +174,7 @@ public class PokemonController {
      */
     public String getWinner() {
         if (!model.getTrainer1().hasLivingCreature()) return model.getTrainer2().getName()+" won!";
-        if (!model.getTrainer2().hasLivingCreature()) return model.getTrainer1().getName()+" won!";
+        if (!model.getTrainer2().hasLivingCreature()) return model.getTrainer1().getName()+" won!!!";
         return null;
     }
 
