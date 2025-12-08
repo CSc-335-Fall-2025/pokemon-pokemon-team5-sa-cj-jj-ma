@@ -235,6 +235,7 @@ public class GameView extends Application implements Observer {
 		activeTeam.getChildren().addAll(firstSwapBtn,secondSwapBtn,thirdSwapBtn);
 		team.getChildren().addAll(trainerView,activeTeam);
 		team.setAlignment(Pos.CENTER);
+		team.setPadding((new Insets(0,0,20,0)));
 		
 		activeCreatureImage1 = new Image("/sprites/pokemon/bulbasaur.png");
 		activeCreatureView1 = new ImageView(activeCreatureImage1);
@@ -719,6 +720,7 @@ public class GameView extends Application implements Observer {
 		activeTeam.getChildren().addAll(firstSwapBtn,secondSwapBtn,thirdSwapBtn);
 		team.getChildren().addAll(trainerView,activeTeam);
 		team.setAlignment(Pos.CENTER);
+		team.setPadding((new Insets(0,0,20,0)));
 		
 		activeCreatureImage1 = new Image("/sprites/pokemon/bulbasaur.png");
 		activeCreatureView1 = new ImageView(activeCreatureImage1);
