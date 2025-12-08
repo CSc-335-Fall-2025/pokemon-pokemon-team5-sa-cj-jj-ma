@@ -21,7 +21,7 @@ import model.Move.StatusEffect;
 public class CreaturePool {
 
 	/**
-	 * tbis is is a creature array that represents our 12 creatures.
+	 * this is is a creature array that represents our 12 creatures.
 	 */
     private static final Creature[] CREATURES = {
   
