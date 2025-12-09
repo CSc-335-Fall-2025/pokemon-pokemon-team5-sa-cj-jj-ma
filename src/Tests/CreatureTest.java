@@ -62,6 +62,9 @@ class CreatureTest {
 		newMoveList.add(moveToAdd);
 		newMoveList.add(moveToAdd);
 		newMoveList.add(moveToAdd);
+		testCreature.getType();
+		testCreature.getBaseAttack();
+		testCreature.getBaseDefense();
 		testCreature.setMoves(newMoveList);
 		
 		assertEquals(testCreature.getMoves().get(0).getName(), "TEST404");
