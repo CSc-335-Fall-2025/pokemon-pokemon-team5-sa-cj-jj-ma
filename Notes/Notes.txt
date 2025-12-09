@@ -1,0 +1,46 @@
+========================
+The following file is a compilation of some of the notes taken throughout the project process organized to make it clear when the discussions took place. Some of the notes also reference the screen shots located in the Screenshots folder.
+Additionally, some of these notes and screen shots did not take place during the specified meeting times, but were ideas that someone had before/after and I decided to include them since they informed our meetings and implementation.
+========================
+Sprint 1 Planning 
+- Create Kanban Board
+- Think about what we need to implement in order to actually create this game
+- How would the GUI look?
+Questions:
+- What do we need to get done right now to get started on the project?
+
+Sprint 1 
+- Meet at 2pm
+- In a good spot 
+- Create Kanban Boards 
+- Define the specific classes and who is doing which
+
+Sprint 1 Retrospective
+*Can bee seen in Screenshots, we defined who was doing what and thought more about how we were going to implement our Pokemon game*
+
+------------------------------------------------------------
+Sprint 2 Planning 
+- Ask about how to make the creatures attack, what is the best way to implement different types of moves?
+- Also discuss the GUI
+
+Sprint 2 
+*seen in screenshots, we needed to flesh out our game logic a bit more and begin the GUI in depth*
+
+Sprint 2 Retrospective
+- define GUI and start thinking about the game play of the characters (will pikachu be tanky or deal a lot of damage)
+
+------------------------------------------------------------
+Sprint 3 Planning 
+- Ask him if we were using the update code method correctly
+
+Sprint 3
+- Finishing up with basic game implementation (nitty gritty)
+- Optimize GUI 
+- UPDATE METHOD
+- clean up code/encapsulation
+
+Sprint 3 Retrospective
+- make server work 
+- make sure we are calling update every time something changes in the model
+
+------------------------------------------------------------
