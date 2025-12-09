@@ -10,16 +10,17 @@ import model.Move;
 import model.Move.Category;
 import model.Move.StatusEffect;
 import model.Move.Type;
+import model.PokeType;
 
 class MoveTest {
 
 	Move move;
 	@Test
 	void getMoves() {
-		move = new Move("Thunderbolt", Category.PHYSICAL, Type.ELECTRIC, 60);
+		move = new Move("Thunderbolt", Category.PHYSICAL, PokeType.ELECTRIC, 60);
 		assertEquals(move.getName(), "Thunderbolt");
 		assertEquals(move.getMoveCategory(), Category.PHYSICAL);
-		assertEquals(move.getMoveType(), Type.ELECTRIC);
+		assertEquals(move.getMoveType(), PokeType.ELECTRIC);
 		assertEquals(move.getPower(), 60);
 	}
 	
