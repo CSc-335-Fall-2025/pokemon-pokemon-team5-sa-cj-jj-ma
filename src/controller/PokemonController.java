@@ -35,6 +35,10 @@ public class PokemonController {
 		model.resetHealth();
 	}
 	
+	public PokemonModel getModel() {
+		return this.model;
+	}
+	
 	/**
 	 * 
 	 * @param name: this is for name of team
