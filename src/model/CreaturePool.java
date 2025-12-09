@@ -7,8 +7,7 @@ import java.util.Random;
 
 import model.Move.Category;
 import model.Move.StatusEffect;
-import model.Move.Type;
-import model.Move.StatusEffect;
+import model.PokeType;
 
 /**
  * @author conorjanesky, mohammed, jett, safwan
@@ -25,18 +24,18 @@ public class CreaturePool {
 	 */
     private static final Creature[] CREATURES = {
   
-        new Creature("Pikachu",      180,  103, 76, new ArrayList<Move>(), "/sprites/pokemon/pikachu.png"),
-        new Creature("Bulbasaur",   200, 92, 92, new ArrayList<Move>(), "/sprites/pokemon/bulbasaur.png"),
-        new Creature("Charmander",   188,  98, 81, new ArrayList<Move>(), "/sprites/pokemon/charmander.png"),
-        new Creature("Squirtle",    198, 90, 121, new ArrayList<Move>(), "/sprites/pokemon/squirtle.png"),
-        new Creature("Jigglypuff",  340, 85, 40, new ArrayList<Move>(), "/sprites/pokemon/jigglypuff.png"),
-        new Creature("Yoshi",       350, 170, 170, new ArrayList<Move>(), "/sprites/pokemon/yoshi.png"),
-        new Creature("Poliwhirl",   110, 53, 50, new ArrayList<Move>(), "/sprites/pokemon/poliwhirl.png"),
-        new Creature("Gloom",       230, 121, 130, new ArrayList<Move>(), "/sprites/pokemon/gloom.png"),
-        new Creature("Psyduck",     210,  98, 90, new ArrayList<Move>(), "/sprites/pokemon/psyduck.png"),
-        new Creature("Goldeen",     200,  125, 112, new ArrayList<Move>(), "/sprites/pokemon/goldeen.png"),
-        new Creature("Dratini",     192, 119, 85, new ArrayList<Move>(), "/sprites/pokemon/dratini.png"),
-        new Creature("Meowth",      190,  85, 67, new ArrayList<Move>(), "/sprites/pokemon/meowth.png")
+        new Creature("Pikachu",      180,  103, 76, PokeType.ELECTRIC, new ArrayList<Move>(), "/sprites/pokemon/pikachu.png"),
+        new Creature("Bulbasaur",   200, 92, 92, PokeType.GRASS, new ArrayList<Move>(), "/sprites/pokemon/bulbasaur.png"),
+        new Creature("Charmander",   188,  98, 81, PokeType.FIRE, new ArrayList<Move>(), "/sprites/pokemon/charmander.png"),
+        new Creature("Squirtle",    198, 90, 121, PokeType.WATER, new ArrayList<Move>(), "/sprites/pokemon/squirtle.png"),
+        new Creature("Jigglypuff",  340, 85, 40, PokeType.FAIRY, new ArrayList<Move>(), "/sprites/pokemon/jigglypuff.png"),
+        new Creature("Yoshi",       350, 170, 170, PokeType.NORMAL, new ArrayList<Move>(), "/sprites/pokemon/yoshi.png"),
+        new Creature("Poliwhirl",   110, 53, 50, PokeType.WATER, new ArrayList<Move>(), "/sprites/pokemon/poliwhirl.png"),
+        new Creature("Gloom",       230, 121, 130, PokeType.GRASS, new ArrayList<Move>(), "/sprites/pokemon/gloom.png"),
+        new Creature("Psyduck",     210,  98, 90, PokeType.WATER, new ArrayList<Move>(), "/sprites/pokemon/psyduck.png"),
+        new Creature("Goldeen",     200,  125, 112, PokeType.WATER, new ArrayList<Move>(), "/sprites/pokemon/goldeen.png"),
+        new Creature("Dratini",     192, 119, 85, PokeType.DRAGON, new ArrayList<Move>(), "/sprites/pokemon/dratini.png"),
+        new Creature("Meowth",      190,  85, 67, PokeType.NORMAL, new ArrayList<Move>(), "/sprites/pokemon/meowth.png")
     };
     
     /**
@@ -45,27 +44,27 @@ public class CreaturePool {
      */
     private static final Move[] MOVES = {
     		  
-            new Move("Thunderbolt", Category.PHYSICAL, Type.ELECTRIC, 60),
-            new Move("Surf", Category.PHYSICAL, Type.WATER, 60),
-            new Move("Solar Beam", Category.PHYSICAL,  Type.GRASS, 80),
-            new Move("Sludge Wave", Category.PHYSICAL,  Type.POISON, 65),
-            new Move("Flare Blitz", Category.PHYSICAL,  Type.FIRE, 80),
-            new Move("Dragon Rush", Category.PHYSICAL,  Type.DRAGON, 70),
-            new Move("Hydro Pump", Category.PHYSICAL,  Type.WATER, 75),
-            new Move("Ice Punch", Category.PHYSICAL,  Type.ICE, 50),
-            new Move("Take Down", Category.PHYSICAL,  Type.NORMAL, 40),
-            new Move("Disarming Voice", Category.PHYSICAL,  Type.FAIRY, 25),
-            new Move("Hyper Beam", Category.PHYSICAL,  Type.NORMAL, 100),
-            new Move("Draco Meteor", Category.PHYSICAL,  Type.DRAGON, 85),
-            new Move("Bubble Beam", Category.PHYSICAL, Type.WATER, 45),
-            new Move("Body Slam", Category.PHYSICAL, Type.NORMAL, 55),
-            new Move("Energy Ball", Category.PHYSICAL, Type.GRASS, 60),
-            new Move("Scratch", Category.PHYSICAL, Type.NORMAL, 25),
-            new Move("Poison Jab", Category.PHYSICAL, Type.POISON, 60),
-            new Move("Ice Beam", Category.PHYSICAL, Type.ICE, 60),
-            new Move("Outrage", Category.PHYSICAL, Type.DRAGON, 80),
-            new Move("Slash", Category.PHYSICAL, Type.NORMAL, 45),
-            new Move("Play Rough", Category.PHYSICAL, Type.FAIRY, 60),
+            new Move("Thunderbolt", Category.PHYSICAL, PokeType.ELECTRIC, 60),
+            new Move("Surf", Category.PHYSICAL, PokeType.WATER, 60),
+            new Move("Solar Beam", Category.PHYSICAL,  PokeType.GRASS, 80),
+            new Move("Sludge Wave", Category.PHYSICAL,  PokeType.POISON, 65),
+            new Move("Flare Blitz", Category.PHYSICAL,  PokeType.FIRE, 80),
+            new Move("Dragon Rush", Category.PHYSICAL,  PokeType.DRAGON, 70),
+            new Move("Hydro Pump", Category.PHYSICAL,  PokeType.WATER, 75),
+            new Move("Ice Punch", Category.PHYSICAL,  PokeType.ICE, 50),
+            new Move("Take Down", Category.PHYSICAL,  PokeType.NORMAL, 40),
+            new Move("Disarming Voice", Category.PHYSICAL,  PokeType.FAIRY, 25),
+            new Move("Hyper Beam", Category.PHYSICAL,  PokeType.NORMAL, 100),
+            new Move("Draco Meteor", Category.PHYSICAL,  PokeType.DRAGON, 85),
+            new Move("Bubble Beam", Category.PHYSICAL, PokeType.WATER, 45),
+            new Move("Body Slam", Category.PHYSICAL, PokeType.NORMAL, 55),
+            new Move("Energy Ball", Category.PHYSICAL, PokeType.GRASS, 60),
+            new Move("Scratch", Category.PHYSICAL, PokeType.NORMAL, 25),
+            new Move("Poison Jab", Category.PHYSICAL, PokeType.POISON, 60),
+            new Move("Ice Beam", Category.PHYSICAL, PokeType.ICE, 60),
+            new Move("Outrage", Category.PHYSICAL, PokeType.DRAGON, 80),
+            new Move("Slash", Category.PHYSICAL, PokeType.NORMAL, 45),
+            new Move("Play Rough", Category.PHYSICAL, PokeType.FAIRY, 60),
             //21
             new Move("Tail Whip", Category.STATUS, StatusEffect.DEFENSE_DOWN, 1),
             new Move("Charm", Category.STATUS, StatusEffect.ATTACK_DOWN, 2),

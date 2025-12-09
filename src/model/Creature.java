@@ -14,9 +14,12 @@ public class Creature {
 	private int attack;
 	private int defense;
 	private int currHealth;
+	private PokeType type;
 	private List<Move> moves;
 	private int counter;
 	private String path;
+	private int baseAttack;
+	private int baseDefense;
 	
 	/**
 	 * 
@@ -28,12 +31,15 @@ public class Creature {
 	 * @param moveArray: moves array
 	 * @param path: a path of creature picture
 	 */
-	public Creature(String name, int health, int attack, int defense, List<Move> moveArray, String path) {
+	public Creature(String name, int health, int attack, int defense, PokeType type, List<Move> moveArray, String path) {
 		this.name = name;
 		this.baseHealth = health;
+		this.baseAttack = attack;
+		this.baseDefense = defense;
 		this.attack = attack;
 		this.defense = defense;
 		this.currHealth = health;
+		this.type = type;
 		this.moves = moveArray;
 		this.counter = 0;
 		this.path = path;
@@ -52,6 +58,20 @@ public class Creature {
 	 */
 	public int getBaseHealth() {
 		return this.baseHealth;
+	}
+	
+	/**
+	 * @return it returns the base attack of pokemon creature
+	 */
+	public int getBaseAttack() {
+		return this.baseAttack;
+	}
+	
+	/**
+	 * @return it returns the base defense of pokemon creature
+	 */
+	public int getBaseDefense() {
+		return this.baseDefense;
 	}
 	
 	/**
@@ -164,5 +184,10 @@ public class Creature {
 	 */
 	public boolean isCreatureFainted() {
 		return getHealth() <= 0;
+	}
+
+
+	public PokeType getType() {
+		return type;
 	}
 }
