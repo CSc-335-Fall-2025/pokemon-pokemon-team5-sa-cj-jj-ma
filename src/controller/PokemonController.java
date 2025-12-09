@@ -16,6 +16,7 @@ import model.Trainer;
  */
 public class PokemonController {
 	private PokemonModel model;  // this is a model instance
+	private int currTurn;
 	
 	/**
 	 * 
@@ -24,7 +25,7 @@ public class PokemonController {
 	 */
 	public PokemonController(PokemonModel model) {
 		this.model = new PokemonModel();
-
+		this.currTurn = 1;
 	}
 	
 	/**
@@ -82,6 +83,12 @@ public class PokemonController {
             defendingTrainer.autoSwap();
             System.out.println(model.getTrainer1() + "'s " + attacker.getName() + " knocked out " + defender.getName());
         }
+        
+        if (currTurn == 1) {
+        	currTurn = 2;
+        } else if (currTurn == 2) {
+        	currTurn = 1;
+        }
     }
 
     
@@ -106,106 +113,34 @@ public class PokemonController {
             model.getTrainer1().autoSwap();
             System.out.println(model.getTrainer2() + "'s " + attacker.getName() + " knocked out " + defender.getName());
         }
+        
+        currTurn = 1;
 	}
+
 
 	/**
-	 * this method will handel move for the trainer where it will use the move string
-	 * @param attacker: this instance will the attacker
-	 * @param defender: this instance will be the target player
-	 * @param moveStr: this instance will be the move string
+	 * Allows an attacker to execute a given move on the defender
+	 * @param attacker
+	 * @param defender
+	 * @param moveStr
 	 */
     private void doMove(Creature attacker, Creature defender, String moveStr) {
-    	for (Move m : attacker.getMoves()) {
-			if (m.getName().toLowerCase().equals(moveStr)) {
-				if (m.getMoveCategory().equals(Move.Category.PHYSICAL)) {
-					int damageAmt = m.getPower() * attacker.getAttack() / defender.getDefense();
-					
-					defender.setHealth(defender.getHealth() - damageAmt);
-
-					System.out.println(attacker.getName() + " attacked " + defender.getName() + " for " + damageAmt + " damage.");
-				}
-				
-				if (m.getMoveCategory().equals(Move.Category.STATUS)) {
-
-					int changedTotal;
-					
-					switch (m.getEffect()) {
-					case HP_UP:
-						changedTotal = attacker.getHealth() + (attacker.getHealth() / 2);
-						attacker.setHealth(Math.min(changedTotal, attacker.getBaseHealth()));
-						break;
-					case ATTACK_UP:
-						changedTotal = setAttackChange(attacker, m.getEffectLevel());
-						attacker.setAttack(changedTotal);
-						System.out.println(attacker.getName() + " changed " + attacker.getName() + "'s attack to " + changedTotal);
-						break;
-					case ATTACK_DOWN:
-						changedTotal = setAttackChange(defender, -m.getEffectLevel());
-						defender.setAttack(changedTotal);
-						System.out.println(attacker.getName() + " changed " + defender.getName() + "'s attack to " + changedTotal);
-						break;
-					case DEFENSE_UP:
-						changedTotal = setDefenseChange(attacker, m.getEffectLevel());
-						attacker.setAttack(changedTotal);
-						System.out.println(attacker.getName() + " changed " + attacker.getName() + "'s defense to " + changedTotal);
-						break;
-					case DEFENSE_DOWN:
-						changedTotal = setDefenseChange(defender, -m.getEffectLevel());
-						defender.setDefense(changedTotal);
-						System.out.println(attacker.getName() + " changed " + defender.getName() + "'s defense to " + changedTotal);
-
-						break;
-					case NO_EFFECT:
-						break;
-					}
-				}
-			}
-		}
+    	model.executeMove(attacker, defender, moveStr);
     }
-    
-    /**
-     * This method will handle status for the creature move for the attacker
-     * @param affected: target pokemon creature
-     * @param level: to use the calculation of status
-     * @return it returns the calculation of status
-     */
-    public int setAttackChange(Creature affected, int level) {
-    	int numerator = 2;
-    	int denominator = 2;
-    	
-    	if (level > 0) {
-			numerator = 2 + level;
-		} else if (level < 0) {
-			denominator = 2 - level;
-		}
-		
-		return affected.getAttack() * numerator / denominator;
-	}
-	
-    /**
-     * This method will handle status for the creature move for the defender
-     * @param affected: target pokemon creature
-     * @param level: to use the calculation of status
-     * @return it returns the calculation of status
-     */
-    public int setDefenseChange(Creature affected, int level) {
-    	int numerator = 2;
-    	int denominator = 2;
-    	
-    	if (level > 0) {
-			numerator = 2 + level;
-		} else if (level < 0) {
-			denominator = 2 - level;
-		}
-		
-		return affected.getDefense() * numerator / denominator;
-	}
     
     /**
      * Returns true when a trainer has no living creatures left.
      */
     public boolean isBattleOver() {
         return !model.getTrainer1().hasLivingCreature() || !model.getTrainer2().hasLivingCreature();
+    }
+    
+    /**
+     * 
+     * @return Returns the integer corresponding to which player can currently call a move
+     */
+    public int getCurrTurn() {
+    	return currTurn;
     }
     
     /**
@@ -218,7 +153,6 @@ public class PokemonController {
         if (!model.getTrainer2().hasLivingCreature()) return model.getTrainer1().getName()+" won!!!";
         return null;
     }
-
 
     /** 
      * @return it return trainer 1

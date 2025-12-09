@@ -109,6 +109,12 @@ public class GameView extends Application implements Observer {
 	private Image swapBut6;
 	private ImageView swapButView6;
 	private ImageView swapButView5;
+	private Button firstSwapBtn;
+	private Button secondSwapBtn;
+	private Button thirdSwapBtn;
+	private Button firstSwapBtn2;
+	private Button secondSwapBtn2;
+	private Button thirdSwapBtn2;
 	@Override
 	/**
 	 * @param stage - this is the stage that will come up 
@@ -515,6 +521,45 @@ public class GameView extends Application implements Observer {
 		ap6.setImage(activePokemon6);
 		}
 		
+		
+		if (controller.getCurrTurn() == 1) {
+			move1.setDisable(false);
+			move2.setDisable(false);
+			move3.setDisable(false);
+			move4.setDisable(false);
+			
+			move5.setDisable(true);
+			move6.setDisable(true);
+			move7.setDisable(true);
+			move8.setDisable(true);
+			
+			firstSwapBtn.setDisable(false);
+			secondSwapBtn.setDisable(false);
+			thirdSwapBtn.setDisable(false);
+			
+			firstSwapBtn2.setDisable(true);
+			secondSwapBtn2.setDisable(true);
+			thirdSwapBtn2.setDisable(true);
+			
+		} else if (controller.getCurrTurn() == 2) {
+			move1.setDisable(true);
+			move2.setDisable(true);
+			move3.setDisable(true);
+			move4.setDisable(true);
+			
+			move5.setDisable(false);
+			move6.setDisable(false);
+			move7.setDisable(false);
+			move8.setDisable(false);
+			
+			firstSwapBtn.setDisable(true);
+			secondSwapBtn.setDisable(true);
+			thirdSwapBtn.setDisable(true);
+			
+			firstSwapBtn2.setDisable(false);
+			secondSwapBtn2.setDisable(false);
+			thirdSwapBtn2.setDisable(false);
+		}
 		activeCreatureImage2 = new Image(controller.getTrainer2().getActiveCreature().getPath());
 		activeCreatureView2.setImage(activeCreatureImage2);
 		
@@ -749,7 +794,7 @@ public class GameView extends Application implements Observer {
 		HBox activeTeam = new HBox(20);
 		
 		
-		Button firstSwapBtn = new Button();
+		firstSwapBtn = new Button();
 		swapBut1 = new Image("/sprites/trainers/lance.png");
 		swapButView1 = new ImageView(swapBut1);
 		firstSwapBtn.setGraphic(swapButView1);
@@ -759,7 +804,7 @@ public class GameView extends Application implements Observer {
 
 		});
 		
-		Button secondSwapBtn = new Button();
+		secondSwapBtn = new Button();
 		swapBut2 = new Image("/sprites/trainers/lance.png");
 		swapButView2 = new ImageView(swapBut2);
 		secondSwapBtn.setGraphic(swapButView2);
@@ -771,7 +816,7 @@ public class GameView extends Application implements Observer {
 		
 		swapBut3 = new Image("/sprites/trainers/lance.png");
 		swapButView3 = new ImageView(swapBut3);
-		Button thirdSwapBtn = new Button();
+		thirdSwapBtn = new Button();
 		thirdSwapBtn.setGraphic(swapButView3);
 		thirdSwapBtn.setOnAction(e -> {
 			controller.getTrainer1().manualSwap(controller.getTrainer1().getCreature3());
@@ -887,7 +932,7 @@ public class GameView extends Application implements Observer {
 		HBox activeTeam2 = new HBox(20);
 		
 		
-		Button firstSwapBtn2 = new Button();
+		firstSwapBtn2 = new Button();
 		swapBut4 = new Image("/sprites/trainers/lance.png");
 		swapButView4 = new ImageView(swapBut4);
 		firstSwapBtn2.setGraphic(swapButView4);
@@ -897,7 +942,7 @@ public class GameView extends Application implements Observer {
 
 		});
 		
-		Button secondSwapBtn2 = new Button();
+		secondSwapBtn2 = new Button();
 		swapBut5 = new Image("/sprites/trainers/lance.png");
 		swapButView5 = new ImageView(swapBut5);
 		secondSwapBtn2.setGraphic(swapButView5);
@@ -907,7 +952,7 @@ public class GameView extends Application implements Observer {
 
 		});
 		
-		Button thirdSwapBtn2 = new Button();
+		thirdSwapBtn2 = new Button();
 		swapBut6 = new Image("/sprites/trainers/lance.png");
 		swapButView6 = new ImageView(swapBut6);
 		thirdSwapBtn2.setGraphic(swapButView6);
