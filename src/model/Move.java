@@ -21,14 +21,6 @@ public class Move {
 	}
 	
 	/**
-	 * This is the enum for the
-	 * type of pokemon.
-	 */
-	public enum Type {
-		NORMAL, FIRE, WATER, GRASS, ELECTRIC, POISON, ICE, DRAGON, FAIRY
-	}
-	
-	/**
 	 * this is the enum for the type of move (status)
 	 */
 	public enum StatusEffect {
@@ -37,7 +29,7 @@ public class Move {
 	
 	private String name;
 	private Category moveCategory;
-	private Type moveType;
+	private PokeType moveType;
 	private StatusEffect effect;
 	private int power; 
 	private int effectLevel;
@@ -50,7 +42,7 @@ public class Move {
 	 * @param moveType
 	 * @param power
 	 */
-	public Move(String name, Category moveCategory, Type moveType, int power) {
+	public Move(String name, Category moveCategory, PokeType moveType, int power) {
 		this.name = name;
 		this.moveCategory = moveCategory;
 		this.moveType = moveType;
@@ -90,7 +82,7 @@ public class Move {
 	/**
 	 * @return the move's type
 	 */
-	public Type getMoveType() {
+	public PokeType getMoveType() {
 		return moveType;
 	}
 

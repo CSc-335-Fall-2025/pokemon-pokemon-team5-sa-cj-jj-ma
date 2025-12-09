@@ -1,7 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 /**
  * This class extends Observable and will be connected to a javaFX prgram by the MVC model
@@ -19,8 +21,8 @@ public class PokemonModel extends Observable{
 	
 	private Trainer trainer1;
 	private Trainer trainer2;
-	private Trainer trainer3;
 	private CreaturePool pool;
+	private static final Map<PokeType, Map<PokeType, Double>> effectiveChart = createEffectiveChart();
 	
 	/**
 	 * this is the consutructor for the PokemonModel
@@ -33,7 +35,6 @@ public class PokemonModel extends Observable{
 		this.trainer2 = new Trainer();
 		this.pool = new CreaturePool();
 		pool.setMoves();
-		
 	}
 	
 	/**
@@ -46,9 +47,13 @@ public class PokemonModel extends Observable{
 		// does this for the okemon on trainer one team and trainer 2 team
 		for (Creature c : trainer1.getTeam()) {
 			c.setHealth(c.getBaseHealth());
+			c.setAttack(c.getBaseAttack());
+			c.setDefense(c.getBaseDefense());
 		}
 		for (Creature c : trainer2.getTeam()) {
 			c.setHealth(c.getBaseHealth());
+			c.setAttack(c.getBaseAttack());
+			c.setDefense(c.getBaseDefense());
 		}
 	}
 	/**
@@ -174,7 +179,9 @@ public class PokemonModel extends Observable{
 		for (Move m : attacker.getMoves()) {
 			if (m.getName().toLowerCase().equals(moveStr)) {
 				if (m.getMoveCategory().equals(Move.Category.PHYSICAL)) {
-					int damageAmt = m.getPower() * attacker.getAttack() / defender.getDefense();
+					double effectiveness = getEffectiveness(m.getMoveType(), defender.getType());
+					System.out.println("Effectiveness: " + effectiveness);
+					int damageAmt = (int) Math.round((m.getPower() * attacker.getAttack() / defender.getDefense()) * effectiveness);
 					
 					defender.setHealth(defender.getHealth() - damageAmt);
 
@@ -202,7 +209,7 @@ public class PokemonModel extends Observable{
 						break;
 					case DEFENSE_UP:
 						changedTotal = setDefenseChange(attacker, m.getEffectLevel());
-						attacker.setAttack(changedTotal);
+						attacker.setDefense(changedTotal);
 						System.out.println(attacker.getName() + " changed " + attacker.getName() + "'s defense to " + changedTotal);
 						break;
 					case DEFENSE_DOWN:
@@ -217,6 +224,90 @@ public class PokemonModel extends Observable{
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Searches through the effectiveness chart mapping given the type of an attack and a defender's type
+	 * and returns the double representing a super effective move, a less effective move, and a normal move
+	 * @param attackType
+	 * @param defenderType
+	 * @return the effectiveness
+	 */
+	public double getEffectiveness(PokeType attackType, PokeType defenderType) {
+		for (Map.Entry<PokeType, Map<PokeType, Double>> typeMapping : effectiveChart.entrySet()) {
+			PokeType key = typeMapping.getKey();
+			Map<PokeType, Double> val = typeMapping.getValue();
+			
+			if (key.equals(attackType) && val.containsKey(defenderType)) {
+				return val.get(defenderType);
+			}
+		}
+		return 1.0;
+	}
+	
+	/**
+	 * Creates a static chart representing all types and how effective they are against others
+	 * @return the type mapping
+	 */
+	private static Map<PokeType, Map<PokeType, Double>>  createEffectiveChart() {
+		Map<PokeType, Map<PokeType, Double>> effectiveChart = new HashMap<>();
+
+		Map<PokeType, Double> fireMap = new HashMap<>();
+		fireMap.put(PokeType.FIRE, 0.75);
+		fireMap.put(PokeType.WATER, 0.75);
+		fireMap.put(PokeType.GRASS, 1.5);
+		fireMap.put(PokeType.ICE, 1.5);
+		fireMap.put(PokeType.DRAGON, 0.75);
+		effectiveChart.put(PokeType.FIRE, fireMap);
+		
+		Map<PokeType, Double> waterMap = new HashMap<>();
+		waterMap.put(PokeType.FIRE, 1.5);
+		waterMap.put(PokeType.WATER, 0.75);
+		waterMap.put(PokeType.GRASS, 0.75);
+		waterMap.put(PokeType.DRAGON, 0.75);
+		effectiveChart.put(PokeType.WATER, waterMap);
+		
+		Map<PokeType, Double> grassMap = new HashMap<>();
+		grassMap.put(PokeType.FIRE, 0.75);
+		grassMap.put(PokeType.WATER, 1.5);
+		grassMap.put(PokeType.GRASS, 0.75);
+		grassMap.put(PokeType.POISON, 0.75);
+		grassMap.put(PokeType.DRAGON, 0.75);
+		effectiveChart.put(PokeType.GRASS, grassMap);
+		
+		Map<PokeType, Double> electricMap = new HashMap<>();
+		electricMap.put(PokeType.WATER, 1.5);
+		electricMap.put(PokeType.ELECTRIC, 0.75);
+		electricMap.put(PokeType.GRASS, 0.75);
+		electricMap.put(PokeType.DRAGON, 0.75);
+		effectiveChart.put(PokeType.ELECTRIC, electricMap);
+		
+		Map<PokeType, Double> iceMap = new HashMap<>();
+		iceMap.put(PokeType.FIRE, 0.75);
+		iceMap.put(PokeType.WATER, 0.75);
+		iceMap.put(PokeType.GRASS, 1.5);
+		iceMap.put(PokeType.ICE, 0.75);
+		iceMap.put(PokeType.DRAGON, 1.5);
+		effectiveChart.put(PokeType.ICE, iceMap);
+		
+		Map<PokeType, Double> poisonMap = new HashMap<>();
+		poisonMap.put(PokeType.GRASS, 1.5);
+		poisonMap.put(PokeType.POISON, 0.75);
+		poisonMap.put(PokeType.FAIRY, 1.5);
+		effectiveChart.put(PokeType.POISON, poisonMap);
+		
+		Map<PokeType, Double> dragonMap = new HashMap<>();
+		dragonMap.put(PokeType.DRAGON, 1.5);
+		dragonMap.put(PokeType.FAIRY, 0.0);
+		effectiveChart.put(PokeType.DRAGON, dragonMap);
+		
+		Map<PokeType, Double> fairyMap = new HashMap<>();
+		fairyMap.put(PokeType.FIRE, 0.75);
+		fairyMap.put(PokeType.POISON, 1.5);
+		fairyMap.put(PokeType.DRAGON, 1.5);
+		effectiveChart.put(PokeType.FAIRY, fairyMap);
+		
+		return effectiveChart;
 	}
 	
 	/**
@@ -310,4 +401,5 @@ public class PokemonModel extends Observable{
 		setChanged();
 		notifyObservers();
 	}
+	
 }
