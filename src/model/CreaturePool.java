@@ -10,8 +10,19 @@ import model.Move.StatusEffect;
 import model.Move.Type;
 import model.Move.StatusEffect;
 
+/**
+ * @author conorjanesky, mohammed, jett, safwan
+ * File: CreaturePool.java
+ * Class: CSC 335 - FAll 2025
+ * Purpose: This is the 
+ * creature pool that contains and creatures
+ * all of our creatures.
+ */
 public class CreaturePool {
 
+	/**
+	 * this is is a creature array that represents our 12 creatures.
+	 */
     private static final Creature[] CREATURES = {
   
         new Creature("Pikachu",      180,  103, 76, new ArrayList<Move>(), "/sprites/pokemon/pikachu.png"),
@@ -28,6 +39,10 @@ public class CreaturePool {
         new Creature("Meowth",      190,  85, 67, new ArrayList<Move>(), "/sprites/pokemon/meowth.png")
     };
     
+    /**
+     * This is a move[] that determines all of the moves 
+     *  that could be used for each pokemon.
+     */
     private static final Move[] MOVES = {
     		  
             new Move("Thunderbolt", Category.PHYSICAL, Type.ELECTRIC, 60),
@@ -70,6 +85,9 @@ public class CreaturePool {
         
     }
     
+    /**
+     * Sets the unique moves to each one of the pokemon.
+     */
     public void setMoves() {    
     	List<Move> moveSet = Arrays.asList(MOVES[0], MOVES[1], MOVES[21], MOVES[22]);
     	CREATURES[0].setMoves(moveSet);
@@ -98,6 +116,11 @@ public class CreaturePool {
 
     }
     
+    /**
+     * generate a random list of pokemon. Used to create the computer team.
+     * @param pokeStrs - a list of pokemon. 
+     * @return - the list of randomly generated pokemon
+     */
     public List<String> generateRandom(List<String> pokeStrs) {
     	List<String> retRand = new ArrayList<>();
     	Random rand = new Random();
@@ -112,5 +135,5 @@ public class CreaturePool {
     	
     	return retRand;
     }
-    
+
 }
