@@ -9,7 +9,6 @@ import model.CreaturePool;
 import model.Move;
 import model.Move.Category;
 import model.Move.StatusEffect;
-import model.Move.Type;
 import model.PokeType;
 
 class MoveTest {
